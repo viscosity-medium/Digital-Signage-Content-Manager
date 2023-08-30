@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+
+  }
+}
+
+body {
+
+}
+
+#unorderedTrackList::-webkit-scrollbar {
+  width: 16px;
+}
+
+/* Track */
+#unorderedTrackList::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 10px;
+}
+
+/* Handle */
+#unorderedTrackList::-webkit-scrollbar-thumb {
+  border: solid 4px #fff;
+  background: #588a8d;
+  border-radius: 10px;
+}
