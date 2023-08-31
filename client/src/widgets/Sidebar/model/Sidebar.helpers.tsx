@@ -24,35 +24,44 @@ export const createNewSchedule = (
         if(currentItem.type === "folder"){
 
             if(currentItem.uniqueId === activeDirectory){
+
+                const content = currentItem.content.reduce((accum: any, currentItem, index)=>{
+
+                    if(activeItemIndex === index){
+                        return ([
+                                ...accum,
+                                currentItem,
+                                {
+                                    id: internalItem.id,
+                                    name: internalItem.name,
+                                    thumbnailLink: internalItem.thumbnailLink,
+                                    type: "file",
+                                    uniqueId: uuid()
+                                }
+                            ]
+
+                        )
+                    } else {
+                        return [
+                            ...accum,
+                            currentItem
+                        ]
+                    }
+
+                }, [])
+
+
                 return [
                     ...accumulator,
                     {
                         ...currentItem,
-                        content: currentItem.content.reduce((accum: any, currentItem, index)=>{
-
-                            if(activeItemIndex === index){
-                                return ([
-                                    ...accum,
-                                        currentItem,
-                                        {
-                                            id: internalItem.id,
-                                            name: internalItem.name,
-                                            thumbnailLink: internalItem.thumbnailLink,
-                                            type: "file",
-                                            uniqueId: uuid()
-                                        }
-                                    ]
-
-                                )
-                            } else {
-                                return [
-                                    ...accum,
-                                    currentItem
-                                ]
-                            }
-
-                        }, []),
-
+                        content: content?.length !== 0 ? content : [{
+                            id: internalItem.id,
+                            name: internalItem.name,
+                            thumbnailLink: internalItem.thumbnailLink,
+                            type: "file",
+                            uniqueId: uuid()
+                        }]
                     }
                 ];
             } else {

@@ -20,10 +20,10 @@ export class AppService {
         const prevDataText = JSON.stringify(JSON.parse(previousData.toString()), null, 4);
         const currentData = JSON.stringify(fileStructure, null, 4);
 
-        // if(prevDataText !== currentData){
-        //     fs.writeFileSync(fileStructurePath, JSON.stringify(fileStructure, null, 4));
-        //     await this.googleService.downloadMultipleFiles({folder: fileStructure});
-        // }
+        if(prevDataText !== currentData){
+            fs.writeFileSync(fileStructurePath, JSON.stringify(fileStructure, null, 4));
+            await this.googleService.downloadMultipleFiles({folder: fileStructure});
+        }
 
         console.log("Scan is finished");
 

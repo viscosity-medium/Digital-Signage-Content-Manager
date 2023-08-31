@@ -2,11 +2,13 @@ import NextLink from "next/link";
 import React, {DetailedHTMLProps, FC, HTMLAttributes} from "react";
 
 export interface LinkProps extends DetailedHTMLProps<HTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>{
+    href: string
     linkType: "internal" | "external"
 }
 
 const Link: FC<LinkProps> = ({
     linkType = "internal",
+    href,
     children,
     ...otherProps
 }) => {
@@ -14,7 +16,7 @@ const Link: FC<LinkProps> = ({
     if(linkType === "internal"){
         return (
             <NextLink
-                {...otherProps}
+                href={href}
             >
                 {
                     children

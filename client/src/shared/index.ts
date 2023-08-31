@@ -10,5 +10,6 @@ export { ListElement } from "./ui-kit/__HtmlTags/ListElement/ui/ListElement";
 export { Link } from "./ui-kit/__HtmlTags/Link/ui/Link"
 export { Navbar } from "./ui-kit/__HtmlTags/Navbar/ui/Navbar";
 export { Form } from "./ui-kit/__HtmlTags/Form/ui/Form";
+export { Input } from "./ui-kit/__HtmlTags/Input/ui/Input"
 
 export {ProvidersWrapper} from "./ui-kit/ProvidersWrapper/ProvidersWrapper"

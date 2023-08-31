@@ -9,6 +9,7 @@ export interface ScheduleFileInterface {
 }
 
 export interface ScheduleFolderInterface {
+    name: string
     uniqueId: string,
     type: "folder"
     content: Array<ScheduleFileInterface | ScheduleFolderInterface>

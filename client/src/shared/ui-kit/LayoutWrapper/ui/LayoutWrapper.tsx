@@ -8,8 +8,10 @@ const LayoutWrapper = ({children}: {children: ReactNode}) => {
 
     const dispatch = useAppDispatch();
 
-    const escFunction = () => {
-        dispatch(scheduleActions.setActiveItemIndex(undefined))
+    const escFunction = (event: KeyboardEvent) => {
+        if(event.code === "Escape"){
+            dispatch(scheduleActions.setActiveItemIndex(undefined))
+        }
     }
 
     useEffect(() => {

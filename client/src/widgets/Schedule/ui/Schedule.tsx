@@ -16,12 +16,14 @@ import {
     onSaveButtonClick,
     renderScheduleItemsHelper
 } from "@/widgets/Schedule/model/Schedule.helpers";
+import {useState} from "react";
 
 const Schedule = () => {
 
     const dispatch = useAppDispatch();
     const activeDirectoryItems = useSelector(getActiveDirectoryScheduleItems);
     const activeDirectory = useSelector(getScheduleActiveDirectory);
+    const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const scheduleStructure = useSelector(getScheduleStructure);
 
     useFetchScheduleStructure();
@@ -41,7 +43,11 @@ const Schedule = () => {
                             <Button
                                 className={"self-start max-w-[250px] border-[3px] border-white rounded transition duration-300  hover:bg-[#00000033]"}
                                 onClick={()=>{
-                                    onCloseCurrentFolderClick(dispatch, scheduleStructure, activeDirectory)
+                                    onCloseCurrentFolderClick(
+                                        dispatch,
+                                        scheduleStructure,
+                                        activeDirectory
+                                    )
                                 }}
                             >
                                 <Text
@@ -56,7 +62,12 @@ const Schedule = () => {
                     <Button
                         className={"self-end max-w-[250px] border-[3px] border-white rounded transition duration-300 bg-[#fcd462] hover:bg-[#d7b451]"}
                         onClick={()=>{
-                            onCreateFolderButtonClick(dispatch, scheduleStructure, activeDirectory);
+                            onCreateFolderButtonClick(
+                                dispatch,
+                                scheduleStructure,
+                                activeDirectory,
+                                (activeItemIndex !== undefined ? activeItemIndex : activeDirectoryItems.length - 1)
+                            );
                         }}
                     >
                         <Text

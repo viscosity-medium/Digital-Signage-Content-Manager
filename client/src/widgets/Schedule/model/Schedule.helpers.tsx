@@ -8,6 +8,7 @@ import {v4 as uuid} from "uuid";
 import {ScheduleFileInterface, ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {Identifier} from "dnd-core";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
+import {ChangeEvent, Dispatch, SetStateAction} from "react";
 
 
 export const getChildrenFolderContent = (
@@ -150,7 +151,8 @@ export const moveScheduleItem = (
 
 const createNewScheduleStructure = (
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
-    activeDirectory: string
+    activeDirectory: string,
+    activeItemIndex: number
 ): Array<ScheduleFileInterface | ScheduleFolderInterface>  => {
 
     return scheduleStructure.reduce((
@@ -161,18 +163,41 @@ const createNewScheduleStructure = (
         if(currentItem.type === "folder"){
 
             if(currentItem.uniqueId === activeDirectory){
+
+                const content = currentItem.content.reduce((accum: any, currentItem, index)=>{
+
+                    if(activeItemIndex === index){
+                        return ([
+                                ...accum,
+                                currentItem,
+                                {
+                                    type: "folder",
+                                    name: "folder",
+                                    uniqueId: uuid(),
+                                    content: []
+                                }
+                            ]
+
+                        )
+                    } else {
+                        return [
+                            ...accum,
+                            currentItem
+                        ]
+                    }
+
+                }, [])
+
                 return [
                     ...accumulator,
                     {
                         ...currentItem,
-                        content: [
-                            ...currentItem.content,
-                            {
-                                type: "folder",
-                                uniqueId: uuid(),
-                                content: []
-                            }
-                        ]
+                        content: content?.length !== 0 ? content : [{
+                            type: "folder",
+                            name: "folder",
+                            uniqueId: uuid(),
+                            content: []
+                        }]
                     }
                 ];
             } else {
@@ -181,7 +206,7 @@ const createNewScheduleStructure = (
                     {
                         ...currentItem,
                         content: [
-                            ...createNewScheduleStructure(currentItem.content, activeDirectory)
+                            ...createNewScheduleStructure(currentItem.content, activeDirectory, activeItemIndex)
                         ]
                     }
                 ];
@@ -223,14 +248,16 @@ const createNewActiveDirectoryItems = (
 export const onCreateFolderButtonClick = (
     dispatch: AppDispatch,
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
-    activeDirectory: string
+    activeDirectory: string,
+    activeItemIndex: number
 ) => {
 
-    const newScheduleStructure = createNewScheduleStructure(scheduleStructure, activeDirectory);
+    const newScheduleStructure = createNewScheduleStructure(scheduleStructure, activeDirectory, activeItemIndex);
     const newActiveDirectoryItems = createNewActiveDirectoryItems(newScheduleStructure, activeDirectory);
 
     dispatch(scheduleActions.setScheduleStructure(newScheduleStructure));
     dispatch(scheduleActions.setActiveDirectoryItems(newActiveDirectoryItems));
+
 }
 
 export const onListElementClick = (dispatch: AppDispatch, handlerId: Identifier | null, activeElementIndex: number ) => {
@@ -311,7 +338,6 @@ const createNewActiveDirectoryItemsAfterDeletion = (
 
     return scheduleStructure.reduce((accum: Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem) => {
 
-        console.log(currentItem)
         if(currentItem.type === "folder"){
             if( currentItem.uniqueId === activeDirectory){
                 return [...currentItem.content];
@@ -337,9 +363,6 @@ export const onDeleteButtonClick = (
     const newSchedule = createNewScheduleStructureByDeletion(scheduleStructure, activeDirectory, deleteIndex)
     const newFolderContent = createNewActiveDirectoryItemsAfterDeletion(newSchedule, activeDirectory)
 
-    console.log(scheduleStructure)
-    console.log(newSchedule)
-
     dispatch(scheduleActions.setScheduleStructure(newSchedule));
     dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));
 };
@@ -354,6 +377,73 @@ export const onCloseCurrentFolderClick = (dispatch: AppDispatch, scheduleStructu
         dispatch(scheduleActions.setActiveDirectory(parentFolderId));
         dispatch(scheduleActions.setActiveItem(null));
     }
+
+}
+
+export const onSaveEditedFolderName = (
+    dispatch: AppDispatch,
+    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    activeDirectory: string,
+    activeItemIndex: number,
+    newName: string
+) => {
+
+    const newSchedule =  scheduleStructure.reduce((accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem)=>{
+
+        if(currentItem.type === "folder"){
+
+            if(currentItem.uniqueId === activeDirectory){
+                return [
+                    ...accumulator,
+                    {
+                        ...currentItem,
+                        content: currentItem.content.reduce((accum: any, currentItem, index)=>{
+
+                            if(activeItemIndex === index){
+                                return ([
+                                        ...accum,
+                                        {
+                                            ...currentItem,
+                                            name: newName
+                                        },
+
+                                    ]
+
+                                )
+                            } else {
+                                return [
+                                    ...accum,
+                                    currentItem
+                                ]
+                            }
+
+                        }, []),
+                    }
+                ];
+            } else {
+                return [
+                    ...accumulator,
+                    {
+                        ...currentItem,
+                        content: [
+                            ...createNewScheduleStructure(currentItem.content, activeDirectory, activeItemIndex)
+                        ]
+                    }
+                ];
+            }
+
+        } else {
+            return [
+                ...accumulator,
+                currentItem
+            ]
+        }
+    },[])
+
+    const newActiveDirectoryContent = createNewActiveDirectoryItemsAfterDeletion(newSchedule, activeDirectory)
+
+    dispatch(scheduleActions.setScheduleStructure(newSchedule));
+    dispatch(scheduleActions.setActiveDirectoryItems(newActiveDirectoryContent));
 
 }
 
@@ -383,4 +473,16 @@ export const renderScheduleItemsHelper = (
         )
     }
 
+}
+
+export const onRightButtonClick = (setPopUpIsShown: Dispatch<SetStateAction<boolean>>) => {
+    setPopUpIsShown(prevState => !prevState)
+}
+
+export const onChangeIsEditMode = (setIsEditMode: Dispatch<SetStateAction<boolean>>) => {
+    setIsEditMode(prevState => !prevState);
+}
+
+export const onInputChange = (e: ChangeEvent<HTMLInputElement>, setFolderName:  Dispatch<SetStateAction<string>>) => {
+    setFolderName(e.target.value)
 }

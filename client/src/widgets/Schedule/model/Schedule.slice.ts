@@ -34,10 +34,13 @@ const scheduleSlice = createSlice({
         builder.addCase(fetchScheduleStructure.fulfilled, (state, action: PayloadAction<Array<ScheduleFolderInterface>>)=> {
 
             const data = getChildrenFolderContent(action.payload, "rootDirectory");
-
+            console.log(action.payload)
             state.scheduleStructure = action.payload;
             state.activeDirectoryScheduleItems = data;
 
+        });
+        builder.addCase(fetchScheduleStructure.rejected, (state, action) => {
+            console.log(action)
         });
 
         // updateScheduleStructure

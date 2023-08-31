@@ -23,14 +23,12 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
     const scheduleStructure = useSelector(getScheduleStructure);
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
     const activeFolder = useSelector(getScheduleActiveDirectory);
-
+    const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const {
-        opacity,
-        handlerId,
-        refListObject
+        opacity, handlerId, refListObject
     } = useDragAndDrop({item, index, moveScheduleItem});
 
-    const folderColorLight = handlerId === scheduleActiveItem ? "#6567e9" : "#fff";
+    const folderColorLight = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "whiteBorderColor";
 
     return (
         <ListElement
@@ -43,7 +41,7 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
             onDragStart={()=>{
                 onListElementClick(dispatch, handlerId, index);
             }}
-            className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] border-[${folderColorLight}] rounded`}
+            className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} rounded`}
         >
             <Div className={"flex items-center select-none"}>
                 <Image

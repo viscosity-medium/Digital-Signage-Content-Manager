@@ -1,0 +1,28 @@
+
+.folderBackgroundColor {
+    background: #FCD462FF;
+}
+
+.activeBackgroundColor{
+    background: #6567E9FF;
+}
+
+.folderBorderColor {
+    border-color: #FCD462FF;
+}
+
+.activeBorderColor{
+    border-color: #6567E9FF;
+}
+
+.whiteBorderColor{
+    border-color: #FFFFFF;
+}
+
+.whiteTextColor{
+    color: #FFFFFF;
+}
+
+.blackTextColor{
+    color: #000000;
+}
