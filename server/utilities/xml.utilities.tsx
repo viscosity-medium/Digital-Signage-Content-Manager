@@ -1,6 +1,0 @@
-
-const xmlCreator = () =>{
-    return(
-``
-    )
-}

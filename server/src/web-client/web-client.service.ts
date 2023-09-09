@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {FileSystemService} from "../file-system/file-system.service";
 import * as fs from "fs";
-import path from "path";
-import process from "process";
 import {ScheduleStructure} from "../../types/scheduleStucture.types";
+import {processSchedule} from "../../utilities/recursiveCycle.utilities";
+import {fileSystem} from "../../utilities/fileSystem.utilities";
 
 @Injectable()
 export class WebClientService {
@@ -13,7 +13,7 @@ export class WebClientService {
     getFolderStructure(){
 
         const filePath = this.fileSystemService.getFolderAbsolutePath({
-            pathArray: ["model", "fileStructure.json"]
+            pathArray: ["model", "googleFolderFileStructure.json"]
         });
 
         return JSON.parse(fs.readFileSync(filePath).toString());
@@ -35,6 +35,10 @@ export class WebClientService {
         const filePath = this.fileSystemService.getFolderAbsolutePath({
             pathArray: ["model", "scheduleStructure.json"]
         });
+
+        processSchedule({schedule: newScheduleData});
+
+        fileSystem.clearFoldersRecursively(process.env.EASESCREEN_MMS_MEDIA_FOLDER);
 
         fs.writeFileSync(filePath, JSON.stringify(newScheduleData, null, 4));
 

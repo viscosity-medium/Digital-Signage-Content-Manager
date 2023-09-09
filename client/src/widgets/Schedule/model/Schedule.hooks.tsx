@@ -1,6 +1,6 @@
 import {useDrag, useDrop} from "react-dnd";
 import {Identifier, XYCoord} from "dnd-core";
-import {DragItem, ScheduleItemProps} from "./Schedule.types";
+import {DragItem, ScheduleItemProps, StaticFolders} from "./Schedule.types";
 import {useEffect, useRef} from "react";
 import {fetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.asyncThunks";
 import {useAppDispatch} from "../../../../store/store";
@@ -18,7 +18,10 @@ export const useDragAndDrop = ({
     item,
     index,
     moveScheduleItem,
+    activeDirectoryId
 }: ScheduleItemProps) => {
+
+    const { rootDirectory, Yabloneviy, Uglovoi } = StaticFolders;
 
     const refListObject = useRef<HTMLLIElement>(null);
     const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
@@ -71,6 +74,14 @@ export const useDragAndDrop = ({
     });
 
     dragRef(drop(refListObject));
+
+    if([rootDirectory, Yabloneviy, Uglovoi].includes(activeDirectoryId as StaticFolders)){
+        return {
+            opacity: 1,
+            handlerId,
+            refListObject: null
+        }
+    }
 
     return {
         opacity,

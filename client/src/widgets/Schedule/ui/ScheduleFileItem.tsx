@@ -5,7 +5,7 @@ import {ScheduleFileProps} from "../model/Schedule.types";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {useSelector} from "react-redux";
 import {
-    getScheduleActiveDirectory,
+    getScheduleActiveDirectoryId,
     getScheduleActiveItem, getScheduleActiveItemIndex,
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
@@ -22,13 +22,16 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
     const dispatch = useAppDispatch();
     const scheduleStructure = useSelector(getScheduleStructure);
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
-    const activeFolder = useSelector(getScheduleActiveDirectory);
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const {
         opacity, handlerId, refListObject
-    } = useDragAndDrop({item, index, moveScheduleItem});
+    } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
 
     const folderColorLight = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "whiteBorderColor";
+    const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "whiteBackgroundColor";
+    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
+
 
     return (
         <ListElement
@@ -41,7 +44,7 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
             onDragStart={()=>{
                 onListElementClick(dispatch, handlerId, index);
             }}
-            className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} rounded`}
+            className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} ${folderBackgroundColor} rounded`}
         >
             <Div className={"flex items-center select-none"}>
                 <Image
@@ -58,7 +61,7 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
                 />
                 <Text
                     tag={"p"}
-                    className={"ml-3"}
+                    className={`ml-3 ${textColor}`}
                 >
                     {
                         item.name
@@ -67,7 +70,7 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
             </Div>
             <Button
                 onClick={()=>{
-                    onDeleteButtonClick(dispatch, scheduleStructure,activeFolder, index)
+                    onDeleteButtonClick(dispatch, scheduleStructure,activeDirectoryId, index)
                 }}
             >
                 <CrossSvg

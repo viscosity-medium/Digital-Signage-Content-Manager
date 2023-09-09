@@ -22,30 +22,41 @@ export class GoogleService {
     async getFileListInFolder({searchId}:{searchId?: string}):  Promise<Common.GaxiosResponse<drive_v3.Schema$FileList>> {
         const googleDriveInstance = this.initializeGoogleDrive();
 
-        // const info = await googleDriveInstance.files.get({
-        //     fileId: searchId,
-        //     fields : "thumbnailLink"
-        // });
-        //
-        // console.log(info);
-
         return await googleDriveInstance.files.list({
             q: `'${searchId || process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID}' in parents`,
             fields: "files(id, name, kind, mimeType, thumbnailLink)"
         });
     }
 
-    async getFullFileStructure({ searchId = process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID }:{searchId?: string}) {
+    async getFullFileStructure({ 
+        searchId = process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID,
+        name,
+        mimeType
+    }:{
+        searchId?: string,
+        name?: string,
+        mimeType?: string
+    }) {
+
         const fileList = await this.getFileListInFolder({searchId});
         const newArray = {
             [searchId]: fileList.data.files.filter((item)=> (
                 item.mimeType !== "application/vnd.google-apps.folder"
-            ))
+            )),
+            name: name,
+            mimeType: "folder"
         };
-
+    
         for await (const listItem of fileList.data.files) {
             if (listItem.mimeType.match("application/vnd.google-apps.folder")) {
-                const content = await this.getFullFileStructure({searchId: listItem.id});
+                // console.log(listItem)
+                const content = await this.getFullFileStructure({
+                    searchId: listItem.id,
+                    name: listItem.name,
+                    mimeType: listItem.mimeType
+                });
+
+                // @ts-ignore
                 newArray[searchId]?.push(content);
             }
 
@@ -109,7 +120,7 @@ export class GoogleService {
                     fileID: content.id,
                     folderPath: newFolderPath
                 });
-
+                
                 this.fileSystemService.consoleColorLog({
                     consoleString: `New file ${content.name} is downloaded`,
                     colorWords: {

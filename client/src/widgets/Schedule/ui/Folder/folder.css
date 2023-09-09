@@ -1,10 +1,21 @@
+.whiteBackgroundColor{
+    background: #FFFFFF;
+}
 
 .folderBackgroundColor {
     background: #FCD462FF;
 }
 
+.folderBackgroundColorDark {
+    background: #e0bc56;
+}
+
 .activeBackgroundColor{
     background: #6567E9FF;
+}
+
+.activeBackgroundColorDark{
+    background: #5758c5;
 }
 
 .folderBorderColor {
@@ -25,4 +36,8 @@
 
 .blackTextColor{
     color: #000000;
+}
+
+.blueTextColor{
+    color: #393ab2;
 }

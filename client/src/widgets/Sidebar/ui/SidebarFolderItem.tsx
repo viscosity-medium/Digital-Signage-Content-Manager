@@ -1,6 +1,6 @@
 'use client'
 
-import {Div, ListElement, UnorderedList} from "@/shared";
+import {Div, ListElement, Text, UnorderedList} from "@/shared";
 import FolderIcon from "@/assets/folder-icon.svg";
 import DownArrowIcon from "@/assets/down-arrow.svg";
 import {createRecursiveContent} from "@/widgets/Sidebar/model/Sidebar.helpers";
@@ -15,8 +15,9 @@ const SidebarFolderItem = ({
 
     const folderId = internalProperties[0][0];
     const folderStructure = internalProperties[0][1];
+    const folderName = internalProperties[1][1];
     const onFolderHeight = () => {
-        setIsOpen(prevState => !prevState)
+        setIsOpen(prevState => !prevState);
     };
 
     return(
@@ -35,8 +36,16 @@ const SidebarFolderItem = ({
                         className={`w-[20px]`}
                     />
                     <DownArrowIcon
-                        className={`w-[16px] ml-[12px] ${isOpen ? "" : "rotate-180"}`}
+                        className={`w-[16px] mx-[12px] ${isOpen ? "" : "rotate-180"}`}
                     />
+                    <Text
+                        tag={"p"}
+                        className={"text-[white]"}
+                    >
+                        {
+                            folderName
+                        }
+                    </Text>
                 </Div>
             </Div>
             <Div

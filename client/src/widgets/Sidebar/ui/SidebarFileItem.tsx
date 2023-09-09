@@ -2,7 +2,7 @@ import {Div, ListElement, Text} from "@/shared";
 import {SidebarFileItemProps} from "@/widgets/Sidebar/model/Sidebar.type";
 import {
     getActiveDirectoryScheduleItems,
-    getScheduleActiveDirectory,
+    getScheduleActiveDirectoryId,
     getScheduleActiveItem, getScheduleActiveItemIndex,
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
@@ -18,7 +18,7 @@ const SidebarFileItem: FC<SidebarFileItemProps> = ({
 
     const refObj = useRef<HTMLDivElement>(null);
     const schedule = useSelector(getScheduleStructure);
-    const scheduleActiveDirectory = useSelector(getScheduleActiveDirectory);
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const activeItems = useSelector(getActiveDirectoryScheduleItems);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const dispatch = useAppDispatch();
@@ -33,7 +33,9 @@ const SidebarFileItem: FC<SidebarFileItemProps> = ({
                 height: refObj.current?.clientHeight
             }}
             onClick={()=>{
-                onListElementClick(dispatch, schedule, internalItem, scheduleActiveDirectory, activeItemIndex !== undefined ? activeItemIndex : activeItems.length - 1)
+                if(activeDirectoryId !== "rootDirectory"){
+                    onListElementClick(dispatch, schedule, internalItem, activeDirectoryId, activeItemIndex !== undefined ? activeItemIndex : activeItems.length - 1)
+                }
             }}
         >
             <Div
@@ -54,7 +56,7 @@ const SidebarFileItem: FC<SidebarFileItemProps> = ({
                 />
                 <Text
                     tag={`p`}
-                    className={`ml-[12px] text-[16px] text-[#ffffffb3] select-none`}
+                    className={`ml-[12px] text-[16px] text-[#ffffffb3] break-all select-none`}
                 >
                     {`${internalItem.name}`}
                 </Text>

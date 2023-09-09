@@ -1,22 +1,18 @@
-import {FC, useState} from "react";
-import {Div, ListElement} from "@/shared";
+import {FC} from "react";
+import {Div, ListElement, Text} from "@/shared";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {ScheduleFolderProps} from "@/widgets/Schedule/model/Schedule.types";
-import {
-    onFolderElementDoubleClick,
-    onListElementClick,
-    onRightButtonClick
-} from "@/widgets/Schedule/model/Schedule.helpers";
+import {onFolderElementDoubleClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
 import {useAppDispatch} from "../../../../store/store";
 import {useSelector} from "react-redux";
 import {
+    getScheduleActiveDirectoryId,
     getScheduleActiveItem,
     getScheduleActiveItemIndex,
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {FolderItemHeader} from "@/widgets/Schedule/ui/Folder/FolderItemHeader";
 import {FolderItemList} from "@/widgets/Schedule/ui/Folder/FolderItemList";
-import {FolderEditPopUp} from "@/widgets/Schedule/ui/Folder/FolderEditPopUp";
 import {FolderCloseButton} from "@/widgets/Schedule/ui/Folder/FolderCloseButton";
 import "./Folder/folder.css"
 
@@ -27,13 +23,14 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
 }) => {
 
     const dispatch = useAppDispatch();
-    const [popUpIsShown, setPopUpIsShown] = useState<boolean>(false);
     const scheduleStructure = useSelector(getScheduleStructure);
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId)
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
-    const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem});
-    const folderColorLight = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "folderBorderColor";
-    // const folderColorDark = handlerId === scheduleActiveItem ? "#5758c5" : "#e0bc56";
+    const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
+    const folderBorderColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "folderBorderColor";
+    const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "folderBackgroundColor";
+
 
     return (
         <>
@@ -56,18 +53,28 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                 />
 
                 <Div
-                    className={`flex flex-col relative justify-between min-h-[56px] px-3 text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} rounded`}
+                    className={`flex flex-col relative justify-between min-h-[72px] px-3 text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderBorderColor} ${folderBackgroundColor} rounded`}
                     onDoubleClick={()=>{
-                        onFolderElementDoubleClick(dispatch, scheduleStructure , item.uniqueId);
+                        onFolderElementDoubleClick(dispatch, scheduleStructure , item.uniqueId, item.name);
                     }}
                 >
                     <FolderItemList
                         item={item}
+                        handlerId={handlerId}
                     />
+                    <Text
+                        tag={"h3"}
+                        className={"absolute z-0 ml-auto mr-auto left-0 right-0 text-[40px] text-[#ffffff60] text-center select-none"}
+                    >
+                        {
+                            item.name
+                        }
+                    </Text>
                     <FolderCloseButton
+                        item={item}
                         index={index}
                     />
-                    <FolderEditPopUp/>
+                    {/*<FolderEditPopUp/>*/}
                 </Div>
 
             </ListElement>

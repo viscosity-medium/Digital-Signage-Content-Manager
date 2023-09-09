@@ -5,7 +5,8 @@ import {useSelector} from "react-redux";
 import {useAppDispatch} from "../../../../store/store";
 import {
     getActiveDirectoryScheduleItems,
-    getScheduleActiveDirectory, getScheduleActiveItemIndex,
+    getScheduleActiveDirectoryId, getScheduleActiveDirectoryName,
+    getScheduleActiveItemIndex,
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {useFetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.hooks";
@@ -16,18 +17,18 @@ import {
     onSaveButtonClick,
     renderScheduleItemsHelper
 } from "@/widgets/Schedule/model/Schedule.helpers";
-import {useState} from "react";
 
 const Schedule = () => {
 
     const dispatch = useAppDispatch();
     const activeDirectoryItems = useSelector(getActiveDirectoryScheduleItems);
-    const activeDirectory = useSelector(getScheduleActiveDirectory);
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
+    const activeDirectoryName = useSelector(getScheduleActiveDirectoryName);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const scheduleStructure = useSelector(getScheduleStructure);
 
     useFetchScheduleStructure();
-
+    console.log(activeDirectoryName)
     return (
         <Div
             className={"flex flex-col justify-between m-[50px] p-[50px] w-[100%] max-h-[100vh] border-[4px] border-solid border-white"}
@@ -39,44 +40,69 @@ const Schedule = () => {
                     className={"flex justify-between"}
                 >
                     {
-                        activeDirectory !== "rootDirectory" ? (
-                            <Button
-                                className={"self-start max-w-[250px] border-[3px] border-white rounded transition duration-300  hover:bg-[#00000033]"}
-                                onClick={()=>{
-                                    onCloseCurrentFolderClick(
-                                        dispatch,
-                                        scheduleStructure,
-                                        activeDirectory
-                                    )
-                                }}
+                        activeDirectoryId !== "rootDirectory" ? (
+                            <>
+                                <Button
+                                    className={"self-start max-w-[250px] border-[3px] border-white rounded transition duration-300  hover:bg-[#00000033]"}
+                                    onClick={()=>{
+                                        onCloseCurrentFolderClick(
+                                            dispatch,
+                                            scheduleStructure,
+                                            activeDirectoryId
+                                        )
+                                    }}
+                                >
+                                    <Text
+                                        tag={"p"}
+                                        className={"py-[4px] px-[8px] text-[#fff] text-[20px]"}
+                                    >
+                                        Вернуться обратно
+                                    </Text>
+                                </Button>
+                                <Div
+                                    className={"w-[100%]"}
+                                >
+                                    <Text
+                                        tag={"h2"}
+                                        className={"text-[30px] text-[#fff] text-center uppercase"}
+                                    >
+                                        {
+                                            activeDirectoryName
+                                        }
+                                    </Text>
+                                </Div>
+                                <Button
+                                    className={"self-end max-w-[250px] border-[3px] border-white rounded transition duration-300 bg-[#fcd462] hover:bg-[#d7b451]"}
+                                    onClick={()=>{
+                                        onCreateFolderButtonClick(
+                                            dispatch,
+                                            scheduleStructure,
+                                            activeDirectoryId,
+                                            (activeItemIndex !== undefined ? activeItemIndex : activeDirectoryItems.length - 1)
+                                        );
+                                    }}
+                                >
+                                    <Text
+                                        tag={"p"}
+                                        className={"py-[4px] px-[8px] text-[#fff] text-[20px]"}
+                                    >
+                                        Добавить папку
+                                    </Text>
+                                </Button>
+                            </>
+                        ) : (
+                            <Div
+                                className={"w-[100%]"}
                             >
                                 <Text
-                                    tag={"p"}
-                                    className={"py-[4px] px-[8px] text-[#fff] text-[20px]"}
+                                    tag={"h2"}
+                                    className={"text-[30px] text-[#fff] text-center uppercase"}
                                 >
-                                    Вернуться обратно
+                                    Корневой каталог
                                 </Text>
-                            </Button>
-                        ) : <Div/>
+                            </Div>
+                        )
                     }
-                    <Button
-                        className={"self-end max-w-[250px] border-[3px] border-white rounded transition duration-300 bg-[#fcd462] hover:bg-[#d7b451]"}
-                        onClick={()=>{
-                            onCreateFolderButtonClick(
-                                dispatch,
-                                scheduleStructure,
-                                activeDirectory,
-                                (activeItemIndex !== undefined ? activeItemIndex : activeDirectoryItems.length - 1)
-                            );
-                        }}
-                    >
-                        <Text
-                            tag={"p"}
-                            className={"py-[4px] px-[8px] text-[#fff] text-[20px]"}
-                        >
-                            Добавить папку
-                        </Text>
-                    </Button>
                 </Div>
                 <UnorderedList
                     id={"unorderedTrackList"}
@@ -91,7 +117,7 @@ const Schedule = () => {
                                     dispatch,
                                     scheduleStructure,
                                     activeDirectoryItems,
-                                    activeDirectory
+                                    activeDirectoryId
                                 )
                             )
                         ))

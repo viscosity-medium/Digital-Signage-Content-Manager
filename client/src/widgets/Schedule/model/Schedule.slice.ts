@@ -12,7 +12,8 @@ const initialState: ScheduleScheme = {
     scheduleStructure: [],
     activeItem: null,
     activeItemIndex: undefined,
-    activeDirectory: "rootDirectory",
+    activeDirectoryId: "rootDirectory",
+    activeDirectoryName: "rootDirectory",
     activeDirectoryScheduleItems: []
 }
 
@@ -25,7 +26,8 @@ const scheduleSlice = createSlice({
         },
         setActiveItem: (state, action: PayloadAction<Identifier | null>) => {state.activeItem = action.payload},
         setActiveItemIndex: (state, action: PayloadAction<number | undefined>) => {state.activeItemIndex = action.payload},
-        setActiveDirectory: (state, action: PayloadAction<string>) => {state.activeDirectory = action.payload},
+        setActiveDirectoryId: (state, action: PayloadAction<string>) => {state.activeDirectoryId = action.payload},
+        setActiveDirectoryName: (state, action: PayloadAction<string>) => {state.activeDirectoryName = action.payload},
         setActiveDirectoryItems: (state, action: PayloadAction<Array<ScheduleFileInterface | ScheduleFolderInterface>>) => {state.activeDirectoryScheduleItems = action.payload},
     },
     extraReducers: (builder) => {

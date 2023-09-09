@@ -1,11 +1,10 @@
 "use client"
 
-import {Provider} from "react-redux";
-import {store, useAppDispatch} from "../../../../store/store";
-import {FC, ReactNode, useEffect} from "react";
+import { FC, ReactNode } from "react";
+import { Provider } from "react-redux";
+import { store } from "../../../../store/store";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
 
 export interface ProvidersWrapperProps {
     children: ReactNode
@@ -22,6 +21,7 @@ const ProvidersWrapper: FC<ProvidersWrapperProps> = ({children}) => {
             </DndProvider>
         </Provider>
     );
+
 };
 
 export {ProvidersWrapper};

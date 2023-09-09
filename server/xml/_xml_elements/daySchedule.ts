@@ -1,9 +1,10 @@
 
-export const folderMultiItem = (content) => {
+export const daySchedule = (content) => {
     return(
     `   <TMultiItem>
-            <Comment>'ENKA&#95;1344&#95;night-1&#95;5min'</Comment>
-            <DisplayTime>-1</DisplayTime>
+            <Date>Default 08.00</Date>
+            <Length>12.00</Length>
+            <Comment>'Day-1344'</Comment>
             <Effect.TransitionNr>0</Effect.TransitionNr>
             <DefaultTime>15</DefaultTime>
             <Items>

@@ -1,4 +1,5 @@
 import {ComputeRange} from "./types";
+import {ScheduleFolderInterface} from "./scheduleStucture.types";
 
 // black-picture_[turn-off-screen] xml
 export type Hours24 = 24;
@@ -16,3 +17,22 @@ export interface BlackPictureProps {
     contentDurationTime: DateTime
 }
 
+
+export enum StaticFolders {
+    "rootDirectory" = "rootDirectory",
+    "Yabloneviy" = "Yabloneviy",
+    "Uglovoi" = "Uglovoi",
+    "Day" = "Day",
+    "Night" = "Night"
+}
+
+export interface GetSeparatedScheduleItems {
+    [StaticFolders.Yabloneviy]: {
+        [StaticFolders.Day]: ScheduleFolderInterface | undefined
+        [StaticFolders.Night]: ScheduleFolderInterface | undefined
+    },
+    [StaticFolders.Uglovoi]: {
+        [StaticFolders.Day]: ScheduleFolderInterface | undefined
+        [StaticFolders.Night]: ScheduleFolderInterface | undefined
+    }
+}

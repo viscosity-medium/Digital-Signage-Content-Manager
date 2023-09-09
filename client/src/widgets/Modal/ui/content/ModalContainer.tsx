@@ -10,7 +10,7 @@ const ModalContainer: FC<ModalContainerProps> = ({
 }) => {
     return (
         <Div
-            className={`absolute top-0 left-0 flex justify-center items-center w-[100vw] h-[100vh] bg-[#00000099] ${className}`}
+            className={`absolute z-[10] top-0 left-0 flex justify-center items-center w-[100vw] h-[100vh] bg-[#00000099] ${className}`}
         >
             <Div
                 className={"flex flex-col justify-center items-center p-[32px] max-w-[80%] min-w-[40%] max-h-[60%] min-h-[10%] bg-white rounded-[25px]"}

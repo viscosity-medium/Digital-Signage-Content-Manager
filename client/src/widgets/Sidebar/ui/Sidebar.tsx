@@ -16,7 +16,9 @@ const Sidebar = () => {
     const sidebarStructure = useSelector(getSidebarStructure);
 
     return (
-        <Aside>
+        <Aside
+            className={"h-[100%] overflow-y-scroll"}
+        >
             <UnorderedList>
                 {createRecursiveContent({structure: sidebarStructure})}
             </UnorderedList>

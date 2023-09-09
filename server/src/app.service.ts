@@ -3,6 +3,10 @@ import {GoogleService} from "./google/google.service";
 import * as process from "process";
 import * as fs from "fs";
 import * as path from "path";
+import {fileSystem} from "../utilities/fileSystem.utilities";
+import {getActualGoogleFilesList} from "../utilities/recursiveCycle.utilities";
+import {xmlUtilities} from "../utilities/xml.utilities";
+import {jsonUtilities} from "../utilities/json.utilities";
 
 
 @Injectable()
@@ -12,20 +16,47 @@ export class AppService {
 
     async startApp(){
 
-        console.log("App is started");
+        console.log("__Программа стартовала__\n");
 
-        const fileStructure = await this.googleService.getFullFileStructure({});
-        const fileStructurePath = path.join(process.cwd(), "model", "fileStructure.json");
-        const previousData = fs.readFileSync(fileStructurePath);
-        const prevDataText = JSON.stringify(JSON.parse(previousData.toString()), null, 4);
-        const currentData = JSON.stringify(fileStructure, null, 4);
+        const googleFolderFileStructure = await this.googleService.getFullFileStructure({
+            searchId: process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID,
+            name: "RootDirectory",
+            mimeType: "folder"
+        });
+        const fileStructurePath = fileSystem.createAbsolutePathFromProjectRoot(["model", "googleFolderFileStructure.json"]);
+        const previousData = fs.readFileSync(fileStructurePath).toString();
+        const currentData = JSON.stringify(googleFolderFileStructure, null, 4);
+        const previousDataToCompare = previousData.replace(/"thumbnailLink":.*$/gm, "");
+        const currentDataToCompare = currentData.replace(/"thumbnailLink":.*$/gm, "");
 
-        if(prevDataText !== currentData){
-            fs.writeFileSync(fileStructurePath, JSON.stringify(fileStructure, null, 4));
-            await this.googleService.downloadMultipleFiles({folder: fileStructure});
+        const actualFileListData = getActualGoogleFilesList(googleFolderFileStructure as any);
+        const actualFileListPath = fileSystem.createAbsolutePathFromProjectRoot(["model", "actualFilesList.json"]);
+        console.log(actualFileListData);
+        fileSystem.writeFile(actualFileListPath, actualFileListData);
+
+        fileSystem.createFoldersRecursively("C:\\mms\\Media\\ENKA\\yabloneviy\\day");
+        fileSystem.createFoldersRecursively("C:\\mms\\Media\\ENKA\\yabloneviy\\night");
+        fileSystem.createFoldersRecursively("C:\\mms\\Media\\ENKA\\uglovoi\\day");
+        fileSystem.createFoldersRecursively("C:\\mms\\Media\\ENKA\\uglovoi\\night");
+
+        const jsonPathsArray = xmlUtilities.createMultipleJsonFilesFromXmlAndReturnJsonPathsInArray(["yabloneviy", "uglovoi"]);
+
+        //fileSystem.copyMultipleFilesFromMmsMedia(jsonPathsArray);
+
+        // const actualYabloneviyFileList = xmlUtilities.getActualFilesListFromJson(yabloneviyJsonPath);
+        // const actualUglovoiFileList = xmlUtilities.getActualFilesListFromJson(yabloneviyJsonPath);
+        // console.log(jsonPathsArray)
+    
+
+        if(previousData !== currentData){
+            fs.writeFileSync(fileStructurePath, JSON.stringify(googleFolderFileStructure, null, 4));
+            
+            //await this.googleService.downloadMultipleFiles({folder: googleFolderFileStructure});
+        } else {
+            console.log("Файлы в системе соответствуют файлам в облачном хранилище google\n")
         }
 
-        console.log("Scan is finished");
+        console.log("__Сканирование закончено__\n");
 
     }
 
