@@ -9,6 +9,7 @@ import {ScheduleFileInterface, ScheduleFolderInterface} from "@/widgets/Schedule
 import {Identifier} from "dnd-core";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 
 export const getChildrenFolderContent = (
@@ -31,6 +32,27 @@ export const getChildrenFolderContent = (
         }
 
     }, []);
+
+}
+
+export const getChildrenFolderName = (
+    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    activeDirectory: "rootDirectory" | string
+): string => {
+
+    return scheduleStructure.reduce((accumulator: string, currentItem ) => {
+
+        if(currentItem.type === "folder"){
+            if(currentItem.uniqueId === activeDirectory){
+                return currentItem.name;
+            } else {
+                return accumulator + getChildrenFolderName(currentItem["content"], activeDirectory);
+            }
+        } else {
+            return accumulator
+        }
+
+    }, "");
 
 }
 
@@ -83,18 +105,21 @@ export const getParentFolderId = (
 export const getParentFolderName = (
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
     activeDirectory: "rootDirectory" | string,
-    parentFolderId?: string
+    parentFolderName?: string
 ): string | undefined => {
 
     return scheduleStructure.reduce(( accumulator: string | undefined, currentItem ) => {
 
         if(currentItem.type === "folder"){
-            const folderId = currentItem.uniqueId;
+            
+            const folderName = currentItem.name;
+            
             if(currentItem.uniqueId === activeDirectory){
-                return currentItem.name;
+                return parentFolderName;
             } else {
-                return accumulator || getParentFolderName(currentItem["content"], activeDirectory, folderId);
+                return accumulator || getParentFolderName(currentItem["content"], activeDirectory, folderName);
             }
+
         } else {
             return accumulator;
         }
@@ -419,10 +444,14 @@ export const onFolderElementDoubleClick = (
     dispatch: AppDispatch,
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
     uniqueId: string,
-    folderName: string
+    folderName: string,
+    router: AppRouterInstance,
+    structureParams: string | null
 ) => {
 
     const results = getChildrenFolderContent(scheduleStructure, uniqueId);
+    
+    router.push(`/?structure=${structureParams?.replace(/\/$/,"")}/${uniqueId}`)
     dispatch(scheduleActions.setActiveDirectoryId(uniqueId));
     dispatch(scheduleActions.setActiveDirectoryName(folderName));
     dispatch(scheduleActions.setActiveDirectoryItems(results));
@@ -449,18 +478,28 @@ export const onDeleteButtonClick = (
     dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));
 };
 
-export const onCloseCurrentFolderClick = (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleFileInterface | ScheduleFolderInterface>, activeDirectoryId: string) => {
+export const onCloseCurrentFolderClick = (
+    dispatch: AppDispatch, 
+    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>, 
+    activeDirectoryId: string,
+    router: AppRouterInstance,
+    structureParams: string | null
+) => {
 
     const parentFolderItems = getParentFolderContent(scheduleStructure, activeDirectoryId);
     const parentFolderId = getParentFolderId(scheduleStructure, activeDirectoryId);
-    const parentFolderName = getParentFolderId(scheduleStructure, activeDirectoryId);
+    const parentFolderName = getParentFolderName(scheduleStructure, activeDirectoryId);
 
     dispatch(scheduleActions.setActiveDirectoryItems(parentFolderItems));
-    
-    if(parentFolderId && parentFolderName){
+
+    if(parentFolderId && parentFolderName && structureParams){
+
+        router.push(`/?structure=${structureParams.replace(/\/[^\/]*$/, "")}`);
+
         dispatch(scheduleActions.setActiveDirectoryId(parentFolderId));
-        dispatch(scheduleActions.setActiveDirectoryName(parentFolderName))
+        dispatch(scheduleActions.setActiveDirectoryName(parentFolderName));
         dispatch(scheduleActions.setActiveItem(null));
+
     }
 
 }

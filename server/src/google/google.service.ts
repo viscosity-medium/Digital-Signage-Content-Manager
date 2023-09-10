@@ -94,7 +94,7 @@ export class GoogleService {
         folder,
         contentId,
         folderPath
-    }: {contentId?: string, folderPath?: string, folder: string | { [p: string]: drive_v3.Schema$File[] }}){
+    }: {contentId?: string, folderPath?: string, folder: string | { [p: string]: drive_v3.Schema$File[] | any }}){
 
         const folderStructurePath = path.join(process.cwd(), "folderStructure");
 

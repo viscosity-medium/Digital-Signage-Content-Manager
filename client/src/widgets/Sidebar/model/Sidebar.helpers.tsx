@@ -1,4 +1,4 @@
-import {SidebarStructure, SidebarStructureItem} from "@/widgets/Sidebar/model/Sidebar.type";
+import {CreateRecursiveContent, SidebarStructure, SidebarStructureItem} from "@/widgets/Sidebar/model/Sidebar.type";
 import {SidebarFileItem} from "@/widgets/Sidebar/ui/SidebarFileItem";
 import {SidebarFolderItem} from "@/widgets/Sidebar/ui/SidebarFolderItem";
 import {AppDispatch} from "../../../../store/store";
@@ -122,10 +122,9 @@ export const onListElementClick = (
 }
 
 export const createRecursiveContent = ({
-    structure
-}: {
-    structure:  SidebarStructure
-}) => {
+    structure,
+    searchBarValue
+}: CreateRecursiveContent) => {
 
     const arrayOfItems = Object.values(structure);
     
@@ -148,19 +147,23 @@ export const createRecursiveContent = ({
             };
 
             const sortedArray = [...singleItem].sort(sortFolders)
-
+            
             return sortedArray.map((internalItem) => {
 
                 const internalProperties = Object.entries(internalItem);
                 
                 if(internalProperties[2][1] !== "folder" && !Array.isArray(internalProperties[0][1])){
-
-                    return (
-                        <SidebarFileItem
-                            key={`${internalItem.id}`}
-                            internalItem={internalItem as SidebarStructureItem}
-                        />
-                    )
+                    
+                    if((typeof internalItem.name === "string" && internalItem.name.match(searchBarValue))){
+                        
+                        return (
+                            <SidebarFileItem
+                                key={`${internalItem.id}`}
+                                internalItem={internalItem as SidebarStructureItem}
+                            />
+                        )
+                    }
+                    
 
                 } else {
 

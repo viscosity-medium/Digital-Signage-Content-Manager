@@ -18,67 +18,31 @@
                         "content": [
                             {
                                 "type": "folder",
-                                "name": "folder",
-                                "uniqueId": "da1acd52-051f-47ce-9452-351057361974",
+                                "name": "Block-1",
+                                "uniqueId": "419504c7-1c8d-401f-af22-bfbc670185a9",
                                 "isEditable": true,
-                                "content": [
-                                    {
-                                        "id": "1BkQKZvwjLrqf4-qWrsTKRT6zvmxzJnzI",
-                                        "name": "Транснефть_ схема инфраструктуры интерактивных инсталляций.png",
-                                        "thumbnailLink": "https://lh4.googleusercontent.com/pXONTB0_xGTo2HexZRwaQKSaRYKytFVSYhisb5DPOmciXhVSqGy8JqhbodshKAYEjDfiBVdQBavR5wo=s220",
-                                        "mimeType": "image/png",
-                                        "type": "file",
-                                        "uniqueId": "d5ce2730-a884-4320-b59e-7457d48beef2"
-                                    },
-                                    {
-                                        "id": "1_7i99vK7qr0ljLMB43DNDfGTLcocxEgR",
-                                        "name": "cover.jpg",
-                                        "thumbnailLink": "https://lh5.googleusercontent.com/ry2QpO_UhX_vCNI59312IGlKtkrvCbt4Dn7qIBhXoL1AGfrRQUcngvYbqj1KdKTk_BmPA8NZr8w8RgA=s220",
-                                        "mimeType": "image/jpeg",
-                                        "type": "file",
-                                        "uniqueId": "5191a84f-5d94-42a5-8cfb-82616e10042c"
-                                    },
-                                    {
-                                        "id": "1M8TeN6pJeaEaM2ez9_1xolZlT2Oz9kCJ",
-                                        "name": "672х384 Распродажа Люберцы Выходной.mp4",
-                                        "thumbnailLink": "https://lh3.googleusercontent.com/WPq5TWCL717LvCPunY7dUppSLlXbffi69MPFPqvuM8YtK3dFdqKzAuXPnd2svDvjyoSJtvGY-YNvK10=s220",
-                                        "mimeType": "video/mp4",
-                                        "type": "file",
-                                        "uniqueId": "84b638fa-cfd5-4753-bb06-dec5f5e5b7d5"
-                                    }
-                                ]
+                                "content": []
                             },
                             {
-                                "id": "1iVbxXrRoj7GagmYSv4m65Sk9NszvZT_q",
-                                "name": "background 1.jpg",
-                                "thumbnailLink": "https://lh4.googleusercontent.com/MHcXWnNEBumIdLrZUC8gS1aGRglIq6CE8cy-p19158n0XDKdzXUplIuADJeA9mXQhyXDS6IpzXjqWK4=s220",
-                                "mimeType": "image/jpeg",
-                                "type": "file",
-                                "uniqueId": "bd7cf2b1-6d95-49eb-a7f0-cbe00fb5e23a"
+                                "type": "folder",
+                                "name": "Block-2",
+                                "uniqueId": "b78a8b5b-aa0c-4bf1-9f1c-38869681cd48",
+                                "isEditable": true,
+                                "content": []
                             },
                             {
-                                "id": "1BkQKZvwjLrqf4-qWrsTKRT6zvmxzJnzI",
-                                "name": "Транснефть_ схема инфраструктуры интерактивных инсталляций.png",
-                                "thumbnailLink": "https://lh4.googleusercontent.com/pXONTB0_xGTo2HexZRwaQKSaRYKytFVSYhisb5DPOmciXhVSqGy8JqhbodshKAYEjDfiBVdQBavR5wo=s220",
-                                "mimeType": "image/png",
-                                "type": "file",
-                                "uniqueId": "5c45f735-6105-4255-a247-5a183e25085f"
+                                "type": "folder",
+                                "name": "Block-3",
+                                "uniqueId": "007a169e-672b-4019-b578-28f6de67e9ab",
+                                "isEditable": true,
+                                "content": []
                             },
                             {
-                                "id": "1dSofQDhC74dvciY-LOlPBeiDOb54iQm6",
-                                "name": "Viscosity.medium_collision_of_two_huge_and_massice_universes_in_d4df5761-6b78-482c-a847-50f91e0dad95.png",
-                                "thumbnailLink": "https://lh6.googleusercontent.com/MUbv304h5zmf6tKpmZklAkZFDy1gWwJeLS2VHhbiIbVoVyGNpWIiN1C91M1Ux9uurfYwnFI64eUQkAM=s220",
-                                "mimeType": "image/png",
-                                "type": "file",
-                                "uniqueId": "bad621d8-8ddb-4908-9012-013c003e4056"
-                            },
-                            {
-                                "id": "10rlzByOxAfpWuE_aFSAkGyLsCZBR9FvT",
-                                "name": "charuel.png",
-                                "thumbnailLink": "https://lh4.googleusercontent.com/KUCj-PmEvM40kOC123pr_8OEM5Y6T5aLTYdagTdorRYmw3kUH5yR4NcKzj3oxpfILqkjVCVG-J4hzzY=s220",
-                                "mimeType": "image/png",
-                                "type": "file",
-                                "uniqueId": "bd3a4df9-c9e6-449d-a7f0-f927fcf6c8ea"
+                                "type": "folder",
+                                "name": "Block-4",
+                                "uniqueId": "c8303fab-6896-4c0e-bcdf-faed39f653c8",
+                                "isEditable": true,
+                                "content": []
                             }
                         ]
                     },
@@ -90,43 +54,31 @@
                         "content": [
                             {
                                 "type": "folder",
-                                "name": "folder",
-                                "uniqueId": "b93fa807-775a-4fc8-a862-ab3eabd86508",
+                                "name": "Block-1",
+                                "uniqueId": "01ea884f-490d-4ab1-a003-dd0f9fe36da4",
                                 "isEditable": true,
-                                "content": [
-                                    {
-                                        "id": "1_7i99vK7qr0ljLMB43DNDfGTLcocxEgR",
-                                        "name": "cover.jpg",
-                                        "thumbnailLink": "https://lh5.googleusercontent.com/ry2QpO_UhX_vCNI59312IGlKtkrvCbt4Dn7qIBhXoL1AGfrRQUcngvYbqj1KdKTk_BmPA8NZr8w8RgA=s220",
-                                        "mimeType": "image/jpeg",
-                                        "type": "file",
-                                        "uniqueId": "c67ab6ff-aa64-4acc-b30c-646fbf90fb13"
-                                    },
-                                    {
-                                        "id": "1BkQKZvwjLrqf4-qWrsTKRT6zvmxzJnzI",
-                                        "name": "Транснефть_ схема инфраструктуры интерактивных инсталляций.png",
-                                        "thumbnailLink": "https://lh4.googleusercontent.com/pXONTB0_xGTo2HexZRwaQKSaRYKytFVSYhisb5DPOmciXhVSqGy8JqhbodshKAYEjDfiBVdQBavR5wo=s220",
-                                        "mimeType": "image/png",
-                                        "type": "file",
-                                        "uniqueId": "eaf5703c-0fac-4249-a8a4-1f544ec6d22b"
-                                    }
-                                ]
+                                "content": []
                             },
                             {
                                 "type": "folder",
-                                "name": "folder",
-                                "uniqueId": "6812a13b-0bab-479b-be71-1894643f96aa",
+                                "name": "Block-2",
+                                "uniqueId": "8c8e156d-5019-4df2-9794-dc60b33625b1",
                                 "isEditable": true,
-                                "content": [
-                                    {
-                                        "id": "1dSofQDhC74dvciY-LOlPBeiDOb54iQm6",
-                                        "name": "Viscosity.medium_collision_of_two_huge_and_massice_universes_in_d4df5761-6b78-482c-a847-50f91e0dad95.png",
-                                        "thumbnailLink": "https://lh6.googleusercontent.com/MUbv304h5zmf6tKpmZklAkZFDy1gWwJeLS2VHhbiIbVoVyGNpWIiN1C91M1Ux9uurfYwnFI64eUQkAM=s220",
-                                        "mimeType": "image/png",
-                                        "type": "file",
-                                        "uniqueId": "90d3f5bc-2be6-4557-b17a-047d66b35745"
-                                    }
-                                ]
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-3",
+                                "uniqueId": "08880fdd-e167-4a2b-8954-7a331fd82a15",
+                                "isEditable": true,
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-4",
+                                "uniqueId": "60d0aa40-8d19-4c12-8180-fac074d5a407",
+                                "isEditable": true,
+                                "content": []
                             }
                         ]
                     }
@@ -142,14 +94,72 @@
                         "name": "Day",
                         "uniqueId": "bde351cc-359b-45fd-862e-7af211fc359a",
                         "isEditable": false,
-                        "content": []
+                        "content": [
+                            {
+                                "type": "folder",
+                                "name": "Block-1",
+                                "uniqueId": "195ce63c-1a08-4af8-8220-4d045a87869b",
+                                "isEditable": true,
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-2",
+                                "uniqueId": "7720eb4d-eda9-4fba-9f30-7d4f49f1b782",
+                                "isEditable": true,
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-3",
+                                "uniqueId": "614f7878-0e63-4625-b61a-969ffa8b59cf",
+                                "isEditable": true,
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-4",
+                                "uniqueId": "e39088e8-50db-4ce0-895e-f83173a02d51",
+                                "isEditable": true,
+                                "content": []
+                            }
+                        ]
                     },
                     {
                         "type": "folder",
                         "name": "Night",
                         "uniqueId": "fe26d157-46e6-4d1b-9d19-5646a01df21f",
                         "isEditable": false,
-                        "content": []
+                        "content": [
+                            {
+                                "type": "folder",
+                                "name": "Block-1",
+                                "uniqueId": "39281754-c885-4e67-8517-dd6b36fbcb47",
+                                "isEditable": true,
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-2",
+                                "uniqueId": "075473ec-3af8-417f-8da4-599ae948d401",
+                                "isEditable": true,
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-3",
+                                "uniqueId": "ea772028-eaf8-405e-ab57-9a73a76cbc9d",
+                                "isEditable": true,
+                                "content": []
+                            },
+                            {
+                                "type": "folder",
+                                "name": "Block-4",
+                                "uniqueId": "8b2cbff0-a460-47c8-bc1e-2fc1325e01be",
+                                "isEditable": true,
+                                "content": []
+                            }
+                        ]
                     }
                 ],
                 "isEditable": false

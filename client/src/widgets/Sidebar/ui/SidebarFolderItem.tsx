@@ -5,13 +5,18 @@ import FolderIcon from "@/assets/folder-icon.svg";
 import DownArrowIcon from "@/assets/down-arrow.svg";
 import {createRecursiveContent} from "@/widgets/Sidebar/model/Sidebar.helpers";
 import {useRef, useState} from "react";
+import { useAppDispatch } from "../../../../store/store";
+import { useSelector } from "react-redux";
+import { getSearchBarValue } from "../model/Sidebar.selectors";
 
 const SidebarFolderItem = ({
     internalProperties
 }: {internalProperties:  [string, any][]}) => {
 
+    const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState(true);
     const folderContentRef = useRef<HTMLUListElement>(null);
+    const searchBarValue = useSelector(getSearchBarValue);
 
     const folderId = internalProperties[0][0];
     const folderStructure = internalProperties[0][1];
@@ -59,7 +64,8 @@ const SidebarFolderItem = ({
                         createRecursiveContent({
                             structure: {
                                 [folderId]: folderStructure
-                            }
+                            },
+                            searchBarValue
                         })
                     }
                 </UnorderedList>

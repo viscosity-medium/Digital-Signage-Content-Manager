@@ -4,11 +4,23 @@ import {DragItem, ScheduleItemProps, StaticFolders} from "./Schedule.types";
 import {useEffect, useRef} from "react";
 import {fetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.asyncThunks";
 import {useAppDispatch} from "../../../../store/store";
+import { useSearchParams } from "next/navigation";
+import { scheduleActions } from "./Schedule.slice";
 
 export const useFetchScheduleStructure = () => {
 
     const dispatch = useAppDispatch();
+    const searchParams = useSearchParams();
+
+    const structureParams = searchParams.get("structure");
+    const initialActiveDirectory = structureParams?.replace(/.*\//, "")
+
     useEffect(()=>{
+        
+        if(initialActiveDirectory){
+            dispatch(scheduleActions.setActiveDirectoryId(initialActiveDirectory));
+        }
+
         dispatch(fetchScheduleStructure());
     },[]);
 

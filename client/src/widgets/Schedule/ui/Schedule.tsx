@@ -10,6 +10,7 @@ import {
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {useFetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.hooks";
+import { useRouter, useSearchParams } from 'next/navigation'
 import {
     moveScheduleItem,
     onCloseCurrentFolderClick,
@@ -26,9 +27,12 @@ const Schedule = () => {
     const activeDirectoryName = useSelector(getScheduleActiveDirectoryName);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const scheduleStructure = useSelector(getScheduleStructure);
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const structure = searchParams.get("structure");
 
     useFetchScheduleStructure();
-    console.log(activeDirectoryName)
+    
     return (
         <Div
             className={"flex flex-col justify-between m-[50px] p-[50px] w-[100%] max-h-[100vh] border-[4px] border-solid border-white"}
@@ -48,7 +52,9 @@ const Schedule = () => {
                                         onCloseCurrentFolderClick(
                                             dispatch,
                                             scheduleStructure,
-                                            activeDirectoryId
+                                            activeDirectoryId,
+                                            router,
+                                            structure
                                         )
                                     }}
                                 >
@@ -64,7 +70,7 @@ const Schedule = () => {
                                 >
                                     <Text
                                         tag={"h2"}
-                                        className={"text-[30px] text-[#fff] text-center uppercase"}
+                                        className={"text-[30px] text-[#fff] text-center"}
                                     >
                                         {
                                             activeDirectoryName
@@ -96,7 +102,7 @@ const Schedule = () => {
                             >
                                 <Text
                                     tag={"h2"}
-                                    className={"text-[30px] text-[#fff] text-center uppercase"}
+                                    className={"text-[30px] text-[#fff] text-center"}
                                 >
                                     Корневой каталог
                                 </Text>

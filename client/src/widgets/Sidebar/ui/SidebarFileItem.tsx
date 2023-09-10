@@ -56,7 +56,7 @@ const SidebarFileItem: FC<SidebarFileItemProps> = ({
                 />
                 <Text
                     tag={`p`}
-                    className={`ml-[12px] text-[16px] text-[#ffffffb3] break-all select-none`}
+                    className={`ml-[12px] text-[14px] text-[#ffffffb3] break-all select-none`}
                 >
                     {`${internalItem.name}`}
                 </Text>

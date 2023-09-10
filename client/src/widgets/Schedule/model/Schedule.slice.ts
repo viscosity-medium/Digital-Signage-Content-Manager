@@ -3,7 +3,7 @@ import {fetchScheduleStructure, updateScheduleStructure} from "@/widgets/Schedul
 import {ScheduleScheme} from "@/widgets/Schedule/model/Schedule.types";
 import {ScheduleFileInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
-import {getChildrenFolderContent} from "@/widgets/Schedule/model/Schedule.helpers";
+import {getChildrenFolderContent, getChildrenFolderName} from "@/widgets/Schedule/model/Schedule.helpers";
 import {Identifier} from "dnd-core";
 import {useAppDispatch} from "../../../../store/store";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
@@ -35,10 +35,12 @@ const scheduleSlice = createSlice({
         // fetchScheduleStructure
         builder.addCase(fetchScheduleStructure.fulfilled, (state, action: PayloadAction<Array<ScheduleFolderInterface>>)=> {
 
-            const data = getChildrenFolderContent(action.payload, "rootDirectory");
-            console.log(action.payload)
+            const directoryItems = getChildrenFolderContent(action.payload, state.activeDirectoryId);
+            const directoryName = getChildrenFolderName(action.payload, state.activeDirectoryId);
+       
             state.scheduleStructure = action.payload;
-            state.activeDirectoryScheduleItems = data;
+            state.activeDirectoryScheduleItems = directoryItems;
+            state.activeDirectoryName = directoryName;
 
         });
         builder.addCase(fetchScheduleStructure.rejected, (state, action) => {

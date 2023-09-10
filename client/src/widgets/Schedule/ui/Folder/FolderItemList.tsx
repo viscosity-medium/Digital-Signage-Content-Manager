@@ -24,8 +24,6 @@ const FolderItemList: FC<FolderItemListProps> = ({
 
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
-
-    const staticFolderName = "[  Каталог  ]";
     const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blackTextColor";
 
     return (
@@ -34,7 +32,7 @@ const FolderItemList: FC<FolderItemListProps> = ({
         >
             {
                 item.content.map((textContent, index) => {
-                    const name =  textContent.type === "file" ? textContent.name  : staticFolderName;
+                    const name =  textContent.type === "file" ? textContent.name  : `[ ${textContent.name} ]`;
 
                     return (
                         <Text
@@ -42,9 +40,7 @@ const FolderItemList: FC<FolderItemListProps> = ({
                             tag={"p"}
                             className={`text-[16px] ${textColor}`}
                         >
-                            {index+1}) {
-                            name
-                        }
+                            {index+1}) { name }
                         </Text>
                     )
 

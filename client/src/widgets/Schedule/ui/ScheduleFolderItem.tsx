@@ -15,6 +15,7 @@ import {FolderItemHeader} from "@/widgets/Schedule/ui/Folder/FolderItemHeader";
 import {FolderItemList} from "@/widgets/Schedule/ui/Folder/FolderItemList";
 import {FolderCloseButton} from "@/widgets/Schedule/ui/Folder/FolderCloseButton";
 import "./Folder/folder.css"
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     item,
@@ -31,6 +32,9 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     const folderBorderColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "folderBorderColor";
     const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "folderBackgroundColor";
 
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const structureParams = searchParams.get("structure");
 
     return (
         <>
@@ -53,9 +57,16 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                 />
 
                 <Div
-                    className={`flex flex-col relative justify-between min-h-[72px] px-3 text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderBorderColor} ${folderBackgroundColor} rounded`}
+                    className={`flex flex-col relative justify-center min-h-[72px] px-3 text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderBorderColor} ${folderBackgroundColor} rounded`}
                     onDoubleClick={()=>{
-                        onFolderElementDoubleClick(dispatch, scheduleStructure , item.uniqueId, item.name);
+                        onFolderElementDoubleClick(
+                            dispatch, 
+                            scheduleStructure, 
+                            item.uniqueId, 
+                            item.name,
+                            router,
+                            structureParams
+                        );
                     }}
                 >
                     <FolderItemList

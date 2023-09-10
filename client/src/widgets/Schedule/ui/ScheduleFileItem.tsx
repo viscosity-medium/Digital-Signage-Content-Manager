@@ -55,13 +55,13 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
                     className={"bg-white"}
                     style={{
                         width: '50px',
-                        height: '50px',
+                        height: 'auto',
                         objectFit: 'contain'
                     }}
                 />
                 <Text
                     tag={"p"}
-                    className={`ml-3 ${textColor}`}
+                    className={`ml-3 pr-[20px] ${textColor} truncate`}
                 >
                     {
                         item.name

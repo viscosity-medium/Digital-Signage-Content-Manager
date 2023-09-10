@@ -13,25 +13,7 @@
             <Effect.TransitionNr>0</Effect.TransitionNr>
             <DefaultTime>15</DefaultTime>
             <Items>
-                   <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
-            <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\night\cover.jpg
-            </FileName>
-        </TPictureItem>
-       <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
-            <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\night\Транснефть_ схема инфраструктуры интерактивных инсталляций.png
-            </FileName>
-        </TPictureItem>
-    
+                
             </Items>
         </TMultiItem>
        <TMultiItem>
@@ -40,16 +22,25 @@
             <Effect.TransitionNr>0</Effect.TransitionNr>
             <DefaultTime>15</DefaultTime>
             <Items>
-                   <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
+                
+            </Items>
+        </TMultiItem>
+       <TMultiItem>
+            <Comment>'ENKA&#95;1344&#95;night-1&#95;5min'</Comment>
+            <DisplayTime>-1</DisplayTime>
             <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\night\Viscosity.medium_collision_of_two_huge_and_massice_universes_in_d4df5761-6b78-482c-a847-50f91e0dad95.png
-            </FileName>
-        </TPictureItem>
-    
+            <DefaultTime>15</DefaultTime>
+            <Items>
+                
+            </Items>
+        </TMultiItem>
+       <TMultiItem>
+            <Comment>'ENKA&#95;1344&#95;night-1&#95;5min'</Comment>
+            <DisplayTime>-1</DisplayTime>
+            <Effect.TransitionNr>0</Effect.TransitionNr>
+            <DefaultTime>15</DefaultTime>
+            <Items>
+                
             </Items>
         </TMultiItem>
     
@@ -87,75 +78,36 @@
             <Effect.TransitionNr>0</Effect.TransitionNr>
             <DefaultTime>15</DefaultTime>
             <Items>
-                   <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
-            <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\day\Транснефть_ схема инфраструктуры интерактивных инсталляций.png
-            </FileName>
-        </TPictureItem>
-       <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
-            <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\day\cover.jpg
-            </FileName>
-        </TPictureItem>
-       <TMovieItem>
-            <Date></Date>
-            <DisplayTime>-1</DisplayTime>
-            <Log>True</Log>
-            <Effect.TransitionNr>1</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <Effect.TransitionLength>400</Effect.TransitionLength>
-            <Effect.BackColor>clDefault</Effect.BackColor>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\day\672х384 Распродажа Люберцы Выходной.mp4
-            </FileName>
-        </TMovieItem>
-    
+                
             </Items>
         </TMultiItem>
-       <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
+       <TMultiItem>
+            <Comment>'ENKA&#95;1344&#95;night-1&#95;5min'</Comment>
+            <DisplayTime>-1</DisplayTime>
             <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\day\background 1.jpg
-            </FileName>
-        </TPictureItem>
-       <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
+            <DefaultTime>15</DefaultTime>
+            <Items>
+                
+            </Items>
+        </TMultiItem>
+       <TMultiItem>
+            <Comment>'ENKA&#95;1344&#95;night-1&#95;5min'</Comment>
+            <DisplayTime>-1</DisplayTime>
             <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\day\Транснефть_ схема инфраструктуры интерактивных инсталляций.png
-            </FileName>
-        </TPictureItem>
-       <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
+            <DefaultTime>15</DefaultTime>
+            <Items>
+                
+            </Items>
+        </TMultiItem>
+       <TMultiItem>
+            <Comment>'ENKA&#95;1344&#95;night-1&#95;5min'</Comment>
+            <DisplayTime>-1</DisplayTime>
             <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\day\Viscosity.medium_collision_of_two_huge_and_massice_universes_in_d4df5761-6b78-482c-a847-50f91e0dad95.png
-            </FileName>
-        </TPictureItem>
-       <TPictureItem>
-            <Date></Date>
-            <Log>True</Log>
-            <Effect.TransitionNr>0</Effect.TransitionNr>
-            <Effect.TransitionParam>1</Effect.TransitionParam>
-            <FileName>
-                C:\mms\Media\ENKA\yabloneviy\day\charuel.png
-            </FileName>
-        </TPictureItem>
+            <DefaultTime>15</DefaultTime>
+            <Items>
+                
+            </Items>
+        </TMultiItem>
     
             </Items>
         </TMultiItem>
