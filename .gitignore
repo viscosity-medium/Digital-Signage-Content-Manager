@@ -15,7 +15,7 @@
 
 # media
 /server/mms
-/server/folderStructure
+/server/folderStructurecd c
 
 # production
 /client/build

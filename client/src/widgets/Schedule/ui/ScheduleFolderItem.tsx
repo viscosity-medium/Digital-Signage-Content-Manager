@@ -15,7 +15,7 @@ import {FolderItemHeader} from "@/widgets/Schedule/ui/Folder/FolderItemHeader";
 import {FolderItemList} from "@/widgets/Schedule/ui/Folder/FolderItemList";
 import {FolderCloseButton} from "@/widgets/Schedule/ui/Folder/FolderCloseButton";
 import "./Folder/folder.css"
-import { useRouter, useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     item,
@@ -85,7 +85,6 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                         item={item}
                         index={index}
                     />
-                    {/*<FolderEditPopUp/>*/}
                 </Div>
 
             </ListElement>

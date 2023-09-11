@@ -12,6 +12,9 @@ import {
 import {useAppDispatch} from "../../../../store/store";
 import Image from "next/image";
 import {onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
+import {DatePicker} from "antd";
+import {DateLimitations} from "@/widgets/Schedule/ui/File/DateLimitations";
+import {TimeLimitations} from "@/widgets/Schedule/ui/File/TimeLimitations";
 
 const ScheduleFileItem: FC<ScheduleFileProps> = ({
     item,
@@ -32,7 +35,6 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
     const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "whiteBackgroundColor";
     const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
 
-
     return (
         <ListElement
             reference={refListObject}
@@ -46,7 +48,9 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
             }}
             className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} ${folderBackgroundColor} rounded`}
         >
-            <Div className={"flex items-center select-none"}>
+            <Div
+                className={"flex items-center select-none p-[4px]"}
+            >
                 <Image
                     src={item.thumbnailLink}
                     alt={item.name}
@@ -59,14 +63,24 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
                         objectFit: 'contain'
                     }}
                 />
-                <Text
-                    tag={"p"}
-                    className={`ml-3 pr-[20px] ${textColor} truncate`}
+                <Div
+                    className={"px-[20px] flex flex-col"}
                 >
-                    {
-                        item.name
-                    }
-                </Text>
+                    <Text
+                        tag={"p"}
+                        className={`${textColor} truncate`}
+                    >
+                        {
+                            item.name
+                        }
+                    </Text>
+                    <DateLimitations
+                        textColor={textColor}
+                    />
+                    <TimeLimitations
+                        textColor={textColor}
+                    />
+                </Div>
             </Div>
             <Button
                 onClick={()=>{

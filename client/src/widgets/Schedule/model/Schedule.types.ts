@@ -1,4 +1,6 @@
 import {Identifier} from "dnd-core";
+import {toggleValidDaysSwitch} from "@/widgets/Schedule/model/DateLimitations.helpers";
+import {Dispatch, SetStateAction} from "react";
 
 export interface ScheduleFileInterface {
     id: string
@@ -63,4 +65,8 @@ export interface GetSeparatedScheduleItems {
         [StaticFolders.Day]: ScheduleFolderInterface[],
         [StaticFolders.Night]: ScheduleFolderInterface[]
     }
+}
+
+export interface ToggleScheduleSwitchProps {
+    setIsActive: Dispatch<SetStateAction<boolean>>
 }

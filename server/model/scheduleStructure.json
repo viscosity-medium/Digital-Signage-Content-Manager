@@ -21,7 +21,16 @@
                                 "name": "Block-1",
                                 "uniqueId": "419504c7-1c8d-401f-af22-bfbc670185a9",
                                 "isEditable": true,
-                                "content": []
+                                "content": [
+                                    {
+                                        "id": "1Yrx6TUTpoBbs22cr85_QhhA2Hz__2yIn",
+                                        "name": "Parkovka_free_green_1344.mp4",
+                                        "thumbnailLink": "https://lh3.googleusercontent.com/drive-storage/APZSt_cvP86GC04CWO91s-5qiEpOTPWsJlak2dQStr81bxI51s1DnceiWnzACMeaPCmHrTnPYNjGgMs90Wg-u84q-6xj1WRUe4_cNykEfXODiw=s220",
+                                        "mimeType": "video/mp4",
+                                        "type": "file",
+                                        "uniqueId": "8d8f1474-b76e-4511-8637-e524187619d0"
+                                    }
+                                ]
                             },
                             {
                                 "type": "folder",
