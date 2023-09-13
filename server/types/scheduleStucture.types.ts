@@ -1,3 +1,13 @@
+import {Dayjs} from "dayjs";
+
+export interface ItemLimits {
+    date: {
+        start: Dayjs | null | "default";
+        end: Dayjs | null | "default";
+    },
+    time: Dayjs | "default"
+}
+
 export interface ScheduleFileInterface {
     id: string
     name: string
@@ -5,6 +15,7 @@ export interface ScheduleFileInterface {
     type: "file"
     thumbnailLink: string,
     mimeType: string
+    limits: ItemLimits
 }
 
 export interface ScheduleFolderInterface {

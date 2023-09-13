@@ -1,6 +1,7 @@
 import {Identifier} from "dnd-core";
-import {toggleValidDaysSwitch} from "@/widgets/Schedule/model/DateLimitations.helpers";
 import {Dispatch, SetStateAction} from "react";
+import {Dayjs} from "dayjs";
+import {AppDispatch} from "../../../../store/store";
 
 export interface ScheduleFileInterface {
     id: string
@@ -8,6 +9,7 @@ export interface ScheduleFileInterface {
     uniqueId: string,
     type: "file"
     thumbnailLink: string
+    limits: ItemLimits
 }
 
 export interface ScheduleFolderInterface {
@@ -67,6 +69,38 @@ export interface GetSeparatedScheduleItems {
     }
 }
 
+export interface FindFileRecursively {
+    fileUniqueId: string
+    structure: (ScheduleFileInterface | ScheduleFolderInterface)[]
+    itemLimits: ItemLimits
+}
+
+export interface LimitationsProps {
+    fileItem: ScheduleFileInterface
+    textColor: string
+    fileUniqueId: string
+}
+
+export interface OnPickerChangeProps {
+    dispatch: AppDispatch
+    itemLimits: ItemLimits
+    fileUniqueId: string
+    scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[]
+}
+
 export interface ToggleScheduleSwitchProps {
+    dispatch: AppDispatch
+    itemLimits: ItemLimits
+    isActive: boolean
+    fileUniqueId: string
     setIsActive: Dispatch<SetStateAction<boolean>>
+    scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[]
+}
+
+export interface ItemLimits {
+    date: {
+        start: Dayjs | null | "default";
+        end: Dayjs | null | "default";
+    },
+    time: Dayjs | "default"
 }

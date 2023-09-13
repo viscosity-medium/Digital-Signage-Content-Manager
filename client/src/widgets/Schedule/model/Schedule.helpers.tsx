@@ -11,7 +11,6 @@ import {modalActions} from "@/widgets/Modal/model/Modal.slice";
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
-
 export const getChildrenFolderContent = (
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
     activeDirectory: "rootDirectory" | string
@@ -450,8 +449,9 @@ export const onFolderElementDoubleClick = (
 ) => {
 
     const results = getChildrenFolderContent(scheduleStructure, uniqueId);
+    const previousUrl = structureParams !== null ? structureParams : "/rootDirectory";
     
-    router.push(`/?structure=${structureParams?.replace(/\/$/,"")}/${uniqueId}`)
+    router.push(`/?structure=${previousUrl?.replace(/\/$/,"")}/${uniqueId}`)
     dispatch(scheduleActions.setActiveDirectoryId(uniqueId));
     dispatch(scheduleActions.setActiveDirectoryName(folderName));
     dispatch(scheduleActions.setActiveDirectoryItems(results));
@@ -548,10 +548,6 @@ export const renderScheduleItemsHelper = (
         )
     }
 
-}
-
-export const onRightButtonClick = (setPopUpIsShown: Dispatch<SetStateAction<boolean>>) => {
-    setPopUpIsShown(prevState => !prevState)
 }
 
 export const onChangeIsEditMode = (setIsEditMode: Dispatch<SetStateAction<boolean>>) => {

@@ -1,4 +1,5 @@
 import { AppDispatch } from "../../../../store/store"
+import {Dayjs} from "dayjs";
 
 export interface SidebarStructureItem {
     kind: string,
@@ -6,6 +7,10 @@ export interface SidebarStructureItem {
     id: string,
     name: string
     thumbnailLink: string
+    limits: {
+        date: Dayjs | "default",
+        time: Dayjs | "default"
+    }
 }
 
 export interface SidebarFileItemProps {

@@ -1,4 +1,9 @@
-import {ScheduleFileInterface, ScheduleFolderInterface, ScheduleStructure} from "../types/scheduleStucture.types";
+import {
+    ItemLimits,
+    ScheduleFileInterface,
+    ScheduleFolderInterface,
+    ScheduleStructure
+} from "../types/scheduleStucture.types";
 import {GetSeparatedScheduleItems, StaticFolders} from "../types/xml.types";
 import {videoItem} from "../xml/_xml_elements/videoItem";
 import {pictureItem} from "../xml/_xml_elements/pictureItem";
@@ -6,6 +11,7 @@ import {folderMultiItem} from "../xml/_xml_elements/folderMultiItem";
 import {xmlBase} from "../xml/_xml_elements/xmlBase";
 import * as path from "path";
 import * as fs from "fs";
+import * as dayjs from "dayjs";
 
 export interface GoogleFile {
     kind: string,
@@ -13,6 +19,7 @@ export interface GoogleFile {
     thumbnailLink: string,
     id: string,
     name: string
+    limits: ItemLimits
 }
 
 export interface GoogleFolder {
@@ -99,14 +106,23 @@ const createXmlSchedule = (schedule: ScheduleStructure, folderWithContentPath: s
 
         } else {
 
-            const fullFilePath = path.join(folderWithContentPath, currentItem.name)
+            const fullFilePath = path.join(folderWithContentPath, currentItem.name);
+
+            if(currentItem.limits.date?.start !== "default"){
+                const parsedDate = currentItem.limits.date.start
+
+                // @ts-ignore
+                console.log(dayjs(parsedDate))
+            }
+
+            console.log(currentItem);
 
             if(currentItem.mimeType.match("video")){
                 return (`${
                     accumulator
                 }${
                     videoItem(fullFilePath)
-                }`)
+                }`);
             } else if(currentItem.mimeType.match("image")) {
                 return (`${
                     accumulator
@@ -114,7 +130,7 @@ const createXmlSchedule = (schedule: ScheduleStructure, folderWithContentPath: s
                     pictureItem(fullFilePath)
                 }`)
             } else {
-                return (`${accumulator}`)
+                return (`${accumulator}`);
             }
 
         }
@@ -189,6 +205,8 @@ export const copyFilesToMediaPool = async (
 export const processSchedule = async ({schedule}: {schedule: any[]}) => {
 
     const {Yabloneviy, Uglovoi} = getSeparatedScreenSchedules(schedule);
+
+    // console.log(Yabloneviy[StaticFolders.Day]);
 
     const uniqueYabloneviyDayList = getUniqueFilesList(Yabloneviy[StaticFolders.Day].content, []);
     const uniqueYabloneviyNightList = getUniqueFilesList(Yabloneviy[StaticFolders.Night].content, []);

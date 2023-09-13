@@ -5,31 +5,25 @@ import {ScheduleFileProps} from "../model/Schedule.types";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {useSelector} from "react-redux";
 import {
-    getScheduleActiveDirectoryId,
-    getScheduleActiveItem, getScheduleActiveItemIndex,
-    getScheduleStructure
+    getScheduleActiveDirectoryId, getScheduleActiveItem,
+    getScheduleActiveItemIndex, getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {useAppDispatch} from "../../../../store/store";
 import Image from "next/image";
 import {onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
-import {DatePicker} from "antd";
 import {DateLimitations} from "@/widgets/Schedule/ui/File/DateLimitations";
 import {TimeLimitations} from "@/widgets/Schedule/ui/File/TimeLimitations";
 
 const ScheduleFileItem: FC<ScheduleFileProps> = ({
-    item,
-    index,
-    moveScheduleItem,
+    item, index, moveScheduleItem,
 }) => {
 
     const dispatch = useAppDispatch();
     const scheduleStructure = useSelector(getScheduleStructure);
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
-    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
-    const {
-        opacity, handlerId, refListObject
-    } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
+    const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
 
     const folderColorLight = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "whiteBorderColor";
     const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "whiteBackgroundColor";
@@ -49,7 +43,7 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
             className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} ${folderBackgroundColor} rounded`}
         >
             <Div
-                className={"flex items-center select-none p-[4px]"}
+                className={"overflow-hidden flex items-center select-none p-[4px]"}
             >
                 <Image
                     src={item.thumbnailLink}
@@ -75,16 +69,25 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
                         }
                     </Text>
                     <DateLimitations
+                        fileItem={item}
                         textColor={textColor}
+                        fileUniqueId={item.uniqueId}
                     />
                     <TimeLimitations
+                        fileItem={item}
                         textColor={textColor}
+                        fileUniqueId={item.uniqueId}
                     />
                 </Div>
             </Div>
             <Button
                 onClick={()=>{
-                    onDeleteButtonClick(dispatch, scheduleStructure,activeDirectoryId, index)
+                    onDeleteButtonClick(
+                        dispatch,
+                        scheduleStructure,
+                        activeDirectoryId,
+                        index
+                    )
                 }}
             >
                 <CrossSvg

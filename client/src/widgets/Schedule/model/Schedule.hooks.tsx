@@ -13,7 +13,9 @@ export const useFetchScheduleStructure = () => {
     const searchParams = useSearchParams();
 
     const structureParams = searchParams.get("structure");
-    const initialActiveDirectory = structureParams?.replace(/.*\//, "")
+    const initialActiveDirectory = structureParams?.replace(/.*\//, "");
+
+    console.log(initialActiveDirectory)
 
     useEffect(()=>{
         

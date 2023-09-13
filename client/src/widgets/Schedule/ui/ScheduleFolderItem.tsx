@@ -23,18 +23,18 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     moveScheduleItem
 }) => {
 
+    const router = useRouter();
     const dispatch = useAppDispatch();
+    const searchParams = useSearchParams();
     const scheduleStructure = useSelector(getScheduleStructure);
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId)
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
+
+    const structureParams = searchParams.get("structure");
     const folderBorderColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "folderBorderColor";
     const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "folderBackgroundColor";
-
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const structureParams = searchParams.get("structure");
 
     return (
         <>

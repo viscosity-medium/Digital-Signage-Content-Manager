@@ -36,7 +36,7 @@ export class WebClientService {
             pathArray: ["model", "scheduleStructure.json"]
         });
 
-        processSchedule({schedule: newScheduleData});
+        await processSchedule({schedule: newScheduleData});
 
         fileSystem.clearFoldersRecursively(process.env.EASESCREEN_MMS_MEDIA_FOLDER);
 

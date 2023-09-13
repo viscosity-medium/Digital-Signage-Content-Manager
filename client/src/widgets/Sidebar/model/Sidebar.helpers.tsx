@@ -1,4 +1,4 @@
-import {CreateRecursiveContent, SidebarStructure, SidebarStructureItem} from "@/widgets/Sidebar/model/Sidebar.type";
+import {CreateRecursiveContent, SidebarStructureItem} from "@/widgets/Sidebar/model/Sidebar.type";
 import {SidebarFileItem} from "@/widgets/Sidebar/ui/SidebarFileItem";
 import {SidebarFolderItem} from "@/widgets/Sidebar/ui/SidebarFolderItem";
 import {AppDispatch} from "../../../../store/store";
@@ -34,7 +34,14 @@ export const createNewSchedule = (
                                     thumbnailLink: internalItem.thumbnailLink,
                                     mimeType: internalItem.mimeType,
                                     type: "file",
-                                    uniqueId: uuid()
+                                    uniqueId: uuid(),
+                                    limits: {
+                                        date: {
+                                            start: "default",
+                                            end: "default"
+                                        },
+                                        time: "default"
+                                    }
                                 }
                             ]
 
@@ -59,7 +66,14 @@ export const createNewSchedule = (
                             thumbnailLink: internalItem.thumbnailLink,
                             mimeType: internalItem.mimeType,
                             type: "file",
-                            uniqueId: uuid()
+                            uniqueId: uuid(),
+                            limits: {
+                                date: {
+                                    start: "default",
+                                    end: "default"
+                                },
+                                time: "default"
+                            }
                         }]
                     }
                 ];
@@ -115,7 +129,7 @@ export const onListElementClick = (
 ) => {
 
     const newSchedule = createNewSchedule(scheduleStructure, internalItem, scheduleActiveDirectory, activeItemIndex)
-    const newFolderContent =  createNewActiveDirectoryItems(newSchedule, scheduleActiveDirectory);
+    const newFolderContent = createNewActiveDirectoryItems(newSchedule, scheduleActiveDirectory);
 
     dispatch(scheduleActions.setScheduleStructure(newSchedule));
     dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));

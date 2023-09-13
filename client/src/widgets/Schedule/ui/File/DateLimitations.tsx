@@ -1,21 +1,25 @@
 import {DatePicker} from "antd";
 import {Div, Input, Text} from "@/shared";
 import {FC, useState} from "react";
-import {onTimePickerChange, toggleValidDaysSwitch} from "@/widgets/Schedule/model/DateLimitations.helpers";
+import {onDatePickerChange, onToggleValidDaysSwitch} from "@/widgets/Schedule/model/DateLimitations.helpers";
+import {LimitationsProps} from "@/widgets/Schedule/model/Schedule.types";
+import {useSelector} from "react-redux";
+import {getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
+import {useAppDispatch} from "../../../../../store/store";
 
-interface DateLimitationsProps{
-    textColor: string
-}
-
-const DateLimitations: FC<DateLimitationsProps> = ({
-    textColor
+const DateLimitations: FC<LimitationsProps> = ({
+    fileItem,
+    textColor,
+    fileUniqueId
 }) => {
 
+    const dispatch = useAppDispatch();
     const [isActive, setIsActive] = useState<boolean>(false);
-    const textWidth = "130px";
-    const switchText = isActive ? "Отключить расписание" : "Включить расписание";
-    const opacity = isActive ? 1 : 0.7;
+    const scheduleStructure = useSelector(getScheduleStructure);
 
+    const textWidth = "150px";
+    const switchText = isActive ? "Отключить расписание" : "Включить расписание";
+    const opacity = isActive ? 1 : 0.5;
 
     return (
         <Div
@@ -26,13 +30,13 @@ const DateLimitations: FC<DateLimitationsProps> = ({
             >
                 {
                     isActive ?
-                        null : (
-                        <Div
-                            className={"before:absolute before:z-[1] before:w-[100%] before:h-[100%]"}
-                        />
-                        )
+                    null : (
+                    <Div
+                        className={"before:absolute before:z-[1] before:w-[100%] before:h-[100%]"}
+                    />
+                    )
                 }
-                <Div className={"flex items-center"}>
+                <Div className={`flex items-center`}>
                     <Text
                         tag={"p"}
                         className={`${textColor} text-[16px] w-[${textWidth}]`}
@@ -41,8 +45,19 @@ const DateLimitations: FC<DateLimitationsProps> = ({
                     </Text>
                     <DatePicker
                         className={"ml-[20px] w-[150px] h-[24px]"}
-                        onChange={(event) => {
-                            onTimePickerChange(event)
+                        onChange={(dayJsData) => {
+                            onDatePickerChange({
+                                dispatch,
+                                itemLimits: {
+                                    ...fileItem.limits,
+                                    date: {
+                                        start: dayJsData !== null ? dayJsData : "default",
+                                        end: fileItem.limits.date.end,
+                                    }
+                                },
+                                fileUniqueId,
+                                scheduleStructure
+                            })
                         }}
                     />
                 </Div>
@@ -57,8 +72,19 @@ const DateLimitations: FC<DateLimitationsProps> = ({
                     </Text>
                     <DatePicker
                         className={"ml-[20px] w-[150px] h-[24px]"}
-                        onChange={(event) => {
-                            onTimePickerChange(event)
+                        onChange={(dayJsData) => {
+                            onDatePickerChange({
+                                dispatch,
+                                fileUniqueId,
+                                scheduleStructure,
+                                itemLimits: {
+                                    ...fileItem.limits,
+                                    date: {
+                                        start: fileItem.limits.date.start,
+                                        end: dayJsData !== null ? dayJsData : null,
+                                    }
+                                }
+                            })
                         }}
                     />
                 </Div>
@@ -71,10 +97,15 @@ const DateLimitations: FC<DateLimitationsProps> = ({
                 >
                     <Input
                         type={"checkbox"}
-                        className={"w-[24px] h-[24px] outline-none"}
+                        className={"w-[20px] h-[20px] outline-none"}
                         onChange={() => {
-                            toggleValidDaysSwitch({
-                                setIsActive
+                            onToggleValidDaysSwitch({
+                                dispatch,
+                                isActive,
+                                setIsActive,
+                                fileUniqueId,
+                                scheduleStructure,
+                                itemLimits: fileItem.limits,
                             })
                         }}
                     />

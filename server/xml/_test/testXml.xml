@@ -87,6 +87,18 @@
             <Effect.TransitionLength>400</Effect.TransitionLength>
             <Effect.BackColor>clDefault</Effect.BackColor>
             <FileName>
+                C:\mms\Media\ENKA\yabloneviy\day\myaso-riba_1344_dostavka.mp4
+            </FileName>
+        </TMovieItem>
+       <TMovieItem>
+            <Date></Date>
+            <DisplayTime>-1</DisplayTime>
+            <Log>True</Log>
+            <Effect.TransitionNr>1</Effect.TransitionNr>
+            <Effect.TransitionParam>1</Effect.TransitionParam>
+            <Effect.TransitionLength>400</Effect.TransitionLength>
+            <Effect.BackColor>clDefault</Effect.BackColor>
+            <FileName>
                 C:\mms\Media\ENKA\yabloneviy\day\Parkovka_free_green_1344.mp4
             </FileName>
         </TMovieItem>
