@@ -268,7 +268,7 @@ const createNewScheduleStructure = (
     }, [])
 }
 
-const createNewActiveDirectoryItems = (
+export const createNewActiveDirectoryItems = (
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
     activeDirectory: string
 ): Array<ScheduleFileInterface | ScheduleFolderInterface> => {

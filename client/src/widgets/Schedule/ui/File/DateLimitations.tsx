@@ -4,8 +4,9 @@ import {FC, useState} from "react";
 import {onDatePickerChange, onToggleValidDaysSwitch} from "@/widgets/Schedule/model/DateLimitations.helpers";
 import {LimitationsProps} from "@/widgets/Schedule/model/Schedule.types";
 import {useSelector} from "react-redux";
-import {getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
+import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
 import {useAppDispatch} from "../../../../../store/store";
+import dayjs from "dayjs";
 
 const DateLimitations: FC<LimitationsProps> = ({
     fileItem,
@@ -14,12 +15,16 @@ const DateLimitations: FC<LimitationsProps> = ({
 }) => {
 
     const dispatch = useAppDispatch();
-    const [isActive, setIsActive] = useState<boolean>(false);
+    const [isActive, setIsActive] = useState<boolean>(fileItem.limits.dateIsActive);
     const scheduleStructure = useSelector(getScheduleStructure);
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
 
     const textWidth = "150px";
     const switchText = isActive ? "Отключить расписание" : "Включить расписание";
     const opacity = isActive ? 1 : 0.5;
+
+    const startDate = fileItem?.limits?.date?.start;
+    const endDate = fileItem.limits.date.end;
 
     return (
         <Div
@@ -45,18 +50,20 @@ const DateLimitations: FC<LimitationsProps> = ({
                     </Text>
                     <DatePicker
                         className={"ml-[20px] w-[150px] h-[24px]"}
+                        value={ startDate !== "default" ? dayjs(startDate) : null }
                         onChange={(dayJsData) => {
                             onDatePickerChange({
                                 dispatch,
+                                fileUniqueId,
+                                activeDirectoryId,
+                                scheduleStructure,
                                 itemLimits: {
                                     ...fileItem.limits,
                                     date: {
-                                        start: dayJsData !== null ? dayJsData : "default",
+                                        start: dayJsData !== null ? dayJsData.toString() : "default",
                                         end: fileItem.limits.date.end,
                                     }
                                 },
-                                fileUniqueId,
-                                scheduleStructure
                             })
                         }}
                     />
@@ -72,16 +79,18 @@ const DateLimitations: FC<LimitationsProps> = ({
                     </Text>
                     <DatePicker
                         className={"ml-[20px] w-[150px] h-[24px]"}
+                        value={ endDate !== "default" ? dayjs(endDate) : null }
                         onChange={(dayJsData) => {
                             onDatePickerChange({
                                 dispatch,
                                 fileUniqueId,
+                                activeDirectoryId,
                                 scheduleStructure,
                                 itemLimits: {
                                     ...fileItem.limits,
                                     date: {
                                         start: fileItem.limits.date.start,
-                                        end: dayJsData !== null ? dayJsData : null,
+                                        end: dayJsData !== null ? dayJsData.toISOString() : null,
                                     }
                                 }
                             })
@@ -98,12 +107,14 @@ const DateLimitations: FC<LimitationsProps> = ({
                     <Input
                         type={"checkbox"}
                         className={"w-[20px] h-[20px] outline-none"}
+                        checked={isActive}
                         onChange={() => {
                             onToggleValidDaysSwitch({
                                 dispatch,
                                 isActive,
                                 setIsActive,
                                 fileUniqueId,
+                                activeDirectoryId,
                                 scheduleStructure,
                                 itemLimits: fileItem.limits,
                             })

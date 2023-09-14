@@ -40,7 +40,9 @@ export const createNewSchedule = (
                                             start: "default",
                                             end: "default"
                                         },
-                                        time: "default"
+                                        dateIsActive: false,
+                                        time: "default",
+                                        timeIsActive: false
                                     }
                                 }
                             ]

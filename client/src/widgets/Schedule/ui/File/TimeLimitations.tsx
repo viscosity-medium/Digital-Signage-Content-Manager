@@ -3,9 +3,10 @@ import {Div, Input, Text} from "@/shared";
 import {FC, useState} from "react";
 import {LimitationsProps} from "@/widgets/Schedule/model/Schedule.types";
 import {useSelector} from "react-redux";
-import {getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
+import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
 import {onTimePickerChange, onToggleValidTimeSwitch} from "@/widgets/Schedule/model/TimeLimitations.helpers";
 import {useAppDispatch} from "../../../../../store/store";
+import dayjs from "dayjs";
 
 const TimeLimitations: FC<LimitationsProps> = ({
     fileItem,
@@ -14,12 +15,14 @@ const TimeLimitations: FC<LimitationsProps> = ({
 }) => {
 
     const dispatch = useAppDispatch();
-    const [isActive, setIsActive] = useState<boolean>(false);
+    const [isActive, setIsActive] = useState<boolean>(fileItem.limits.timeIsActive);
     const scheduleStructure = useSelector(getScheduleStructure);
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
 
     const textWidth = "150px";
     const switchText = isActive ? "Не указывать время" : "Указать время";
     const opacity = isActive ? 1 : 0.5;
+    const duration = fileItem?.limits?.time;
 
     return (
         <Div
@@ -46,15 +49,17 @@ const TimeLimitations: FC<LimitationsProps> = ({
                     <TimePicker
                         className={"ml-[20px] w-[150px] h-[24px]"}
                         format={"mm:ss"}
+                        value={ duration !== "default" ? dayjs(duration) : null }
                         onChange={(dayJsData) => {
                             onTimePickerChange({
                                 dispatch,
+                                fileUniqueId,
+                                activeDirectoryId,
+                                scheduleStructure,
                                 itemLimits: {
                                     ...fileItem.limits,
-                                    time: "default"
-                                },
-                                fileUniqueId,
-                                scheduleStructure
+                                    time: dayJsData !== null ? dayJsData.toString() : "default",
+                                }
                             })
                         }}
                     />
@@ -69,12 +74,14 @@ const TimeLimitations: FC<LimitationsProps> = ({
                     <Input
                         type={"checkbox"}
                         className={"w-[20px] h-[20px] outline-none"}
+                        checked={isActive}
                         onChange={() => {
                             onToggleValidTimeSwitch({
                                 dispatch,
+                                setIsActive,
                                 isActive,
                                 fileUniqueId,
-                                setIsActive,
+                                activeDirectoryId,
                                 scheduleStructure,
                                 itemLimits: fileItem.limits
                             })

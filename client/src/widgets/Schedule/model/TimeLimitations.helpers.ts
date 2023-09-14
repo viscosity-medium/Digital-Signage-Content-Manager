@@ -1,12 +1,14 @@
 import {OnPickerChangeProps, ToggleScheduleSwitchProps} from "@/widgets/Schedule/model/Schedule.types";
 import {changeFileLimitsRecursively} from "@/widgets/Schedule/model/File.helpers";
 import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
+import {createNewActiveDirectoryItems} from "@/widgets/Schedule/model/Schedule.helpers";
 
 export const onTimePickerChange = ({
     dispatch,
     itemLimits,
     fileUniqueId,
-    scheduleStructure
+    activeDirectoryId,
+    scheduleStructure,
 }: OnPickerChangeProps) => {
 
     const editedScheduleData = changeFileLimitsRecursively({
@@ -15,11 +17,15 @@ export const onTimePickerChange = ({
         itemLimits
     });
 
+    const updatedActiveItems = createNewActiveDirectoryItems(
+        editedScheduleData,
+        activeDirectoryId
+    );
+
     dispatch(scheduleActions.setScheduleStructure(editedScheduleData));
+    dispatch(scheduleActions.setActiveDirectoryItems(updatedActiveItems));
 
-    console.log(editedScheduleData);
-
-}
+};
 
 export const onToggleValidTimeSwitch = ({
     dispatch,
@@ -27,6 +33,7 @@ export const onToggleValidTimeSwitch = ({
     setIsActive,
     fileUniqueId,
     itemLimits,
+    activeDirectoryId,
     scheduleStructure
 }: ToggleScheduleSwitchProps) => {
 
@@ -37,12 +44,36 @@ export const onToggleValidTimeSwitch = ({
             fileUniqueId,
             itemLimits: {
                 ...itemLimits,
-                time: "default"
+                time: "default",
+                timeIsActive: false
+            },
+        });
+
+        const updatedActiveItems = createNewActiveDirectoryItems(
+            editedScheduleData,
+            activeDirectoryId
+        );
+
+        dispatch(scheduleActions.setScheduleStructure(editedScheduleData));
+        dispatch(scheduleActions.setActiveDirectoryItems(updatedActiveItems));
+
+    } else {
+        const editedScheduleData = changeFileLimitsRecursively({
+            structure: scheduleStructure,
+            fileUniqueId,
+            itemLimits: {
+                ...itemLimits,
+                timeIsActive: true
             }
         });
 
-        dispatch(scheduleActions.setScheduleStructure(editedScheduleData));
+        const updatedActiveItems = createNewActiveDirectoryItems(
+            editedScheduleData,
+            activeDirectoryId
+        );
 
+        dispatch(scheduleActions.setScheduleStructure(editedScheduleData));
+        dispatch(scheduleActions.setActiveDirectoryItems(updatedActiveItems));
     }
 
     setIsActive(prevState => !prevState);

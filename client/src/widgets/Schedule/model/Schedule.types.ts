@@ -85,6 +85,7 @@ export interface OnPickerChangeProps {
     dispatch: AppDispatch
     itemLimits: ItemLimits
     fileUniqueId: string
+    activeDirectoryId: string
     scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[]
 }
 
@@ -95,12 +96,15 @@ export interface ToggleScheduleSwitchProps {
     fileUniqueId: string
     setIsActive: Dispatch<SetStateAction<boolean>>
     scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[]
+    activeDirectoryId: string
 }
 
 export interface ItemLimits {
     date: {
-        start: Dayjs | null | "default";
-        end: Dayjs | null | "default";
+        start: Dayjs | string | null | "default";
+        end: Dayjs | string | null | "default";
     },
-    time: Dayjs | "default"
+    dateIsActive: boolean
+    time: Dayjs | string | "default",
+    timeIsActive: boolean
 }
