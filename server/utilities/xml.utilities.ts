@@ -1,5 +1,11 @@
-import * as xml2js from "xml2js";
+import xml2js from "xml2js";
 import {fileSystem} from "./fileSystem.utilities";
+import {CreateXmlSchedule} from "../types/recursiveCycle.types";
+import {folderMultiItem} from "../xml/_xml_elements/folderMultiItem";
+import path from "path";
+import {calculateActiveDays} from "./converter";
+import {videoItem} from "../xml/_xml_elements/videoItem";
+import {pictureItem} from "../xml/_xml_elements/pictureItem";
 
 
 const regExpShortCondition = /^\s*<(?!\/*(TMultiItem|Items|TMovieItem|FileName|easescreen.*|Comment)).*>*.*(\n|\r)/;
@@ -48,6 +54,64 @@ class XmlUtilities {
 
     underlineCodeToSymbol = (content: string) => {
         return content.replace(/&#95;/, "_");
+    }
+
+    createXmlSchedule: CreateXmlSchedule = ({
+        schedule,
+        folderWithContentPath
+    }) => {
+
+        return schedule.reduce((accumulator, currentItem) => {
+
+            if(currentItem.type === "folder"){
+
+                return (`${
+                    accumulator
+                }${
+                    folderMultiItem(
+                        this.createXmlSchedule({
+                            schedule: currentItem.content,
+                            folderWithContentPath: fileSystem.joinPath([folderWithContentPath, currentItem.name])
+                        })
+                    )
+                }`);
+
+            } else {
+
+                const fullFilePath = path.join(folderWithContentPath, currentItem.name);
+                const relativeMmsMediaPoolFilePath = fullFilePath.replace(/C:\\mms\\Media\\/gm, "").replace(/_/gm, "&#95;")
+
+                if(currentItem.mimeType.match("video")){
+
+                    const dateLimits = calculateActiveDays({
+                        minDay: currentItem.limits.date.start,
+                        maxDay: currentItem.limits.date.end
+                    });
+
+                    return (`${
+                        accumulator
+                    }${
+                        videoItem({
+                            relativeMmsMediaPoolFilePath,
+                            dateLimits,
+                            fileDuration: currentItem.limits.time
+                        })
+                    }`);
+
+                } else if(currentItem.mimeType.match("image")) {
+                    return (`${
+                        accumulator
+                    }${
+                        pictureItem(fullFilePath)
+                    }`)
+                } else {
+                    return (`${accumulator}`);
+                }
+
+            }
+
+        }, "")
+
     }
 
 }

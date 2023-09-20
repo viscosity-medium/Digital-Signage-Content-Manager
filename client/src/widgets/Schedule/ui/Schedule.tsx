@@ -30,6 +30,7 @@ const Schedule = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const structure = searchParams.get("structure");
+    const defaultFolderName = "Корневой каталог"
 
     useFetchScheduleStructure();
     
@@ -65,15 +66,13 @@ const Schedule = () => {
                                         Вернуться обратно
                                     </Text>
                                 </Button>
-                                <Div
-                                    className={"w-[100%]"}
-                                >
+                                <Div>
                                     <Text
                                         tag={"h2"}
                                         className={"text-[30px] text-[#fff] text-center"}
                                     >
                                         {
-                                            activeDirectoryName
+                                            activeDirectoryName !== "rootDirectory" ? activeDirectoryName : defaultFolderName
                                         }
                                     </Text>
                                 </Div>
@@ -104,7 +103,9 @@ const Schedule = () => {
                                     tag={"h2"}
                                     className={"text-[30px] text-[#fff] text-center"}
                                 >
-                                    Корневой каталог
+                                    {
+                                        defaultFolderName
+                                    }
                                 </Text>
                             </Div>
                         )

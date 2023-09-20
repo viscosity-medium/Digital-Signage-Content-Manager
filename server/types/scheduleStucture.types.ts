@@ -2,10 +2,12 @@ import {Dayjs} from "dayjs";
 
 export interface ItemLimits {
     date: {
-        start: Dayjs | null | "default";
-        end: Dayjs | null | "default";
+        start: string | "default";
+        end: string | "default";
     },
-    time: Dayjs | "default"
+    dateIsActive: boolean
+    time: string | "default",
+    timeIsActive: boolean
 }
 
 export interface ScheduleFileInterface {

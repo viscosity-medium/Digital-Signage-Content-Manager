@@ -1,38 +1,21 @@
-import {
-    ItemLimits,
-    ScheduleFileInterface,
-    ScheduleFolderInterface,
-    ScheduleStructure
-} from "../types/scheduleStucture.types";
-import {GetSeparatedScheduleItems, StaticFolders} from "../types/xml.types";
-import {videoItem} from "../xml/_xml_elements/videoItem";
-import {pictureItem} from "../xml/_xml_elements/pictureItem";
-import {folderMultiItem} from "../xml/_xml_elements/folderMultiItem";
+import {StaticFolders} from "../types/xml.types";
 import {xmlBase} from "../xml/_xml_elements/xmlBase";
-import * as path from "path";
-import * as fs from "fs";
-import * as dayjs from "dayjs";
+import xmlFormat from "xml-formatter";
+import {
+    GetActualGoogleFilesList,
+    GetSeparatedScreenSchedules,
+    GetUniqueFilesList,
+    GoogleItem
+} from "../types/recursiveCycle.types";
+import {fileSystem} from "./fileSystem.utilities";
+import {xmlUtilities} from "./xml.utilities";
+import {ftpUtilities} from "./ftp.utilitie";
 
-export interface GoogleFile {
-    kind: string,
-    mimeType: string,
-    thumbnailLink: string,
-    id: string,
-    name: string
-    limits: ItemLimits
-}
-
-export interface GoogleFolder {
-    [key: string]: Array<GoogleFile | GoogleFolder> | any,
-    name: string
-    mimeType: string
-}
-
-export const getActualGoogleFilesList = (structure: GoogleFolder | GoogleFile): string[] => {
+export const getActualGoogleFilesList: GetActualGoogleFilesList = (structure) => {
 
     if(structure.mimeType === "folder"){
 
-        return Object.values(structure)[0].reduce((accumulator: string[], currentItem: GoogleFolder | GoogleFile) => {
+        return Object.values(structure)[0].reduce((accumulator: string[], currentItem: GoogleItem) => {
             if(Object.keys(currentItem).length > 1){
                 return [
                     ...accumulator,
@@ -50,7 +33,7 @@ export const getActualGoogleFilesList = (structure: GoogleFolder | GoogleFile): 
 
 }
 
-const getSeparatedScreenSchedules = (parentItem: (ScheduleFolderInterface | ScheduleFileInterface)[]): GetSeparatedScheduleItems => {
+export const getSeparatedScreenSchedules: GetSeparatedScreenSchedules = (parentItem) => {
 
     return parentItem.reduce((accumulator, currentItem) => {
 
@@ -92,57 +75,10 @@ const getSeparatedScreenSchedules = (parentItem: (ScheduleFolderInterface | Sche
 
 };
 
-const createXmlSchedule = (schedule: ScheduleStructure, folderWithContentPath: string): string => {
-
-    return schedule.reduce((accumulator, currentItem) => {
-
-        if(currentItem.type === "folder"){
-
-            return (`${
-                accumulator
-            }${
-                folderMultiItem(createXmlSchedule(currentItem.content, folderWithContentPath))
-            }`);
-
-        } else {
-
-            const fullFilePath = path.join(folderWithContentPath, currentItem.name);
-
-            if(currentItem.limits.date?.start !== "default"){
-                const parsedDate = currentItem.limits.date.start
-
-                // @ts-ignore
-                console.log(dayjs(parsedDate))
-            }
-
-            console.log(currentItem);
-
-            if(currentItem.mimeType.match("video")){
-                return (`${
-                    accumulator
-                }${
-                    videoItem(fullFilePath)
-                }`);
-            } else if(currentItem.mimeType.match("image")) {
-                return (`${
-                    accumulator
-                }${
-                    pictureItem(fullFilePath)
-                }`)
-            } else {
-                return (`${accumulator}`);
-            }
-
-        }
-
-    }, "")
-
-}
-
-export const getUniqueFilesList = (
-    structure: (ScheduleFolderInterface | ScheduleFileInterface)[],
-    startArray: string[]
-): string[] => {
+export const getUniqueFilesList: GetUniqueFilesList = (
+    structure,
+    startArray
+) => {
 
     const results = [];
     const setList = new Set(structure.reduce((accumulator, currentItem): string[] => {
@@ -166,84 +102,74 @@ export const getUniqueFilesList = (
 
 }
 
-export const copyFilesToMediaPool = async (
-    filesArray: string[],
-    pathTo: string
-) => {
-
-    const downloadedFilesFromGoogleFolder = path.join(process.cwd(), "folderStructure");
-    const filesInFolder = fs.readdirSync(downloadedFilesFromGoogleFolder);
-
-    const recursiveSearch = async (arr: string[], str: string) => {
-
-        for await (const item of arr) {
-            await new Promise((resolve, reject) => {
-                const sourcePath = path.join(str, item);
-                if(fs.statSync(sourcePath).isDirectory()){
-
-                    const newArray = fs.readdirSync(sourcePath);
-                    recursiveSearch(newArray, sourcePath);
-
-                } else {
-                    if(filesArray.includes(item)){
-
-                        const copyPath = path.join(pathTo, item);
-                        fs.copyFileSync(sourcePath, copyPath);
-
-                    }
-                }
-                resolve("")
-            });
-        }
-
-    }
-
-    await recursiveSearch(filesInFolder, downloadedFilesFromGoogleFolder)
-
-}
-
 export const processSchedule = async ({schedule}: {schedule: any[]}) => {
 
-    const {Yabloneviy, Uglovoi} = getSeparatedScreenSchedules(schedule);
+    const {
+        Yabloneviy,
+        Uglovoi
+    } = getSeparatedScreenSchedules(schedule);
 
-    // console.log(Yabloneviy[StaticFolders.Day]);
+    //console.log(JSON.stringify(Yabloneviy["Day"], null, 4));
 
     const uniqueYabloneviyDayList = getUniqueFilesList(Yabloneviy[StaticFolders.Day].content, []);
     const uniqueYabloneviyNightList = getUniqueFilesList(Yabloneviy[StaticFolders.Night].content, []);
     const uniqueUglovoiDayList = getUniqueFilesList(Uglovoi[StaticFolders.Day].content, []);
     const uniqueUglovoiNightList = getUniqueFilesList(Uglovoi[StaticFolders.Night].content, []);
 
-    const pathYabloneviyDayToCopy = path.join(process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "day");
-    const pathYabloneviyNightToCopy = path.join(process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "night");
-    const pathUglovoiDayToCopy = path.join(process.env.EASESCREEN_MMS_MEDIA_FOLDER, "uglovoi", "day");
-    const pathUglovoiNightToCopy = path.join(process.env.EASESCREEN_MMS_MEDIA_FOLDER, "uglovoi", "day");
+    const yabloneviyDayFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "day"]);
+    const yabloneviyNightFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "night"]);
+    const uglovoyDayFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "uglovoi", "day"]);
+    const uglovoyNightFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "uglovoi", "night"]);
 
-    uniqueYabloneviyDayList.length !== 0 && await copyFilesToMediaPool(uniqueYabloneviyDayList, pathYabloneviyDayToCopy);
-    pathYabloneviyNightToCopy.length !== 0 && await copyFilesToMediaPool(uniqueYabloneviyNightList, pathYabloneviyNightToCopy);
-    pathUglovoiDayToCopy.length !== 0 && await copyFilesToMediaPool(uniqueUglovoiDayList, pathUglovoiDayToCopy);
-    pathUglovoiNightToCopy.length !== 0 && await copyFilesToMediaPool(uniqueUglovoiNightList, pathUglovoiNightToCopy);
+    const YabloneviyDaySchedule = xmlUtilities.createXmlSchedule({
+        schedule: Yabloneviy[StaticFolders.Day].content,
+        folderWithContentPath: yabloneviyDayFolderPath
+    });
+    const YabloneviyNightSchedule = xmlUtilities.createXmlSchedule({
+        schedule: Yabloneviy[StaticFolders.Night].content,
+        folderWithContentPath: yabloneviyNightFolderPath
+    });
+    const UglovoiDaySchedule = xmlUtilities.createXmlSchedule({
+        schedule: Uglovoi[StaticFolders.Day].content,
+        folderWithContentPath: uglovoyDayFolderPath
+    });
+    const UglovoiNightSchedule = xmlUtilities.createXmlSchedule({
+        schedule: Uglovoi[StaticFolders.Night].content,
+        folderWithContentPath: uglovoyNightFolderPath
+    });
 
     // console.log(uniqueYabloneviyDayList);
     // console.log(uniqueYabloneviyNightList);
     // console.log(uniqueUglovoiDayList);
     // console.log(uniqueUglovoiNightList);
 
-    const YabloneviyDaySchedule = createXmlSchedule(Yabloneviy[StaticFolders.Day].content, pathYabloneviyDayToCopy);
-    const YabloneviyNightSchedule = createXmlSchedule(Yabloneviy[StaticFolders.Night].content, pathYabloneviyNightToCopy);
-
-    const UglovoiDaySchedule = createXmlSchedule(Uglovoi[StaticFolders.Day].content, pathUglovoiDayToCopy);
-    const UglovoiNightSchedule = createXmlSchedule(Uglovoi[StaticFolders.Night].content, pathUglovoiNightToCopy);
-
     const YabloneviyXmlSchedule = xmlBase(YabloneviyDaySchedule, YabloneviyNightSchedule);
     const UglovoiXmlSchedule = xmlBase(UglovoiDaySchedule, UglovoiNightSchedule);
 
-    const testXmlPath = path.join(process.cwd(), "xml", "_test", "testXml.xml");
+    const YabloneviyFolderPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "yabloneviy"]);
+    const UglovoiFolderPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "uglovoi"]);
+    const YabloneviyXmlPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "yabloneviy", "0_0_0.xml"]);
+    const UglovoiXmlPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "uglovoi", "0_0_0.xml"]);
 
     const uniqueFilesList = getUniqueFilesList(schedule, []);
 
-    // console.log(uniqueFilesList);
+    const YabloneviyXmlFormattedSchedule = xmlFormat(YabloneviyXmlSchedule);
+    const UglovoiXmlFormattedSchedule = xmlFormat(UglovoiXmlSchedule);
 
-    fs.writeFileSync(testXmlPath, YabloneviyXmlSchedule);
+    fileSystem.createMultipleFoldersRecursively([
+        YabloneviyFolderPath,
+        UglovoiFolderPath
+    ]);
+
+    fileSystem.writeFileSync(YabloneviyXmlPath, YabloneviyXmlFormattedSchedule);
+    fileSystem.writeFileSync(UglovoiXmlPath, UglovoiXmlFormattedSchedule);
+
+    await ftpUtilities.uploadContentToMmsPlayers([
+        {
+            playerId: "{318A5E69-E22C-4141-95F5-DBF77E176ABF}",
+            fileSystemPath: YabloneviyXmlPath
+        }
+    ])
 
     return("");
 

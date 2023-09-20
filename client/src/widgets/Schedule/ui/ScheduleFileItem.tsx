@@ -43,26 +43,26 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
             className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} ${folderBackgroundColor} rounded`}
         >
             <Div
-                className={"overflow-hidden flex items-center select-none p-[4px]"}
+                className={"overflow-hidden flex items-center select-none py-[4px] px-[8px]"}
             >
                 <Image
                     src={item.thumbnailLink}
                     alt={item.name}
-                    width={50}
-                    height={50}
+                    width={120}
+                    height={120}
                     className={"bg-white"}
                     style={{
-                        width: '50px',
+                        width: '120px',
                         height: 'auto',
                         objectFit: 'contain'
                     }}
                 />
                 <Div
-                    className={"px-[20px] flex flex-col"}
+                    className={"px-[8px] flex flex-col"}
                 >
                     <Text
                         tag={"p"}
-                        className={`${textColor} truncate`}
+                        className={`${textColor} truncate px-[8px]`}
                     >
                         {
                             item.name

@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common';
 import {ansiColors} from "./ansiColors/ansiColors";
 import {PartialAnsiColors} from "./ansiColors/ansiColors.types";
-import * as fs from "fs";
-import * as path from "path";
-import * as process from "process";
+import fs from "fs";
+import path from "path";
+import process from "process";
 
 @Injectable()
 export class FileSystemService {
@@ -83,7 +83,12 @@ export class FileSystemService {
 
     }
 
+    getListOfItemsInFolder(folderPath: string){
+        return fs.readdirSync(folderPath);
+    }
+
     async removeAllFilesFromFolder({folderPath}: {folderPath: string}){
+
         try {
 
             const files = fs.readdirSync(folderPath);

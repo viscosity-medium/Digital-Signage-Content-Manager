@@ -21,7 +21,7 @@ const DateLimitations: FC<LimitationsProps> = ({
 
     const textWidth = "150px";
     const switchText = isActive ? "Отключить расписание" : "Включить расписание";
-    const opacity = isActive ? 1 : 0.5;
+    const opacity = isActive ? "opacity-[1]" : "opacity-[0.5]";
 
     const startDate = fileItem?.limits?.date?.start;
     const endDate = fileItem.limits.date.end;
@@ -31,7 +31,7 @@ const DateLimitations: FC<LimitationsProps> = ({
             className={"relative flex"}
         >
             <Div
-                className={`relative flex flex-col items-start px-[8px] opacity-[${opacity}]`}
+                className={`relative flex flex-col items-start px-[8px] ${opacity}`}
             >
                 {
                     isActive ?
@@ -49,7 +49,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                         Дата начала
                     </Text>
                     <DatePicker
-                        className={"ml-[20px] w-[150px] h-[24px]"}
+                        className={"w-[150px] h-[24px]"}
                         value={ startDate !== "default" ? dayjs(startDate) : null }
                         onChange={(dayJsData) => {
                             onDatePickerChange({
@@ -60,7 +60,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                                 itemLimits: {
                                     ...fileItem.limits,
                                     date: {
-                                        start: dayJsData !== null ? dayJsData.toString() : "default",
+                                        start: dayJsData !== null ? dayJsData.toISOString() : "default",
                                         end: fileItem.limits.date.end,
                                     }
                                 },
@@ -78,7 +78,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                         Дата окончания
                     </Text>
                     <DatePicker
-                        className={"ml-[20px] w-[150px] h-[24px]"}
+                        className={"w-[150px] h-[24px]"}
                         value={ endDate !== "default" ? dayjs(endDate) : null }
                         onChange={(dayJsData) => {
                             onDatePickerChange({

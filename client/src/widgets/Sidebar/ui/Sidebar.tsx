@@ -23,7 +23,7 @@ const Sidebar = () => {
 
     return (
         <Aside
-            className={"h-[100%] overflow-y-scroll"}
+            className={"h-[100%] w-[100%] overflow-y-scroll"}
         >
             <Input
                 value={searchBarValue}

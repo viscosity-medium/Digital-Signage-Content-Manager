@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {FileSystemService} from "../file-system/file-system.service";
-import * as fs from "fs";
+import fs from "fs";
 import {ScheduleStructure} from "../../types/scheduleStucture.types";
 import {processSchedule} from "../../utilities/recursiveCycle.utilities";
 import {fileSystem} from "../../utilities/fileSystem.utilities";
@@ -38,11 +38,10 @@ export class WebClientService {
 
         await processSchedule({schedule: newScheduleData});
 
-        fileSystem.clearFoldersRecursively(process.env.EASESCREEN_MMS_MEDIA_FOLDER);
-
         fs.writeFileSync(filePath, JSON.stringify(newScheduleData, null, 4));
 
-        return newScheduleData
+        return newScheduleData;
+
     }
 
 }

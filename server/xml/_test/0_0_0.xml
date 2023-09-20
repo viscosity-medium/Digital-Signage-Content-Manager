@@ -181,7 +181,7 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\kp&#95;mobilnoe&#95;prilojenie&#95;kard&#95;1344&#95;cake.mp4'
+                            'ENKA\yabloneviy\day\nac&#95;lot&#95;1344.mp4'
                         </FileName>
                     </TMovieItem>
                     <TMovieItem>
@@ -205,106 +205,7 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\nac&#95;lot&#95;1344.mp4'
-                        </FileName>
-                    </TMovieItem>
-                    <TMovieItem>
-                        <Date></Date>
-                        <DisplayTime>
-                            -1
-                        </DisplayTime>
-                        <Log>
-                            True
-                        </Log>
-                        <Effect.TransitionNr>
-                            1
-                        </Effect.TransitionNr>
-                        <Effect.TransitionParam>
-                            1
-                        </Effect.TransitionParam>
-                        <Effect.TransitionLength>
-                            400
-                        </Effect.TransitionLength>
-                        <Effect.BackColor>
-                            clDefault
-                        </Effect.BackColor>
-                        <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\maer&#95;rich&#95;09-08&#95;1344.mp4'
-                        </FileName>
-                    </TMovieItem>
-                    <TMovieItem>
-                        <Date></Date>
-                        <DisplayTime>
-                            -1
-                        </DisplayTime>
-                        <MinDate>
-                            45189
-                        </MinDate>
-                        <Log>
-                            True
-                        </Log>
-                        <Effect.TransitionNr>
-                            1
-                        </Effect.TransitionNr>
-                        <Effect.TransitionParam>
-                            1
-                        </Effect.TransitionParam>
-                        <Effect.TransitionLength>
-                            400
-                        </Effect.TransitionLength>
-                        <Effect.BackColor>
-                            clDefault
-                        </Effect.BackColor>
-                        <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\Parkovka&#95;free&#95;green&#95;1344.mp4'
-                        </FileName>
-                    </TMovieItem>
-                    <TMovieItem>
-                        <Date></Date>
-                        <DisplayTime>
-                            -1
-                        </DisplayTime>
-                        <Log>
-                            True
-                        </Log>
-                        <Effect.TransitionNr>
-                            1
-                        </Effect.TransitionNr>
-                        <Effect.TransitionParam>
-                            1
-                        </Effect.TransitionParam>
-                        <Effect.TransitionLength>
-                            400
-                        </Effect.TransitionLength>
-                        <Effect.BackColor>
-                            clDefault
-                        </Effect.BackColor>
-                        <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\kp&#95;mobilnoe&#95;prilojenie&#95;kard&#95;1344&#95;cake.mp4'
-                        </FileName>
-                    </TMovieItem>
-                    <TMovieItem>
-                        <Date></Date>
-                        <DisplayTime>
-                            -1
-                        </DisplayTime>
-                        <Log>
-                            True
-                        </Log>
-                        <Effect.TransitionNr>
-                            1
-                        </Effect.TransitionNr>
-                        <Effect.TransitionParam>
-                            1
-                        </Effect.TransitionParam>
-                        <Effect.TransitionLength>
-                            400
-                        </Effect.TransitionLength>
-                        <Effect.BackColor>
-                            clDefault
-                        </Effect.BackColor>
-                        <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\maer&#95;08-15&#95;motherbear&#95;1344.mp4'
+                            'ENKA\yabloneviy\day\myaso-riba&#95;1344&#95;dostavka.mp4'
                         </FileName>
                     </TMovieItem>
                 </Items>

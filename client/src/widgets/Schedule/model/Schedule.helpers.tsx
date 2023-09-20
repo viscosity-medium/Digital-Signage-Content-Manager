@@ -151,6 +151,7 @@ export const moveScheduleItem = (
             accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface>,
             currentItem
         )=>{
+
             if(currentItem.type === "folder"){
 
                 if(currentItem.uniqueId === activeDirectory){
@@ -215,7 +216,7 @@ const createNewScheduleStructure = (
                                 ...accum,
                                 currentItem,
                                 {
-                                    type: "folder",
+                                    type: "googleFolder",
                                     name: "folder",
                                     uniqueId: uuid(),
                                     isEditable: true,
@@ -238,8 +239,8 @@ const createNewScheduleStructure = (
                     {
                         ...currentItem,
                         content: content?.length !== 0 ? content : [{
-                            type: "folder",
-                            name: "folder",
+                            type: "googleFolder",
+                            name: "googleFolder",
                             uniqueId: uuid(),
                             isEditable: true,
                             content: []

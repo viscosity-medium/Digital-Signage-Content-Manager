@@ -7,10 +7,10 @@ export default function Home() {
 
     return (
         <Main className={"flex w-full h-[100vh] bg-[#79b7bd]"}>
-            <Div className={"flex w-[70%]"}>
+            <Div className={"overflow-hidden flex w-[70%]"}>
                 <Schedule/>
             </Div>
-            <Div className={"w-[30%] border-l-[4px]"}>
+            <Div className={"overflow-hidden flex w-[30%] border-l-[4px] border-[#fff]"}>
                 <Sidebar/>
             </Div>
         </Main>

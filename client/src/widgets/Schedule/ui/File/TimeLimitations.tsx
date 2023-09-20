@@ -9,10 +9,10 @@ import {useAppDispatch} from "../../../../../store/store";
 import dayjs from "dayjs";
 
 const TimeLimitations: FC<LimitationsProps> = ({
-    fileItem,
-    textColor,
-    fileUniqueId
-}) => {
+                                                   fileItem,
+                                                   textColor,
+                                                   fileUniqueId
+                                               }) => {
 
     const dispatch = useAppDispatch();
     const [isActive, setIsActive] = useState<boolean>(fileItem.limits.timeIsActive);
@@ -21,7 +21,7 @@ const TimeLimitations: FC<LimitationsProps> = ({
 
     const textWidth = "150px";
     const switchText = isActive ? "Не указывать время" : "Указать время";
-    const opacity = isActive ? 1 : 0.5;
+    const opacity = isActive ? "opacity-[1]" : "opacity-[0.5]";
     const duration = fileItem?.limits?.time;
 
     return (
@@ -29,15 +29,15 @@ const TimeLimitations: FC<LimitationsProps> = ({
             className={"relative flex items-center mt-[8px]"}
         >
             <Div
-                className={`relative flex flex-col items-start px-[8px] opacity-[${opacity}]`}
+                className={`relative flex flex-col items-start px-[8px] ${opacity}`}
             >
                 {
                     isActive ?
-                    null : (
-                    <Div
-                        className={"before:absolute before:z-[1] before:w-[100%] before:h-[100%]"}
-                    />
-                    )
+                        null : (
+                            <Div
+                                className={"before:absolute before:z-[1] before:w-[100%] before:h-[100%]"}
+                            />
+                        )
                 }
                 <Div className={"flex items-center"}>
                     <Text
@@ -47,7 +47,7 @@ const TimeLimitations: FC<LimitationsProps> = ({
                         Длительность
                     </Text>
                     <TimePicker
-                        className={"ml-[20px] w-[150px] h-[24px]"}
+                        className={"w-[150px] h-[24px]"}
                         format={"mm:ss"}
                         value={ duration !== "default" ? dayjs(duration) : null }
                         onChange={(dayJsData) => {
@@ -58,7 +58,9 @@ const TimeLimitations: FC<LimitationsProps> = ({
                                 scheduleStructure,
                                 itemLimits: {
                                     ...fileItem.limits,
-                                    time: dayJsData !== null ? dayJsData.toString() : "default",
+                                    time: dayJsData !== null ?
+                                        dayJsData.toISOString() :
+                                        "default"
                                 }
                             })
                         }}

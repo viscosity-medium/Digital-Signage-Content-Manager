@@ -1,5 +1,5 @@
-import * as path from "path";
-import * as fs from "fs";
+import path from "path";
+import fs from "fs";
 import {jsonUtilities} from "./json.utilities";
 
 class FileSystem {
@@ -23,7 +23,7 @@ class FileSystem {
 
     };
 
-    clearFoldersRecursively(pathToClear: string){
+    clearInternalFoldersRecursively(pathToClear: string){
 
         const internalItems = fs.readdirSync(pathToClear);
 
@@ -32,7 +32,7 @@ class FileSystem {
             const internalPath = path.join(pathToClear, internalItem);
 
             if(fs.statSync(internalPath).isDirectory()){
-                fileSystem.clearFoldersRecursively(internalPath);
+                fileSystem.clearInternalFoldersRecursively(internalPath);
             } else {
                 fs.unlinkSync(internalPath);
             }
@@ -40,6 +40,12 @@ class FileSystem {
         });
 
     };
+
+    clearMultipleInternalFoldersRecursively(arrayOfPaths: string[]){
+        for (const singlePath of arrayOfPaths){
+            this.clearInternalFoldersRecursively(singlePath);
+        }
+    }
 
     createFoldersRecursively(totalPath: string){
 
@@ -58,6 +64,13 @@ class FileSystem {
         }, "")
     }
 
+    createMultipleFoldersRecursively(arrayOfPaths: string[]){
+
+        for (const singlePath of arrayOfPaths){
+            this.createFoldersRecursively(singlePath);
+        }
+
+    }
 
     readFileSync(path: string){
         return fs.readFileSync(path);
@@ -98,7 +111,7 @@ class FileSystem {
                             if(!this.checkFolderExists(blockNameFolderPath)){
                                 this.createFoldersRecursively(blockNameFolderPath);
                             } else {
-                                this.clearFoldersRecursively(blockNameFolderPath)
+                                this.clearInternalFoldersRecursively(blockNameFolderPath);
                             }
 
                             blockFileListPaths.forEach((blockFilePath) => {
