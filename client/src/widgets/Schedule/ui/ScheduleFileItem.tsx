@@ -73,15 +73,16 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
                         textColor={textColor}
                         fileUniqueId={item.uniqueId}
                     />
-                    <TimeLimitations
-                        fileItem={item}
-                        textColor={textColor}
-                        fileUniqueId={item.uniqueId}
-                    />
+                    {/*<TimeLimitations*/}
+                    {/*    fileItem={item}*/}
+                    {/*    textColor={textColor}*/}
+                    {/*    fileUniqueId={item.uniqueId}*/}
+                    {/*/>*/}
                 </Div>
             </Div>
             <Button
-                onClick={()=>{
+                onClick={(event)=>{
+                    event.stopPropagation();
                     onDeleteButtonClick(
                         dispatch,
                         scheduleStructure,

@@ -10,6 +10,7 @@ import {
     GetFullFileStructure
 } from "../../types/google.service.types";
 import {fileSystem} from "../../utilities/fileSystem.utilities";
+import { regExpConditionToCollectContentIntoSingleFolder } from 'system/environmental';
 
 @Injectable()
 export class GoogleService {
@@ -41,7 +42,6 @@ export class GoogleService {
     async getFullFileStructure({
         searchId = process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID,
         name,
-        mimeType
     }: GetFullFileStructure) {
 
         const fileList = await this.getFileListInFolder({searchId});
@@ -59,7 +59,6 @@ export class GoogleService {
                 const content = await this.getFullFileStructure({
                     searchId: listItem.id,
                     name: listItem.name,
-                    mimeType: listItem.mimeType
                 });
 
                 // @ts-ignore
@@ -97,94 +96,74 @@ export class GoogleService {
     }
 
     async downloadNewFilesAndDeleteUnlistedFiles({
-        contentItemId, googleFolder, contentItemPath
+        googleSortedContent,
+        contentItemPath
     }: DownloadMultipleNewFilesAndDeleteUnlistedFiles){
 
-        let index = 0;
-        const id = contentItemId || process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID;
-        const folderStructurePath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER]);
-        const parentFileSystemFolderPath = contentItemPath ? contentItemPath : folderStructurePath;
-        const parentFileSystemFolderContent = this.fileSystemService.getListOfItemsInFolder(parentFileSystemFolderPath);
-        /* !!! ПАПКИ, КОТОРЫЕ СЛЕДУЕТ ИСКЛЮЧИТЬ ИЗ ПРОВЕРКИ И УДАЛЕНИЯ
-        (ОНИ ЖЕ ЯВЛЯЮТСЯ ПАПКАМИ, СОДЕРЖАЩИМИ ВЕСЬ ОСНОВНОЙ КОНТЕНТ) !!! */
+        const contentKeys = Object.keys(googleSortedContent);
+        const folderStructurePath = process.env.EASESCREEN_MMS_MEDIA_FOLDER;
+
+        // /* !!! ПАПКИ, КОТОРЫЕ СЛЕДУЕТ ИСКЛЮЧИТЬ ИЗ ПРОВЕРКИ И УДАЛЕНИЯ
+        // (ОНИ ЖЕ ЯВЛЯЮТСЯ ПАПКАМИ, СОДЕРЖАЩИМИ ВЕСЬ ОСНОВНОЙ КОНТЕНТ) !!! */
         const exceptionFolders = ["1344x1152", "full"];
-        const googleFolderContent = googleFolder[id].map(item => item?.name);
 
-        // удаление контента, которого нет в актуальном списке
-        for(const contentItem of parentFileSystemFolderContent){
-            /* удаление файла/папки осуществляется в том случае, если название файла/папки в файловой системе
-            не содержится в массиве с именами файлов/папок из облачного хранилища google */
-            if( ![...exceptionFolders, ...googleFolderContent].includes(contentItem) ){
+        for await (const singleContentKey of contentKeys){
 
-                fs.rmSync(fileSystem.joinPath([parentFileSystemFolderPath, contentItem]), {recursive: true, force: true});
+            const contentItem = googleSortedContent[singleContentKey];
+            const newContentItemPath = (contentItemPath ?
+                fileSystem.joinPath([contentItemPath, singleContentKey]) :
+                fileSystem.joinPath([folderStructurePath, singleContentKey])
+            );
 
-                this.fileSystemService.consoleColorLog({
-                    consoleString: `Item ${contentItem} is deleted`,
-                    colorWords: {
-                        red: [contentItem],
+            if(Array.isArray(contentItem)){
+
+                const parentFileSystemFolderContent = this.fileSystemService.getListOfItemsInFolder(newContentItemPath);
+                const googleFileNames = contentItem.map(item => item.name);
+
+                for await (const fileName of parentFileSystemFolderContent){
+                    if( ![...exceptionFolders, ...googleFileNames].includes(fileName) ){
+
+                        fs.rmSync(fileSystem.joinPath([newContentItemPath, fileName]), {recursive: true, force: true});
+
+                        this.fileSystemService.consoleColorLog({
+                            consoleString: `Item ${fileName} is deleted`,
+                            colorWords: {
+                                red: [fileName],
+                            }
+                        });
+
                     }
-                });
+                }
 
-            }
+                for await (const internalContentItem of contentItem){
 
-        }
+                    if(!parentFileSystemFolderContent.includes(internalContentItem.name)){
 
-        // проход по контенту в конкретной папке с названием
-        for await (const contentItem of googleFolder[id]){
+                        await this.downloadSingleFile({
+                            fileID: internalContentItem.id,
+                            folderPath: newContentItemPath
+                        });
 
-            // для файлов
-            if(contentItem.mimeType !== "folder"){
+                        this.fileSystemService.consoleColorLog({
+                            consoleString: `New file ${internalContentItem.name} is downloaded`,
+                            colorWords: {
+                                green: ["file"],
+                                blue: [internalContentItem.name]
+                            }
+                        });
 
-                const newFolderPath = contentItemPath ? contentItemPath : folderStructurePath;
-                const fileName = contentItem.name;
-
-                // если файла нет в текущем каталоге, тогда скачиваем его
-                if(!parentFileSystemFolderContent.includes(fileName)){
-
-                    await this.downloadSingleFile({
-                        fileID: contentItem.id,
-                        folderPath: newFolderPath
-                    });
-
-                    this.fileSystemService.consoleColorLog({
-                        consoleString: `New file ${contentItem.name} is downloaded`,
-                        colorWords: {
-                            green: ["file"],
-                            blue: [contentItem.name]
-                        }
-                    });
+                    }
 
                 }
 
-                // для папок
             } else {
-
-                const contentItemId = Object.keys(contentItem)[0];
-                const folderName = contentItem.name;
-                const newFolder = googleFolder[id][index];
-                const newContentItemPath = contentItemPath ?
-                    path.join(contentItemPath, folderName) :
-                    path.join(folderStructurePath, folderName);
-
-                if(!fs.existsSync(newContentItemPath)){
-
-                    fs.mkdirSync(newContentItemPath);
-                    this.fileSystemService.consoleColorLog({
-                        consoleString: `New folder ${folderName} is created`,
-                        colorWords: {
-                            green: ["folder"],
-                            blue: [folderName],
-                        }
-                    });
-
-                }
-
-                await this.downloadNewFilesAndDeleteUnlistedFiles({contentItemId, googleFolder: newFolder, contentItemPath: newContentItemPath});
+                await this.downloadNewFilesAndDeleteUnlistedFiles({
+                    googleSortedContent: contentItem,
+                    contentItemPath: newContentItemPath
+                })
             }
 
-            index += 1;
         }
-
     }
 
 }

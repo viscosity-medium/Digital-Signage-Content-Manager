@@ -131,19 +131,34 @@ const Schedule = () => {
                     }
                 </UnorderedList>
             </Div>
-            <Button
-                className={"border-[3px] border-white rounded transition duration-300 hover:bg-[#00000033]"}
-                onClick={()=>{
-                    onSaveButtonClick(dispatch, scheduleStructure)
-                }}
+            <Div
+                className={"flex justify-between w-[100%]"}
             >
-                <Text
-                    tag={"p"}
-                    className={"py-[4px] px-[8px] text-[#fff] text-[20px]"}
+                <Button
+                    className={"w-[70%] border-[3px] border-white rounded transition duration-300 hover:bg-[#00000033]"}
+                    onClick={()=>{
+                        onSaveButtonClick(dispatch, scheduleStructure)
+                    }}
                 >
-                    Сохранить изменения
-                </Text>
-            </Button>
+                    <Text
+                        tag={"p"}
+                        className={"py-[4px] px-[8px] text-[#fff] text-[20px]"}
+                    >
+                        Сохранить расписание
+                    </Text>
+                </Button>
+                <Button
+                    className={"w-[25%] border-[3px] border-[#65ff94] rounded transition duration-300 hover:bg-[#00000033]"}
+                >
+                    <Text
+                        tag={"p"}
+                        className={"py-[4px] px-[8px] text-[#65ff94] text-[20px]"}
+                    >
+                        Загрузить на плееры
+                    </Text>
+                </Button>
+            </Div>
+
         </Div>
     );
 };

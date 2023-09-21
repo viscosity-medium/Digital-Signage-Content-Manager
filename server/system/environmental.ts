@@ -1,0 +1,2 @@
+export const regExpConditionToCollectContentIntoSingleFolder = new RegExp(/((?<=C:\\mms\\Media\\ENKA\\yabloneviy\\day)|(?<=C:\\mms\\Media\\ENKA\\yabloneviy\\night)|(?<=C:\\mms\\Media\\ENKA\\uglovoi\\day)|(?<=C:\\mms\\Media\\ENKA\\uglovoi\\night))(.*)(?=(\\[^\\]*$)|$)/);
+export const regExpConditionToDeleteIntermediateFoldersOnPath = new RegExp(/((?<=ENKA\\yabloneviy\\day)|(?<=ENKA\\yabloneviy\\night)|(?<=ENKA\\uglovoi\\day)|(?<=ENKA\\uglovoi\\night))(.*)(?=(\\[^\\]*$))/)

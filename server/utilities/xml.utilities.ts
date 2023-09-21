@@ -6,6 +6,7 @@ import path from "path";
 import {calculateActiveDays} from "./converter";
 import {videoItem} from "../xml/_xml_elements/videoItem";
 import {pictureItem} from "../xml/_xml_elements/pictureItem";
+import {regExpConditionToDeleteIntermediateFoldersOnPath} from "../system/environmental";
 
 
 const regExpShortCondition = /^\s*<(?!\/*(TMultiItem|Items|TMovieItem|FileName|easescreen.*|Comment)).*>*.*(\n|\r)/;
@@ -79,14 +80,17 @@ class XmlUtilities {
             } else {
 
                 const fullFilePath = path.join(folderWithContentPath, currentItem.name);
-                const relativeMmsMediaPoolFilePath = fullFilePath.replace(/C:\\mms\\Media\\/gm, "").replace(/_/gm, "&#95;")
+                const relativeMmsMediaPoolFilePath = fullFilePath
+                    .replace(/C:\\mms\\Media\\/gm, "")
+                    .replace(regExpConditionToDeleteIntermediateFoldersOnPath, "")
+                    .replace(/_/gm, "&#95;");
 
-                if(currentItem.mimeType.match("video")){
+                const dateLimits = calculateActiveDays({
+                    minDay: currentItem.limits.date.start,
+                    maxDay: currentItem.limits.date.end
+                });
 
-                    const dateLimits = calculateActiveDays({
-                        minDay: currentItem.limits.date.start,
-                        maxDay: currentItem.limits.date.end
-                    });
+                if(currentItem.mimeType?.match("video")){
 
                     return (`${
                         accumulator
@@ -98,11 +102,15 @@ class XmlUtilities {
                         })
                     }`);
 
-                } else if(currentItem.mimeType.match("image")) {
+                } else if(currentItem.mimeType?.match("image")) {
                     return (`${
                         accumulator
                     }${
-                        pictureItem(fullFilePath)
+                        pictureItem({
+                            relativeMmsMediaPoolFilePath,
+                            dateLimits,
+                            fileDuration: currentItem.limits.time
+                        })
                     }`)
                 } else {
                     return (`${accumulator}`);

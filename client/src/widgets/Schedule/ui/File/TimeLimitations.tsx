@@ -9,10 +9,10 @@ import {useAppDispatch} from "../../../../../store/store";
 import dayjs from "dayjs";
 
 const TimeLimitations: FC<LimitationsProps> = ({
-                                                   fileItem,
-                                                   textColor,
-                                                   fileUniqueId
-                                               }) => {
+   fileItem,
+   textColor,
+   fileUniqueId
+}) => {
 
     const dispatch = useAppDispatch();
     const [isActive, setIsActive] = useState<boolean>(fileItem.limits.timeIsActive);

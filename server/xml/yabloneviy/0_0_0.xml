@@ -31,6 +31,174 @@
                     15
                 </DefaultTime>
                 <Items>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\night\domashnij&#95;1344x1152&#95;01&#95;Cafe&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\night\maer&#95;LADA&#95;Vesta&#95;SW&#95;Cross&#95;1344&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\night\maer&#95;april-01&#95;letu-VSE&#95;1344&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\night\maer&#95;podruzhka&#95;09-04&#95;1344&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\night\maer&#95;roskongress&#95;09-05&#95;1344&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\night\myaso-riba&#95;1344&#95;dostavka&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\night\maer&#95;smm&#95;09-06&#95;1344&#95;01&#95;pomada&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
                 </Items>
             </TMultiItem>
             <TMultiItem>
@@ -165,6 +333,12 @@
                         <DisplayTime>
                             -1
                         </DisplayTime>
+                        <MinDate>
+                            45173
+                        </MinDate>
+                        <MaxDate>
+                            45197
+                        </MaxDate>
                         <Log>
                             True
                         </Log>
@@ -181,7 +355,7 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\kp&#95;mobilnoe&#95;prilojenie&#95;kard&#95;1344&#95;cake.mp4'
+                            'ENKA\yabloneviy\day\Parkovka&#95;free&#95;green&#95;1344.mp4'
                         </FileName>
                     </TMovieItem>
                     <TMovieItem>
@@ -205,7 +379,7 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\nac&#95;lot&#95;1344.mp4'
+                            'ENKA\yabloneviy\day\maer&#95;okko&#95;09-07&#95;1344&#95;02&#95;spivak.mp4'
                         </FileName>
                     </TMovieItem>
                     <TMovieItem>
@@ -229,7 +403,31 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\maer&#95;rich&#95;09-08&#95;1344.mp4'
+                            'ENKA\yabloneviy\day\maer&#95;Lynxauto&#95;09-06&#95;1344.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\day\maer&#95;08-30&#95;skk&#95;1344.mp4'
                         </FileName>
                     </TMovieItem>
                     <TMovieItem>
@@ -238,8 +436,11 @@
                             -1
                         </DisplayTime>
                         <MinDate>
-                            45189
+                            45190
                         </MinDate>
+                        <MaxDate>
+                            45252
+                        </MaxDate>
                         <Log>
                             True
                         </Log>
@@ -256,7 +457,7 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\Parkovka&#95;free&#95;green&#95;1344.mp4'
+                            'ENKA\yabloneviy\day\kp&#95;mobilnoe&#95;prilojenie&#95;kard&#95;1344&#95;cake.mp4'
                         </FileName>
                     </TMovieItem>
                     <TMovieItem>
@@ -280,7 +481,62 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\kp&#95;mobilnoe&#95;prilojenie&#95;kard&#95;1344&#95;cake.mp4'
+                            'ENKA\yabloneviy\day\maer&#95;08-30&#95;skk&#95;1344.mp4'
+                        </FileName>
+                    </TMovieItem>
+                </Items>
+            </TMultiItem>
+            <TMultiItem>
+                <Comment>
+                    'ENKA&#95;1344&#95;night-1&#95;5min'
+                </Comment>
+                <DisplayTime>
+                    -1
+                </DisplayTime>
+                <Effect.TransitionNr>
+                    0
+                </Effect.TransitionNr>
+                <DefaultTime>
+                    15
+                </DefaultTime>
+                <Items>
+                    <TPictureItem>
+                        <Date></Date>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            0
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <FileName>
+                            'ENKA\yabloneviy\day\maer&#95;roskongress&#95;09-05&#95;1344.jpg'
+                        </FileName>
+                    </TPictureItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\day\maer&#95;smm&#95;09-06&#95;1344&#95;01&#95;pomada.mp4'
                         </FileName>
                     </TMovieItem>
                     <TMovieItem>
@@ -304,7 +560,31 @@
                             clDefault
                         </Effect.BackColor>
                         <FileName>
-                            'ENKA\yabloneviy\day\blockItem&#95;1\maer&#95;08-15&#95;motherbear&#95;1344.mp4'
+                            'ENKA\yabloneviy\day\myaso-riba&#95;1344&#95;dostavka.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\day\nac&#95;lot&#95;1344.mp4'
                         </FileName>
                     </TMovieItem>
                 </Items>
@@ -355,6 +635,94 @@
                     15
                 </DefaultTime>
                 <Items>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\day\kp&#95;mobilnoe&#95;prilojenie&#95;kard&#95;1344&#95;cake.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\day\keksa&#95;2023-08-31&#95;1344.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\day\maer&#95;08-15&#95;motherbear&#95;1344.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMultiItem>
+                        <Comment>
+                            'ENKA&#95;1344&#95;night-1&#95;5min'
+                        </Comment>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Effect.TransitionNr>
+                            0
+                        </Effect.TransitionNr>
+                        <DefaultTime>
+                            15
+                        </DefaultTime>
+                        <Items>
+                        </Items>
+                    </TMultiItem>
                 </Items>
             </TMultiItem>
         </Items>

@@ -1,5 +1,10 @@
+import {VideoItemProps} from "./videoItem";
 
-export const pictureItem = (filePath) => {
+export const pictureItem = ({
+    relativeMmsMediaPoolFilePath,
+    dateLimits,
+    fileDuration
+}: VideoItemProps) => {
     return(
     `   <TPictureItem>
             <Date></Date>
@@ -7,7 +12,7 @@ export const pictureItem = (filePath) => {
             <Effect.TransitionNr>0</Effect.TransitionNr>
             <Effect.TransitionParam>1</Effect.TransitionParam>
             <FileName>
-                ${filePath}
+                '${relativeMmsMediaPoolFilePath}'
             </FileName>
         </TPictureItem>
     `

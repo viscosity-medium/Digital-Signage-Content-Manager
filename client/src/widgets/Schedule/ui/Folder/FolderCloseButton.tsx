@@ -25,7 +25,8 @@ const FolderCloseButton: FC<FolderCloseButtonProps> = ({
         return (
             <div>
                 <Button
-                    onClick={()=>{
+                    onClick={(event)=>{
+                        event.stopPropagation();
                         onDeleteButtonClick(dispatch, scheduleStructure, activeDirectoryId, index)
                     }}
                     className={"absolute top-3 right-3 z-0"}

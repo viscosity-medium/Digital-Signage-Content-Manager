@@ -216,7 +216,7 @@ const createNewScheduleStructure = (
                                 ...accum,
                                 currentItem,
                                 {
-                                    type: "googleFolder",
+                                    type: "folder",
                                     name: "folder",
                                     uniqueId: uuid(),
                                     isEditable: true,
@@ -239,8 +239,8 @@ const createNewScheduleStructure = (
                     {
                         ...currentItem,
                         content: content?.length !== 0 ? content : [{
-                            type: "googleFolder",
-                            name: "googleFolder",
+                            type: "folder",
+                            name: "folder",
                             uniqueId: uuid(),
                             isEditable: true,
                             content: []
@@ -477,6 +477,7 @@ export const onDeleteButtonClick = (
 
     dispatch(scheduleActions.setScheduleStructure(newSchedule));
     dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));
+    dispatch(scheduleActions.setActiveItemIndex(undefined));
 };
 
 export const onCloseCurrentFolderClick = (

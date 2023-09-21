@@ -26,6 +26,14 @@ export enum StaticFolders {
     "Night" = "Night"
 }
 
+export enum StaticFoldersGoogle {
+    "rootDirectory" = "rootDirectory",
+    "yabloneviy" = "yabloneviy",
+    "uglovoi" = "uglovoi",
+    "day" = "day",
+    "night" = "night"
+}
+
 export interface GetSeparatedScheduleItems {
     [StaticFolders.Yabloneviy]: {
         [StaticFolders.Day]: ScheduleFolderInterface | undefined

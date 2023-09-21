@@ -5,10 +5,24 @@ export interface DownloadSingleFile {
     folderPath?: string
 }
 
+export interface GoogleContentItem {
+    id: string
+    name: string
+}
+
+export interface ScreenContentStructure{
+    day: GoogleContentItem[]
+    night: GoogleContentItem[]
+}
+
+export interface SortedContentStructure {
+    yabloneviy: ScreenContentStructure
+    uglovoi: ScreenContentStructure
+}
+
 export interface DownloadMultipleNewFilesAndDeleteUnlistedFiles {
-    contentItemId?: string,
     contentItemPath?: string,
-    googleFolder: string | { [p: string]: drive_v3.Schema$File[] | any}
+    googleSortedContent: SortedContentStructure
 }
 
 export interface GetFileListInFolder {searchId?: string}
@@ -16,5 +30,4 @@ export interface GetFileListInFolder {searchId?: string}
 export interface GetFullFileStructure {
     searchId?: string,
     name?: string,
-    mimeType?: string
 }

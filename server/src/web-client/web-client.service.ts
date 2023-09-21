@@ -3,7 +3,6 @@ import {FileSystemService} from "../file-system/file-system.service";
 import fs from "fs";
 import {ScheduleStructure} from "../../types/scheduleStucture.types";
 import {processSchedule} from "../../utilities/recursiveCycle.utilities";
-import {fileSystem} from "../../utilities/fileSystem.utilities";
 
 @Injectable()
 export class WebClientService {
