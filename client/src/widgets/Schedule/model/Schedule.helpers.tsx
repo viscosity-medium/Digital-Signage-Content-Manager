@@ -2,7 +2,7 @@ import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
 import {ScheduleFileItem} from "@/widgets/Schedule/ui/ScheduleFileItem";
 import update from "immutability-helper";
 import {AppDispatch} from "../../../../store/store";
-import {updateScheduleStructure} from "@/widgets/Schedule/model/Schedule.asyncThunks";
+import {updateScheduleStructure, uploadXmlFilesOnMmsServer} from "@/widgets/Schedule/model/Schedule.asyncThunks";
 import {ScheduleFolderItem} from "@/widgets/Schedule/ui/ScheduleFolderItem";
 import {v4 as uuid} from "uuid";
 import {ScheduleFileInterface, ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
@@ -461,16 +461,50 @@ export const onFolderElementDoubleClick = (
 
 };
 
-export const onSaveButtonClick = (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleFileInterface | ScheduleFolderInterface>) => {
-    dispatch(updateScheduleStructure({scheduleStructure}));
+export const onSaveButtonClick = async (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleFileInterface | ScheduleFolderInterface>) => {
+
+    const modalContent = await dispatch(updateScheduleStructure({scheduleStructure}))
+        .then((serverResponse: any) => {
+            return {
+                response: serverResponse.payload.response
+            }
+        })
+        .catch(() => {
+            return {
+                response: "",
+                error: "Произошла ошибка: расписание не было сохранено на сервере"
+            }
+        });
+
     dispatch(modalActions.setModalIsShown());
+    dispatch(modalActions.setModalIsContent(modalContent));
+
 };
+
+export const onDeployButtonClick = async (dispatch: AppDispatch) => {
+    const modalContent = await dispatch(uploadXmlFilesOnMmsServer())
+    .then((serverResponse: any) => {
+        return {
+            response: serverResponse.payload.response
+        }
+    })
+    .catch(() => {
+        return {
+            response: "",
+            error: "Произошла ошибка: xml-расписание не было загружено на mms-сервер"
+        }
+    });
+
+    dispatch(modalActions.setModalIsShown());
+    dispatch(modalActions.setModalIsContent(modalContent));
+}
 
 export const onDeleteButtonClick = (
     dispatch: AppDispatch,
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
     activeDirectory: string,
-    deleteIndex: number ) => {
+    deleteIndex: number
+) => {
 
     const newSchedule = createNewScheduleStructureByDeletion(scheduleStructure, activeDirectory, deleteIndex)
     const newFolderContent = createNewActiveDirectoryItemsAfterDeletion(newSchedule, activeDirectory)

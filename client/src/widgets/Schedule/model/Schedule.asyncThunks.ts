@@ -22,11 +22,34 @@ export const updateScheduleStructure = createAsyncThunk(
     "schedule/updateScheduleStructure",
     async ({scheduleStructure}: {scheduleStructure: Array<ScheduleFolderInterface | ScheduleFileInterface>}) => {
 
-        const axiosResponse: AxiosResponse<Array<ScheduleFolderInterface>> = await axiosApi.put("update-schedule-structure", {
+        const axiosResponse: AxiosResponse<{
+            schedule: Array<ScheduleFolderInterface>
+            response: string
+        }> = await axiosApi.put("update-schedule-structure", {
             scheduleStructure
         });
 
-        return axiosResponse.data;
+        return {
+            newSchedule: axiosResponse?.data?.schedule,
+            response: axiosResponse?.data?.response
+        };
+
+    }
+)
+
+export const uploadXmlFilesOnMmsServer = createAsyncThunk(
+    "schedule/uploadXmlFilesOnMmsServer",
+    async () => {
+
+        const axiosResponse: AxiosResponse<{
+            response: string
+            error: string
+        }> = await axiosApi.get("upload-xml-files-to-mms");
+
+        return {
+            response: axiosResponse?.data?.response,
+            error: axiosResponse?.data?.error
+        };
 
     }
 )

@@ -5,7 +5,7 @@ import {createPortal} from "react-dom";
 import {ModalContainer} from "@/widgets/Modal/ui/content/ModalContainer";
 import {UploadInformation} from "@/widgets/Modal/ui/content/UploadInformation";
 import {useSelector} from "react-redux";
-import {getModalState} from "@/widgets/Modal/model/Modal.selectors";
+import {getModalContent, getModalState} from "@/widgets/Modal/model/Modal.selectors";
 
 export interface ModalWindowProps extends DetailedHTMLProps<DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement> {}
 
@@ -15,6 +15,7 @@ const ModalWindow: FC<ModalWindowProps> = ({
 
     const [portal, setPortal] = useState<any>(null);
     const isModalShown = useSelector(getModalState);
+    const modalContent = useSelector(getModalContent);
 
     useEffect(() => {
         if(typeof window.document !== undefined){
@@ -27,7 +28,9 @@ const ModalWindow: FC<ModalWindowProps> = ({
             createPortal(
                 <ModalContainer
                 >
-                    <UploadInformation/>
+                    <UploadInformation
+                        modalContent={modalContent}
+                    />
                 </ModalContainer>,
                 portal
             )

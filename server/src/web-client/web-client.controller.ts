@@ -24,4 +24,8 @@ export class WebClientController {
         return this.webClientService.updateScheduleStructure(scheduleStructure);
     }
 
+    @Get("upload-xml-files-to-mms")
+    uploadXmlFilesToMms(){
+        return this.webClientService.uploadXmlFilesToMms()
+    }
 }

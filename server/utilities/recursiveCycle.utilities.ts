@@ -1,15 +1,10 @@
 import {StaticFolders, StaticFoldersGoogle} from "../types/xml.types";
-import {xmlBase} from "../xml/_xml_elements/xmlBase";
-import xmlFormat from "xml-formatter";
 import {
     GetActualGoogleFilesList,
     GetSeparatedScreenSchedules,
     GetUniqueFilesList,
     GoogleItem
 } from "../types/recursiveCycle.types";
-import {fileSystem} from "./fileSystem.utilities";
-import {xmlUtilities} from "./xml.utilities";
-import {ftpUtilities} from "./ftp.utilitie";
 
 export const getActualGoogleFilesList: GetActualGoogleFilesList = (structure) => {
 
@@ -190,73 +185,3 @@ export const getUniqueFilesList: GetUniqueFilesList = (
 
 }
 
-export const processSchedule = async ({schedule}: {schedule: any[]}) => {
-
-    const {
-        Yabloneviy,
-        Uglovoi
-    } = getSeparatedScreenSchedules(schedule);
-
-    const uniqueYabloneviyDayList = getUniqueFilesList(Yabloneviy[StaticFolders.Day].content, []);
-    const uniqueYabloneviyNightList = getUniqueFilesList(Yabloneviy[StaticFolders.Night].content, []);
-    const uniqueUglovoiDayList = getUniqueFilesList(Uglovoi[StaticFolders.Day].content, []);
-    const uniqueUglovoiNightList = getUniqueFilesList(Uglovoi[StaticFolders.Night].content, []);
-
-    console.log(uniqueYabloneviyDayList);
-    console.log(uniqueYabloneviyNightList);
-    console.log(uniqueUglovoiDayList);
-    console.log(uniqueUglovoiNightList);
-
-    const yabloneviyDayFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "day"]);
-    const yabloneviyNightFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "night"]);
-    const uglovoyDayFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "uglovoi", "day"]);
-    const uglovoyNightFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "uglovoi", "night"]);
-
-    const YabloneviyDaySchedule = xmlUtilities.createXmlSchedule({
-        schedule: Yabloneviy[StaticFolders.Day].content,
-        folderWithContentPath: yabloneviyDayFolderPath
-    });
-    const YabloneviyNightSchedule = xmlUtilities.createXmlSchedule({
-        schedule: Yabloneviy[StaticFolders.Night].content,
-        folderWithContentPath: yabloneviyNightFolderPath
-    });
-    const UglovoiDaySchedule = xmlUtilities.createXmlSchedule({
-        schedule: Uglovoi[StaticFolders.Day].content,
-        folderWithContentPath: uglovoyDayFolderPath
-    });
-    const UglovoiNightSchedule = xmlUtilities.createXmlSchedule({
-        schedule: Uglovoi[StaticFolders.Night].content,
-        folderWithContentPath: uglovoyNightFolderPath
-    });
-
-    const YabloneviyXmlSchedule = xmlBase(YabloneviyDaySchedule, YabloneviyNightSchedule);
-    const UglovoiXmlSchedule = xmlBase(UglovoiDaySchedule, UglovoiNightSchedule);
-
-    const YabloneviyFolderPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "yabloneviy"]);
-    const UglovoiFolderPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "uglovoi"]);
-    const YabloneviyXmlPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "yabloneviy", "0_0_0.xml"]);
-    const UglovoiXmlPath = fileSystem.createAbsolutePathFromProjectRoot(["xml", "uglovoi", "0_0_0.xml"]);
-
-    const uniqueFilesList = getUniqueFilesList(schedule, []);
-
-    const YabloneviyXmlFormattedSchedule = xmlFormat(YabloneviyXmlSchedule);
-    const UglovoiXmlFormattedSchedule = xmlFormat(UglovoiXmlSchedule);
-
-    fileSystem.createMultipleFoldersRecursively([
-        YabloneviyFolderPath,
-        UglovoiFolderPath
-    ]);
-
-    fileSystem.writeFileSync(YabloneviyXmlPath, YabloneviyXmlFormattedSchedule);
-    fileSystem.writeFileSync(UglovoiXmlPath, UglovoiXmlFormattedSchedule);
-
-    await ftpUtilities.uploadContentToMmsPlayers([
-        {
-            playerId: "{318A5E69-E22C-4141-95F5-DBF77E176ABF}",
-            fileSystemPath: YabloneviyXmlPath
-        }
-    ])
-
-    return("");
-
-}

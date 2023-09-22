@@ -1,5 +1,9 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {fetchScheduleStructure, updateScheduleStructure} from "@/widgets/Schedule/model/Schedule.asyncThunks";
+import {
+    fetchScheduleStructure,
+    updateScheduleStructure,
+    uploadXmlFilesOnMmsServer
+} from "@/widgets/Schedule/model/Schedule.asyncThunks";
 import {ScheduleScheme} from "@/widgets/Schedule/model/Schedule.types";
 import {ScheduleFileInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
@@ -47,11 +51,21 @@ const scheduleSlice = createSlice({
             console.log(action)
         });
 
-        // updateScheduleStructure
-        builder.addCase(updateScheduleStructure.fulfilled, (state, action: PayloadAction<Array<ScheduleFileInterface | ScheduleFolderInterface>>)=> {
-            state.scheduleStructure = action.payload;
+        // update schedule structure
+        builder.addCase(updateScheduleStructure.fulfilled, (state, action: PayloadAction<{
+            newSchedule: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+            response: string
+        }>)=> {
+            state.scheduleStructure = action?.payload?.newSchedule;
         });
 
+        // upload xml files on mms server
+        builder.addCase(uploadXmlFilesOnMmsServer.fulfilled, (state, action: PayloadAction<{
+            response: string,
+            error: string
+        }>) => {
+
+        })
     }
 });
 

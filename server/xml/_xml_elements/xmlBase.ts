@@ -3,7 +3,7 @@ import {daySchedule} from "./daySchedule";
 import {nightSchedule} from "./nightSchedule";
 import {blackScreen1, blackScreen2} from "./blackPicture";
 
-export const xmlBase = (day, night) => {
+export const createXmlContent = (day, night) => {
 
     const daySchedule1 = daySchedule(day);
     const nightSchedule1 = nightSchedule(night);

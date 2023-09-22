@@ -22,13 +22,29 @@ export type GetActualGoogleFilesList = (structure: GoogleItem) => string[];
 
 export type GetSeparatedScreenSchedules = (parentItem: (ScheduleFolderInterface | ScheduleFileInterface)[]) => GetSeparatedScheduleItems;
 
+export interface DataForXml {
+    schedule: ScheduleStructure,
+    folderWithContentPath: string
+}
+
 export type CreateXmlSchedule = ({
     schedule,
     folderWithContentPath
-}:{
-    schedule: ScheduleStructure,
-    folderWithContentPath: string
-}) => string;
+}: DataForXml) => string;
+
+export interface DataForMultipleXmlFiles {
+    YabloneviyDaySchedule: DataForXml,
+    YabloneviyNightSchedule: DataForXml,
+    UglovoiDaySchedule: DataForXml,
+    UglovoiNightSchedule: DataForXml;
+}
+
+export type CreateMultipleXmlSchedules = (data: DataForMultipleXmlFiles) => ({
+    YabloneviyDaySchedule: string,
+    YabloneviyNightSchedule: string,
+    UglovoiDaySchedule: string,
+    UglovoiNightSchedule: string
+})
 
 export type GetUniqueFilesList = (
     structure: (ScheduleFolderInterface | ScheduleFileInterface)[],

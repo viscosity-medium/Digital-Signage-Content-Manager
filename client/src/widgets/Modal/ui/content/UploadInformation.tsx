@@ -1,19 +1,36 @@
+import {FC} from "react";
 import {Button, Text} from "@/shared";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
 import {useAppDispatch} from "../../../../../store/store";
+import {UploadInformationProps} from "@/widgets/Modal/model/Modal.types";
 
-const UploadInformation = () => {
+const UploadInformation: FC<UploadInformationProps> = ({modalContent}) => {
 
     const dispatch = useAppDispatch();
 
     return (
         <>
-        <Text
-            tag={"h2"}
-            className={"text-[20px]"}
-        >
-            Вы успешно сохранили расписание в системе EaseScreen
-        </Text>
+            {
+                !modalContent.error ? (
+                    <Text
+                        tag={"h2"}
+                        className={"text-[20px]"}
+                    >
+                        {
+                            modalContent.response
+                        }
+                    </Text>
+                ) : (
+                    <Text
+                        tag={"h2"}
+                        className={"text-[20px] text-red-500"}
+                    >
+                        {
+                            modalContent.error
+                        }
+                    </Text>
+                )
+            }
         <Button
             onClick={()=>{
                 dispatch(modalActions.setModalIsShown());
@@ -24,6 +41,7 @@ const UploadInformation = () => {
         </Button>
         </>
     );
+
 };
 
 export {UploadInformation};
