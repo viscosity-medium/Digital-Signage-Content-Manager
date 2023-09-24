@@ -1,4 +1,4 @@
-import {fetchSidebarStructure} from "./Sidebar.asyncThunks";
+import {fetchActualGoogleStructure, fetchSidebarStructure} from "./Sidebar.asyncThunks";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {SidebarScheme, SidebarStructure} from "./Sidebar.type";
 
@@ -15,8 +15,16 @@ const Sidebar = createSlice({
         setSearchBarValue: (state, action: PayloadAction<string>) => { state.searchBarValue = action.payload }
     },
     extraReducers: (builder) => {
+
         builder.addCase(fetchSidebarStructure.fulfilled, (state, action: PayloadAction<SidebarStructure>) => {
             state.structure = action.payload;
+        })
+
+        builder.addCase(fetchActualGoogleStructure.fulfilled, (state, action: PayloadAction<{
+            schedule: SidebarStructure,
+            response: string
+        }>) => {
+            state.structure = action.payload.schedule
         })
     }
 })

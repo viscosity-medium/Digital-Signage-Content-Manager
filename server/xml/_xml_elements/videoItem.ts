@@ -1,7 +1,7 @@
 
 export interface VideoItemProps {
     relativeMmsMediaPoolFilePath: string
-    fileDuration?: string
+    timeDuration?: number | undefined
     dateLimits: {
         lowerLimit: number | undefined
         upperLimit: number | undefined
@@ -11,7 +11,7 @@ export interface VideoItemProps {
 export const videoItem = ({
     relativeMmsMediaPoolFilePath,
     dateLimits,
-    fileDuration
+    timeDuration
 }: VideoItemProps) => {
 
     return(
@@ -32,10 +32,10 @@ export const videoItem = ({
             <FileName>
                 '${relativeMmsMediaPoolFilePath}'
             </FileName>${
-                (fileDuration && fileDuration !== "default") ?
+                timeDuration ?
                 (`
-                    <FilmEnd>${fileDuration}</FilmEnd>
-                    <FilmLen>${fileDuration}</FilmLen>
+                    <FilmEnd>${timeDuration}</FilmEnd>
+                    <FilmLen>${timeDuration}</FilmLen>
                 `) : 
                 ("")
             }

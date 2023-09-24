@@ -3,7 +3,7 @@ import {VideoItemProps} from "./videoItem";
 export const pictureItem = ({
     relativeMmsMediaPoolFilePath,
     dateLimits,
-    fileDuration
+    timeDuration
 }: VideoItemProps) => {
     return(
     `   <TPictureItem>

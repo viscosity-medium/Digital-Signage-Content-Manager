@@ -33,7 +33,7 @@ const UploadInformation: FC<UploadInformationProps> = ({modalContent}) => {
             }
         <Button
             onClick={()=>{
-                dispatch(modalActions.setModalIsShown());
+                dispatch(modalActions.setModalIsShown(false));
             }}
             className={"mt-[20px] px-[20px] py-[8px] border-[2px] border-solid border-[#000] rounded-[16px]"}
         >

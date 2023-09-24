@@ -1,10 +1,6 @@
-import {StaticFolders, StaticFoldersGoogle} from "../types/xml.types";
-import {
-    GetActualGoogleFilesList,
-    GetSeparatedScreenSchedules,
-    GetUniqueFilesList,
-    GoogleItem
-} from "../types/recursiveCycle.types";
+import {StaticFoldersGoogle} from "../types/xml.types";
+import {GetActualGoogleFilesList, GetUniqueFilesList, GoogleItem} from "../types/recursiveCycle.types";
+import {xmlUtilities} from "./xml.utilities";
 
 export const getActualGoogleFilesList: GetActualGoogleFilesList = (structure) => {
 
@@ -27,48 +23,6 @@ export const getActualGoogleFilesList: GetActualGoogleFilesList = (structure) =>
     }
 
 }
-
-export const getSeparatedScreenSchedules: GetSeparatedScreenSchedules = (parentItem) => {
-
-    return parentItem.reduce((accumulator, currentItem) => {
-
-       if(currentItem.type === "folder"){
-
-           if(currentItem.name === StaticFolders.rootDirectory){
-               return getSeparatedScreenSchedules(currentItem.content)
-           } else if ([StaticFolders.Yabloneviy, StaticFolders.Uglovoi].includes(currentItem.name as StaticFolders)){
-               return {
-                   ...accumulator,
-                   [currentItem.name]: currentItem.content.reduce((innerAccum, innerItem) => {
-                       if(innerItem.name === StaticFolders.Day){
-                           return {
-                               ...innerAccum,
-                               [StaticFolders.Day]: innerItem
-                           }
-                       } else if (innerItem.name === StaticFolders.Night){
-                           return {
-                               ...innerAccum,
-                               [StaticFolders.Night]: innerItem
-                           }
-                       }
-                   },{})
-               }
-           }
-
-       }
-
-    },{
-        [StaticFolders.Yabloneviy]: {
-            [StaticFolders.Day]: undefined,
-            [StaticFolders.Night]: undefined
-        },
-        [StaticFolders.Uglovoi]: {
-            [StaticFolders.Day]: undefined,
-            [StaticFolders.Night]: undefined
-        }
-    })
-
-};
 
 export const getSeparatedFileListFromGoogleStructure: any = (parentItem) => {
 
@@ -98,7 +52,7 @@ export const getSeparatedFileListFromGoogleStructure: any = (parentItem) => {
 
             if(currentItem.mimeType === "folder"){
                 if(currentItem.name === StaticFoldersGoogle.rootDirectory){
-                    return getSeparatedScreenSchedules(currentItem[0])
+                    return xmlUtilities.getSeparatedScreenSchedules(currentItem[0])
                 } else if ([StaticFoldersGoogle.yabloneviy, StaticFoldersGoogle.uglovoi].includes(currentItem.name as StaticFoldersGoogle)){
                     return {
                         ...accumulator,

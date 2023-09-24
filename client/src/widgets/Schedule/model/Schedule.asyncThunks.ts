@@ -39,12 +39,14 @@ export const updateScheduleStructure = createAsyncThunk(
 
 export const uploadXmlFilesOnMmsServer = createAsyncThunk(
     "schedule/uploadXmlFilesOnMmsServer",
-    async () => {
+    async ({scheduleStructure}: {scheduleStructure: Array<ScheduleFolderInterface | ScheduleFileInterface>}) => {
 
         const axiosResponse: AxiosResponse<{
             response: string
             error: string
-        }> = await axiosApi.get("upload-xml-files-to-mms");
+        }> = await axiosApi.put("upload-xml-files-to-mms", {
+            scheduleStructure
+        });
 
         return {
             response: axiosResponse?.data?.response,

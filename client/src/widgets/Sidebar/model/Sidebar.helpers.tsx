@@ -5,6 +5,10 @@ import {AppDispatch} from "../../../../store/store";
 import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
 import {ScheduleFileInterface, ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {v4 as uuid} from "uuid";
+import {ChangeEvent} from "react";
+import {sidebarActions} from "@/widgets/Sidebar/model/Sidebar.slice";
+import {fetchActualGoogleStructure} from "@/widgets/Sidebar/model/Sidebar.asyncThunks";
+import {modalActions} from "@/widgets/Modal/model/Modal.slice";
 
 
 export const createNewSchedule = (
@@ -122,21 +126,6 @@ const createNewActiveDirectoryItems = (
 
 }
 
-export const onListElementClick = (
-    dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
-    internalItem: SidebarStructureItem,
-    scheduleActiveDirectory: string,
-    activeItemIndex: number
-) => {
-
-    const newSchedule = createNewSchedule(scheduleStructure, internalItem, scheduleActiveDirectory, activeItemIndex)
-    const newFolderContent = createNewActiveDirectoryItems(newSchedule, scheduleActiveDirectory);
-
-    dispatch(scheduleActions.setScheduleStructure(newSchedule));
-    dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));
-}
-
 export const createRecursiveContent = ({
     structure,
     searchBarValue
@@ -196,5 +185,48 @@ export const createRecursiveContent = ({
         }
 
     }).filter((item)=> item)
+
+}
+
+export const onListElementClick = (
+    dispatch: AppDispatch,
+    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    internalItem: SidebarStructureItem,
+    scheduleActiveDirectory: string,
+    activeItemIndex: number
+) => {
+
+    const newSchedule = createNewSchedule(scheduleStructure, internalItem, scheduleActiveDirectory, activeItemIndex)
+    const newFolderContent = createNewActiveDirectoryItems(newSchedule, scheduleActiveDirectory);
+
+    dispatch(scheduleActions.setScheduleStructure(newSchedule));
+    dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));
+}
+
+export const onInputChange = (event: ChangeEvent<HTMLInputElement>, dispatch: AppDispatch) => {
+    dispatch(sidebarActions.setSearchBarValue(event.target.value));
+}
+
+export const onGoogleStructureButtonClick = async (dispatch: AppDispatch) => {
+
+    dispatch(modalActions.setModalIsShown(true));
+    dispatch(modalActions.setModalContent({
+        response: "Ожидайте. Файлы загружаются из облачного хранилища google на сервер."
+    }));
+
+    const modalContent = await dispatch(fetchActualGoogleStructure()).then((serverResponse: any) => {
+        return {
+            response: serverResponse.payload.response
+        }
+    })
+    .catch(() => {
+        return {
+            response: "",
+            error: "Произошла ошибка: файлы из облачного хранилища google не были загружены на сервер"
+        }
+    });
+
+    dispatch(modalActions.setModalIsShown(true));
+    dispatch(modalActions.setModalContent(modalContent));
 
 }

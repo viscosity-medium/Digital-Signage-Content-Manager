@@ -476,13 +476,13 @@ export const onSaveButtonClick = async (dispatch: AppDispatch, scheduleStructure
             }
         });
 
-    dispatch(modalActions.setModalIsShown());
-    dispatch(modalActions.setModalIsContent(modalContent));
+    dispatch(modalActions.setModalIsShown(true));
+    dispatch(modalActions.setModalContent(modalContent));
 
 };
 
-export const onDeployButtonClick = async (dispatch: AppDispatch) => {
-    const modalContent = await dispatch(uploadXmlFilesOnMmsServer())
+export const onDeployButtonClick = async (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleFileInterface | ScheduleFolderInterface>) => {
+    const modalContent = await dispatch(uploadXmlFilesOnMmsServer({scheduleStructure}))
     .then((serverResponse: any) => {
         return {
             response: serverResponse.payload.response
@@ -495,8 +495,8 @@ export const onDeployButtonClick = async (dispatch: AppDispatch) => {
         }
     });
 
-    dispatch(modalActions.setModalIsShown());
-    dispatch(modalActions.setModalIsContent(modalContent));
+    dispatch(modalActions.setModalIsShown(true));
+    dispatch(modalActions.setModalContent(modalContent));
 }
 
 export const onDeleteButtonClick = (

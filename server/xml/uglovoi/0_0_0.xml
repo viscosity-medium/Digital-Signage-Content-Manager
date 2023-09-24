@@ -47,6 +47,54 @@
                     15
                 </DefaultTime>
                 <Items>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\uglovoi\night\maer&#95;08-16&#95;full&#95;night-01.mp4'
+                        </FileName>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\uglovoi\night\kp&#95;mobilnoe&#95;prilojenie&#95;full&#95;kard&#95;cake&#95;night.mp4'
+                        </FileName>
+                    </TMovieItem>
                 </Items>
             </TMultiItem>
             <TMultiItem>

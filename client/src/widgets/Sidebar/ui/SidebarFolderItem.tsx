@@ -28,7 +28,7 @@ const SidebarFolderItem = ({
     return(
         <ListElement
             key={`${folderId}`}
-            className={`flex flex-col mx-[12px]`}
+            className={`flex flex-col`}
         >
             <Div
                 className={`flex mt-[8px]`}
@@ -58,7 +58,7 @@ const SidebarFolderItem = ({
             >
                 <UnorderedList
                     reference={folderContentRef}
-                    className={`flex flex-col mx-[12px]`}
+                    className={`flex flex-col mx-[20px]`}
                 >
                     {
                         createRecursiveContent({

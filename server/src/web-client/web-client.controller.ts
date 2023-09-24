@@ -1,15 +1,23 @@
 import {Body, Controller, Get, Put} from '@nestjs/common';
 import {WebClientService} from "./web-client.service";
 import {ScheduleStructure} from "../../types/scheduleStucture.types";
+import {GoogleService} from "../google/google.service";
 
 @Controller()
 export class WebClientController {
 
-    constructor(private webClientService: WebClientService) {}
+    constructor(
+        private webClientService: WebClientService,
+    ) {}
 
-    @Get("get-folder-structure")
-    getFolderStructure() {
-        return this.webClientService.getFolderStructure();
+    @Get("get-actual-google-data")
+    getActualGoogleData() {
+        return this.webClientService.getActualGoogleData();
+    }
+
+    @Get("get-google-drive-structure")
+    getGoogleDriveStructure() {
+        return this.webClientService.getGoogleDriveStructure();
     }
 
     @Get("get-schedule-structure")
@@ -19,13 +27,16 @@ export class WebClientController {
 
     @Put("update-schedule-structure")
     updateScheduleStructure(@Body() {scheduleStructure}: {
-        scheduleStructure: ScheduleStructure})
+        scheduleStructure: ScheduleStructure}
+    )
     {
         return this.webClientService.updateScheduleStructure(scheduleStructure);
     }
 
-    @Get("upload-xml-files-to-mms")
-    uploadXmlFilesToMms(){
-        return this.webClientService.uploadXmlFilesToMms()
+    @Put("upload-xml-files-to-mms")
+    uploadXmlFilesToMms(@Body() {scheduleStructure}: {
+        scheduleStructure: ScheduleStructure}
+    ){
+        return this.webClientService.uploadXmlFilesToMms(scheduleStructure)
     }
 }

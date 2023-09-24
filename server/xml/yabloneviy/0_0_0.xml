@@ -357,12 +357,24 @@
                         <FileName>
                             'ENKA\yabloneviy\day\Parkovka&#95;free&#95;green&#95;1344.mp4'
                         </FileName>
+                        <FilmEnd>
+                            10
+                        </FilmEnd>
+                        <FilmLen>
+                            10
+                        </FilmLen>
                     </TMovieItem>
                     <TMovieItem>
                         <Date></Date>
                         <DisplayTime>
                             -1
                         </DisplayTime>
+                        <MinDate>
+                            45195
+                        </MinDate>
+                        <MaxDate>
+                            45197
+                        </MaxDate>
                         <Log>
                             True
                         </Log>
@@ -381,6 +393,12 @@
                         <FileName>
                             'ENKA\yabloneviy\day\maer&#95;okko&#95;09-07&#95;1344&#95;02&#95;spivak.mp4'
                         </FileName>
+                        <FilmEnd>
+                            15
+                        </FilmEnd>
+                        <FilmLen>
+                            15
+                        </FilmLen>
                     </TMovieItem>
                     <TMovieItem>
                         <Date></Date>
@@ -405,6 +423,12 @@
                         <FileName>
                             'ENKA\yabloneviy\day\maer&#95;Lynxauto&#95;09-06&#95;1344.mp4'
                         </FileName>
+                        <FilmEnd>
+                            10
+                        </FilmEnd>
+                        <FilmLen>
+                            10
+                        </FilmLen>
                     </TMovieItem>
                     <TMovieItem>
                         <Date></Date>
@@ -429,6 +453,12 @@
                         <FileName>
                             'ENKA\yabloneviy\day\maer&#95;08-30&#95;skk&#95;1344.mp4'
                         </FileName>
+                        <FilmEnd>
+                            30
+                        </FilmEnd>
+                        <FilmLen>
+                            30
+                        </FilmLen>
                     </TMovieItem>
                     <TMovieItem>
                         <Date></Date>
@@ -459,6 +489,12 @@
                         <FileName>
                             'ENKA\yabloneviy\day\kp&#95;mobilnoe&#95;prilojenie&#95;kard&#95;1344&#95;cake.mp4'
                         </FileName>
+                        <FilmEnd>
+                            15
+                        </FilmEnd>
+                        <FilmLen>
+                            15
+                        </FilmLen>
                     </TMovieItem>
                     <TMovieItem>
                         <Date></Date>

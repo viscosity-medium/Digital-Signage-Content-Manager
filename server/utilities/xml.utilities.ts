@@ -1,18 +1,20 @@
 import xml2js from "xml2js";
 import {fileSystem} from "./fileSystem.utilities";
-import {CreateMultipleXmlSchedules, CreateXmlSchedule} from "../types/recursiveCycle.types";
+import {
+    CreateMultipleXmlSchedules,
+    CreateXmlSchedule,
+    GetSeparatedScreenSchedules
+} from "../types/recursiveCycle.types";
 import {folderMultiItem} from "../xml/_xml_elements/folderMultiItem";
 import path from "path";
-import {calculateActiveDays} from "./converter";
+import {calculateActiveDays, calculateTimeDuration} from "./converter";
 import {videoItem} from "../xml/_xml_elements/videoItem";
 import {pictureItem} from "../xml/_xml_elements/pictureItem";
 import {regExpConditionToDeleteIntermediateFoldersOnPath} from "../system/environmental";
 import {ScheduleStructure} from "../types/scheduleStucture.types";
-import {StaticFolders} from "../types/xml.types";
+import {GetSeparatedScheduleItems, StaticFolders} from "../types/xml.types";
 import {createXmlContent} from "../xml/_xml_elements/xmlBase";
 import xmlFormat from "xml-formatter";
-import {getSeparatedScreenSchedules} from "./recursiveCycle.utilities";
-
 
 const regExpShortCondition = /^\s*<(?!\/*(TMultiItem|Items|TMovieItem|FileName|easescreen.*|Comment)).*>*.*(\n|\r)/;
 
@@ -94,6 +96,7 @@ class XmlUtilities {
                     minDay: currentItem.limits.date.start,
                     maxDay: currentItem.limits.date.end
                 });
+                const timeDuration = calculateTimeDuration({timeDuration: currentItem.limits.time});
 
                 if(currentItem.mimeType?.match("video")){
 
@@ -103,7 +106,7 @@ class XmlUtilities {
                         videoItem({
                             relativeMmsMediaPoolFilePath,
                             dateLimits,
-                            fileDuration: currentItem.limits.time
+                            timeDuration
                         })
                     }`);
 
@@ -114,7 +117,7 @@ class XmlUtilities {
                         pictureItem({
                             relativeMmsMediaPoolFilePath,
                             dateLimits,
-                            fileDuration: currentItem.limits.time
+                            timeDuration
                         })
                     }`)
                 } else {
@@ -155,15 +158,55 @@ class XmlUtilities {
 
     }
 
-    formSeparatedXmlFiles = ({schedule}: { schedule: ScheduleStructure }): {
+    getSeparatedScreenSchedules: GetSeparatedScreenSchedules = (parentItem) => {
+
+        return parentItem.reduce((accumulator, currentItem) => {
+
+            if(currentItem.type === "folder"){
+
+                if(currentItem.name === StaticFolders.rootDirectory){
+                    return this.getSeparatedScreenSchedules(currentItem.content)
+                } else if ([StaticFolders.Yabloneviy, StaticFolders.Uglovoi].includes(currentItem.name as StaticFolders)){
+                    return {
+                        ...accumulator,
+                        [currentItem.name]: currentItem.content.reduce((innerAccum, innerItem) => {
+                            if(innerItem.name === StaticFolders.Day){
+                                return {
+                                    ...innerAccum,
+                                    [StaticFolders.Day]: innerItem
+                                }
+                            } else if (innerItem.name === StaticFolders.Night){
+                                return {
+                                    ...innerAccum,
+                                    [StaticFolders.Night]: innerItem
+                                }
+                            }
+                        },{})
+                    }
+                }
+
+            }
+
+        },{
+            [StaticFolders.Yabloneviy]: {
+                [StaticFolders.Day]: undefined,
+                [StaticFolders.Night]: undefined
+            },
+            [StaticFolders.Uglovoi]: {
+                [StaticFolders.Day]: undefined,
+                [StaticFolders.Night]: undefined
+            }
+        })
+
+    };
+
+    formSeparatedXmlFiles = ({
+        Yabloneviy,
+        Uglovoi
+    }: GetSeparatedScheduleItems): {
         YabloneviyXmlSchedule: string,
         UglovoiXmlSchedule: string
     } => {
-
-        const {
-            Yabloneviy,
-            Uglovoi
-        } = getSeparatedScreenSchedules(schedule);
 
         const yabloneviyDayFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "day"]);
         const yabloneviyNightFolderPath = fileSystem.joinPath([process.env.EASESCREEN_MMS_MEDIA_FOLDER, "yabloneviy", "night"]);
@@ -202,13 +245,6 @@ class XmlUtilities {
             UglovoiXmlSchedule
         }
 
-        // await ftpUtilities.uploadMultipleXmlFilesToMms([
-        //     {
-        //         playerId: "{318A5E69-E22C-4141-95F5-DBF77E176ABF}",
-        //         fileSystemPath: YabloneviyXmlPath
-        //     }
-        // ])
-
     }
 
     writeXmlFilesToFileSystem({
@@ -230,6 +266,15 @@ class XmlUtilities {
         fileSystem.createMultipleFoldersRecursively([YabloneviyFolderPath, UglovoiFolderPath]);
         fileSystem.writeFileSync(YabloneviyXmlPath, YabloneviyXmlFormattedSchedule);
         fileSystem.writeFileSync(UglovoiXmlPath, UglovoiXmlFormattedSchedule);
+    }
+
+    separateXmlScheduleAndWriteXmlFilesToFileSystem({newScheduleData}: {newScheduleData: ScheduleStructure}){
+
+        const { Yabloneviy, Uglovoi } = xmlUtilities.getSeparatedScreenSchedules(newScheduleData);
+        const { YabloneviyXmlSchedule, UglovoiXmlSchedule } = xmlUtilities.formSeparatedXmlFiles({ Yabloneviy, Uglovoi });
+
+        xmlUtilities.writeXmlFilesToFileSystem({ YabloneviyXmlSchedule, UglovoiXmlSchedule });
+
     }
 
 }

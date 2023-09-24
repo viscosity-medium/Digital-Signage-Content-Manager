@@ -30,7 +30,7 @@ const Schedule = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const structure = searchParams.get("structure");
-    const defaultFolderName = "Корневой каталог"
+    const defaultFolderName = "Корневой каталог";
 
     useFetchScheduleStructure();
     
@@ -39,7 +39,7 @@ const Schedule = () => {
             className={"flex flex-col justify-between m-[50px] p-[50px] w-[100%] max-h-[100vh] border-[4px] border-solid border-white"}
         >
             <Div
-                className={"flex flex-col max-h-[90%]"}
+                className={"flex flex-col max-h-[90%] pb-[16px]"}
             >
                 <Div
                     className={"flex justify-between"}
@@ -132,7 +132,7 @@ const Schedule = () => {
                 </UnorderedList>
             </Div>
             <Div
-                className={"flex justify-between w-[100%]"}
+                className={"flex justify-between mt-[0] w-[100%]"}
             >
                 <Button
                     className={"w-[70%] border-[3px] border-white rounded transition duration-300 hover:bg-[#00000033]"}
@@ -150,7 +150,7 @@ const Schedule = () => {
                 <Button
                     className={"w-[25%] border-[3px] border-[#65ff94] rounded transition duration-300 hover:bg-[#00000033]"}
                     onClick={async ()=>{
-                        await onDeployButtonClick(dispatch);
+                        await onDeployButtonClick(dispatch, scheduleStructure);
                     }}
                 >
                     <Text

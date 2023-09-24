@@ -21,13 +21,13 @@ class FtpUtilities{
 
         try{
 
-            const connectedClient: Client = await new Promise(resolve => {
-                ftpClientInstance.connect(ftpConfig);
-                ftpClientInstance.on("ready", ()=>{
-                    console.log("\x1b[37m", "Подключено");
-                    resolve(ftpClientInstance);
-                })
-            })
+            // const connectedClient: Client = await new Promise(resolve => {
+            //     ftpClientInstance.connect(ftpConfig);
+            //     ftpClientInstance.on("ready", ()=>{
+            //         console.log("\x1b[37m", "Подключено");
+            //         resolve(ftpClientInstance);
+            //     })
+            // })
 
             // for await (const {fileSystemPath, playerId} of mmsPlayers) {
             //
