@@ -33,7 +33,7 @@ const FolderItemHeader: FC<FolderItemHeaderProps> = ({
 
     const folderColorLight = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "folderBackgroundColor";
     const folderColorDark = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColorDark" : "folderBackgroundColorDark";
-    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blackTextColor";
+    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
 
     return (
         <Div className={"relative z-[1] flex justify-between"}>

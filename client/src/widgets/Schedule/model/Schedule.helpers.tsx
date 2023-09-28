@@ -221,6 +221,15 @@ const createNewScheduleStructure = (
                                     uniqueId: uuid(),
                                     isEditable: true,
                                     content: [],
+                                    "limits": {
+                                        "date": {
+                                            "start": "default",
+                                            "end": "default"
+                                        },
+                                        "dateIsActive": false,
+                                        "time": "default",
+                                        "timeIsActive": false
+                                    }
                                 }
                             ]
 
@@ -419,6 +428,95 @@ const recursiveRenameFolder = (
     },[])
 }
 
+export const renderScheduleItemsHelper = (
+    item: ScheduleFileInterface | ScheduleFolderInterface,
+    index: number,
+    moveScheduleItem: (dragIndex: number, hoverIndex: number) => void
+) => {
+
+    if(item.type === "file"){
+        return (
+            <ScheduleFileItem
+                key={`${item.uniqueId}`}
+                item={item}
+                index={index}
+                activeDirectoryId={item.uniqueId}
+                moveScheduleItem={moveScheduleItem}
+            />
+        )
+    } else {
+        return (
+            <ScheduleFolderItem
+                key={`${item.uniqueId}`}
+                item={item}
+                index={index}
+                activeDirectoryId={item.uniqueId}
+                moveScheduleItem={moveScheduleItem}
+            />
+        )
+    }
+
+}
+
+export const onListElementClick = (dispatch: AppDispatch, handlerId: Identifier | null, activeElementIndex: number ) => {
+    dispatch(scheduleActions.setActiveItem(handlerId))
+    dispatch(scheduleActions.setActiveItemIndex(activeElementIndex));
+};
+
+
+export const onOpenExtraSettingsButtonClick = (setIsOpen: Dispatch<SetStateAction<boolean>>) => {
+    setIsOpen(prevState => !prevState)
+};
+
+export const onChangeIsEditMode = (setIsEditMode: Dispatch<SetStateAction<boolean>>) => {
+    setIsEditMode(prevState => !prevState);
+}
+
+export const onInputChange = (e: ChangeEvent<HTMLInputElement>, setFolderName:  Dispatch<SetStateAction<string>>) => {
+    setFolderName(e.target.value)
+}
+
+export const onSaveEditedFolderName = (
+    dispatch: AppDispatch,
+    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    activeDirectory: string,
+    activeItemIndex: number,
+    newName: string
+) => {
+
+    const newSchedule = recursiveRenameFolder(scheduleStructure, activeDirectory, activeItemIndex, newName)
+    const newActiveDirectoryContent = createNewActiveDirectoryItemsAfterDeletion(newSchedule, activeDirectory)
+
+    dispatch(scheduleActions.setScheduleStructure(newSchedule));
+    dispatch(scheduleActions.setActiveDirectoryItems(newActiveDirectoryContent));
+
+}
+
+export const onCloseCurrentFolderClick = (
+    dispatch: AppDispatch,
+    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    activeDirectoryId: string,
+    router: AppRouterInstance,
+    structureParams: string | null
+) => {
+
+    const parentFolderItems = getParentFolderContent(scheduleStructure, activeDirectoryId);
+    const parentFolderId = getParentFolderId(scheduleStructure, activeDirectoryId);
+    const parentFolderName = getParentFolderName(scheduleStructure, activeDirectoryId);
+
+    dispatch(scheduleActions.setActiveDirectoryItems(parentFolderItems));
+
+    if(parentFolderId && parentFolderName && structureParams){
+
+        router.push(`/?structure=${structureParams.replace(/\/[^\/]*$/, "")}`);
+
+        dispatch(scheduleActions.setActiveDirectoryId(parentFolderId));
+        dispatch(scheduleActions.setActiveDirectoryName(parentFolderName));
+        dispatch(scheduleActions.setActiveItem(null));
+
+    }
+
+}
 
 export const onCreateFolderButtonClick = (
     dispatch: AppDispatch,
@@ -435,11 +533,6 @@ export const onCreateFolderButtonClick = (
 
 }
 
-export const onListElementClick = (dispatch: AppDispatch, handlerId: Identifier | null, activeElementIndex: number ) => {
-    dispatch(scheduleActions.setActiveItem(handlerId))
-    dispatch(scheduleActions.setActiveItemIndex(activeElementIndex));
-};
-
 export const onFolderElementDoubleClick = (
     dispatch: AppDispatch,
     scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
@@ -451,7 +544,7 @@ export const onFolderElementDoubleClick = (
 
     const results = getChildrenFolderContent(scheduleStructure, uniqueId);
     const previousUrl = structureParams !== null ? structureParams : "/rootDirectory";
-    
+
     router.push(`/?structure=${previousUrl?.replace(/\/$/,"")}/${uniqueId}`)
     dispatch(scheduleActions.setActiveDirectoryId(uniqueId));
     dispatch(scheduleActions.setActiveDirectoryName(folderName));
@@ -464,17 +557,17 @@ export const onFolderElementDoubleClick = (
 export const onSaveButtonClick = async (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleFileInterface | ScheduleFolderInterface>) => {
 
     const modalContent = await dispatch(updateScheduleStructure({scheduleStructure}))
-        .then((serverResponse: any) => {
-            return {
-                response: serverResponse.payload.response
-            }
-        })
-        .catch(() => {
-            return {
-                response: "",
-                error: "Произошла ошибка: расписание не было сохранено на сервере"
-            }
-        });
+    .then((serverResponse: any) => {
+        return {
+            response: serverResponse.payload.response
+        }
+    })
+    .catch(() => {
+        return {
+            response: "",
+            error: "Произошла ошибка: расписание не было сохранено на сервере"
+        }
+    });
 
     dispatch(modalActions.setModalIsShown(true));
     dispatch(modalActions.setModalContent(modalContent));
@@ -513,83 +606,3 @@ export const onDeleteButtonClick = (
     dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));
     dispatch(scheduleActions.setActiveItemIndex(undefined));
 };
-
-export const onCloseCurrentFolderClick = (
-    dispatch: AppDispatch, 
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>, 
-    activeDirectoryId: string,
-    router: AppRouterInstance,
-    structureParams: string | null
-) => {
-
-    const parentFolderItems = getParentFolderContent(scheduleStructure, activeDirectoryId);
-    const parentFolderId = getParentFolderId(scheduleStructure, activeDirectoryId);
-    const parentFolderName = getParentFolderName(scheduleStructure, activeDirectoryId);
-
-    dispatch(scheduleActions.setActiveDirectoryItems(parentFolderItems));
-
-    if(parentFolderId && parentFolderName && structureParams){
-
-        router.push(`/?structure=${structureParams.replace(/\/[^\/]*$/, "")}`);
-
-        dispatch(scheduleActions.setActiveDirectoryId(parentFolderId));
-        dispatch(scheduleActions.setActiveDirectoryName(parentFolderName));
-        dispatch(scheduleActions.setActiveItem(null));
-
-    }
-
-}
-
-export const onSaveEditedFolderName = (
-    dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
-    activeDirectory: string,
-    activeItemIndex: number,
-    newName: string
-) => {
-
-    const newSchedule = recursiveRenameFolder(scheduleStructure, activeDirectory, activeItemIndex, newName)
-    const newActiveDirectoryContent = createNewActiveDirectoryItemsAfterDeletion(newSchedule, activeDirectory)
-
-    dispatch(scheduleActions.setScheduleStructure(newSchedule));
-    dispatch(scheduleActions.setActiveDirectoryItems(newActiveDirectoryContent));
-
-}
-
-export const renderScheduleItemsHelper = (
-    item: ScheduleFileInterface | ScheduleFolderInterface,
-    index: number,
-    moveScheduleItem: (dragIndex: number, hoverIndex: number) => void
-) => {
-
-    if(item.type === "file"){
-        return (
-            <ScheduleFileItem
-                key={`${item.uniqueId}`}
-                item={item}
-                index={index}
-                activeDirectoryId={item.uniqueId}
-                moveScheduleItem={moveScheduleItem}
-            />
-        )
-    } else {
-        return (
-            <ScheduleFolderItem
-                key={`${item.uniqueId}`}
-                item={item}
-                index={index}
-                activeDirectoryId={item.uniqueId}
-                moveScheduleItem={moveScheduleItem}
-            />
-        )
-    }
-
-}
-
-export const onChangeIsEditMode = (setIsEditMode: Dispatch<SetStateAction<boolean>>) => {
-    setIsEditMode(prevState => !prevState);
-}
-
-export const onInputChange = (e: ChangeEvent<HTMLInputElement>, setFolderName:  Dispatch<SetStateAction<string>>) => {
-    setFolderName(e.target.value)
-}

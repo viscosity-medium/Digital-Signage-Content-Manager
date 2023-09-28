@@ -13,7 +13,6 @@ const SidebarFolderItem = ({
     internalProperties
 }: {internalProperties:  [string, any][]}) => {
 
-    const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState(true);
     const folderContentRef = useRef<HTMLUListElement>(null);
     const searchBarValue = useSelector(getSearchBarValue);

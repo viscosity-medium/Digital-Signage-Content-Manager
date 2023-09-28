@@ -28,7 +28,7 @@ const FolderItemList: FC<FolderItemListProps> = ({
 
     return (
         <Div
-            className={"flex flex-col"}
+            className={"flex flex-col ml-[8px]"}
         >
             {
                 item.content.map((textContent, index) => {

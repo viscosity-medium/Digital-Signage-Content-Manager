@@ -1,5 +1,5 @@
 import {OnPickerChangeProps, ToggleScheduleSwitchProps} from "@/widgets/Schedule/model/Schedule.types";
-import {changeFileLimitsRecursively} from "@/widgets/Schedule/model/File.helpers";
+import {changeItemLimitsRecursively} from "@/widgets/Schedule/model/File.helpers";
 import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
 import {createNewActiveDirectoryItems} from "@/widgets/Schedule/model/Schedule.helpers";
 
@@ -11,9 +11,9 @@ export const onDatePickerChange = ({
     activeDirectoryId
 }: OnPickerChangeProps) => {
 
-    const editedScheduleData = changeFileLimitsRecursively({
+    const editedScheduleData = changeItemLimitsRecursively({
         structure: scheduleStructure,
-        fileUniqueId,
+        itemUniqueId: fileUniqueId,
         itemLimits
     });
 
@@ -39,9 +39,9 @@ export const onToggleValidDaysSwitch = ({
 
     if(isActive){
 
-        const editedScheduleData = changeFileLimitsRecursively({
+        const editedScheduleData = changeItemLimitsRecursively({
             structure: scheduleStructure,
-            fileUniqueId,
+            itemUniqueId: fileUniqueId,
             itemLimits: {
                 ...itemLimits,
                 date: {
@@ -61,9 +61,9 @@ export const onToggleValidDaysSwitch = ({
         dispatch(scheduleActions.setActiveDirectoryItems(updatedActiveItems));
 
     } else {
-        const editedScheduleData = changeFileLimitsRecursively({
+        const editedScheduleData = changeItemLimitsRecursively({
             structure: scheduleStructure,
-            fileUniqueId,
+            itemUniqueId: fileUniqueId,
             itemLimits: {
                 ...itemLimits,
                 dateIsActive: true

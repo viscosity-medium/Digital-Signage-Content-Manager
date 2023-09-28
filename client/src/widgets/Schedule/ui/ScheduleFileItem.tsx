@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Button, Div, ListElement, Text} from "@/shared";
+import {Button, Div, Hr, ListElement, Text} from "@/shared";
 import CrossSvg from "@/assets/cross.svg"
 import {ScheduleFileProps} from "../model/Schedule.types";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
@@ -45,15 +45,30 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
             <Div
                 className={"overflow-hidden flex items-center select-none py-[4px] px-[8px]"}
             >
+                <Div
+                    className={"flex items-center h-[100%]"}
+                >
+                    <Text
+                        tag={"p"}
+                        className={`min-w-[28px] ${textColor} text-center`}
+                    >
+                        {
+                            index + 1
+                        }
+                    </Text>
+                    <Hr
+                        className={"ml-[8px] mr-[4px] w-[2px] h-[100%] bg-[#79b7bd] border-none rounded"}
+                    />
+                </Div>
                 <Image
                     src={item.thumbnailLink}
                     alt={item.name}
                     width={120}
                     height={120}
-                    className={"bg-white"}
+                    className={"bg-white ml-[8px] max-h-[125px]"}
                     style={{
-                        width: '120px',
-                        height: 'auto',
+                        width: 'auto',
+                        height: '100%',
                         objectFit: 'contain'
                     }}
                 />
@@ -69,12 +84,12 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
                         }
                     </Text>
                     <DateLimitations
-                        fileItem={item}
+                        item={item}
                         textColor={textColor}
                         fileUniqueId={item.uniqueId}
                     />
                     <TimeLimitations
-                        fileItem={item}
+                        item={item}
                         textColor={textColor}
                         fileUniqueId={item.uniqueId}
                     />

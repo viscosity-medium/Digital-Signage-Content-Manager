@@ -9,13 +9,13 @@ import {useAppDispatch} from "../../../../../store/store";
 import dayjs from "dayjs";
 
 const DateLimitations: FC<LimitationsProps> = ({
-    fileItem,
+    item,
     textColor,
     fileUniqueId
 }) => {
 
     const dispatch = useAppDispatch();
-    const [isActive, setIsActive] = useState<boolean>(fileItem.limits.dateIsActive);
+    const [isActive, setIsActive] = useState<boolean>(item.limits.dateIsActive);
     const scheduleStructure = useSelector(getScheduleStructure);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
 
@@ -23,8 +23,8 @@ const DateLimitations: FC<LimitationsProps> = ({
     const switchText = isActive ? "Отключить расписание" : "Включить расписание";
     const opacity = isActive ? "opacity-[1]" : "opacity-[0.5]";
 
-    const startDate = fileItem?.limits?.date?.start;
-    const endDate = fileItem.limits.date.end;
+    const startDate = item?.limits?.date?.start;
+    const endDate = item.limits.date.end;
 
     return (
         <Div
@@ -58,10 +58,10 @@ const DateLimitations: FC<LimitationsProps> = ({
                                 activeDirectoryId,
                                 scheduleStructure,
                                 itemLimits: {
-                                    ...fileItem.limits,
+                                    ...item.limits,
                                     date: {
                                         start: dayJsData !== null ? dayJsData.toISOString() : "default",
-                                        end: fileItem.limits.date.end,
+                                        end: item.limits.date.end,
                                     }
                                 },
                             })
@@ -87,9 +87,9 @@ const DateLimitations: FC<LimitationsProps> = ({
                                 activeDirectoryId,
                                 scheduleStructure,
                                 itemLimits: {
-                                    ...fileItem.limits,
+                                    ...item.limits,
                                     date: {
-                                        start: fileItem.limits.date.start,
+                                        start: item.limits.date.start,
                                         end: dayJsData !== null ? dayJsData.toISOString() : null,
                                     }
                                 }
@@ -116,7 +116,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                                 fileUniqueId,
                                 activeDirectoryId,
                                 scheduleStructure,
-                                itemLimits: fileItem.limits,
+                                itemLimits: item.limits,
                             })
                         }}
                     />

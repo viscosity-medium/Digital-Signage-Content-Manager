@@ -23,19 +23,17 @@ const FolderCloseButton: FC<FolderCloseButtonProps> = ({
 
     if(item.isEditable){
         return (
-            <div>
-                <Button
-                    onClick={(event)=>{
-                        event.stopPropagation();
-                        onDeleteButtonClick(dispatch, scheduleStructure, activeDirectoryId, index)
-                    }}
-                    className={"absolute top-3 right-3 z-0"}
-                >
-                    <CrossSvg
-                        className={"w-[24px] fill-red-500"}
-                    />
-                </Button>
-            </div>
+            <Button
+                onClick={(event)=>{
+                    event.stopPropagation();
+                    onDeleteButtonClick(dispatch, scheduleStructure, activeDirectoryId, index)
+                }}
+                className={" z-0"}
+            >
+                <CrossSvg
+                    className={"w-[24px] fill-red-500"}
+                />
+            </Button>
         );
     } else {
         return null;

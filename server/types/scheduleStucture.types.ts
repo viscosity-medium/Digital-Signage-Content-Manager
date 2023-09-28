@@ -1,6 +1,6 @@
 import {Dayjs} from "dayjs";
 
-export interface ItemLimits {
+export interface ItemFileLimits {
     date: {
         start: string | "default";
         end: string | "default";
@@ -10,6 +10,10 @@ export interface ItemLimits {
     timeIsActive: boolean
 }
 
+export interface ItemFolderLimits extends ItemFileLimits{
+    randomIsActive: boolean
+}
+
 export interface ScheduleFileInterface {
     id: string
     name: string
@@ -17,7 +21,7 @@ export interface ScheduleFileInterface {
     type: "file"
     thumbnailLink: string,
     mimeType: string
-    limits: ItemLimits
+    limits: ItemFileLimits
 }
 
 export interface ScheduleFolderInterface {
@@ -26,6 +30,7 @@ export interface ScheduleFolderInterface {
     type: "folder"
     content: Array<ScheduleFileInterface | ScheduleFolderInterface>
     isEditable: boolean
+    limits: ItemFolderLimits
 }
 
 

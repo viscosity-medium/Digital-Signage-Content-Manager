@@ -9,7 +9,7 @@ export interface ScheduleFileInterface {
     uniqueId: string,
     type: "file"
     thumbnailLink: string
-    limits: ItemLimits
+    limits: ItemFileLimits
 }
 
 export interface ScheduleFolderInterface {
@@ -18,6 +18,7 @@ export interface ScheduleFolderInterface {
     type: "folder"
     content: Array<ScheduleFileInterface | ScheduleFolderInterface>
     isEditable: boolean
+    limits: ItemFolderLimits
 }
 
 export interface ScheduleScheme {
@@ -70,20 +71,20 @@ export interface GetSeparatedScheduleItems {
 }
 
 export interface FindFileRecursively {
-    fileUniqueId: string
+    itemUniqueId: string
     structure: (ScheduleFileInterface | ScheduleFolderInterface)[]
-    itemLimits: ItemLimits
+    itemLimits: ItemFileLimits | ItemFolderLimits
 }
 
 export interface LimitationsProps {
-    fileItem: ScheduleFileInterface
+    item: ScheduleFileInterface | ScheduleFolderInterface
     textColor: string
     fileUniqueId: string
 }
 
 export interface OnPickerChangeProps {
     dispatch: AppDispatch
-    itemLimits: ItemLimits
+    itemLimits: ItemFileLimits
     fileUniqueId: string
     activeDirectoryId: string
     scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[]
@@ -91,7 +92,7 @@ export interface OnPickerChangeProps {
 
 export interface ToggleScheduleSwitchProps {
     dispatch: AppDispatch
-    itemLimits: ItemLimits
+    itemLimits: ItemFileLimits
     isActive: boolean
     fileUniqueId: string
     setIsActive: Dispatch<SetStateAction<boolean>>
@@ -99,7 +100,7 @@ export interface ToggleScheduleSwitchProps {
     activeDirectoryId: string
 }
 
-export interface ItemLimits {
+export interface ItemFileLimits {
     date: {
         start: Dayjs | string | null | "default";
         end: Dayjs | string | null | "default";
@@ -108,3 +109,7 @@ export interface ItemLimits {
     time: Dayjs | string | "default",
     timeIsActive: boolean
 }
+
+ export interface ItemFolderLimits extends ItemFileLimits{
+    randomIsActive: boolean
+ }

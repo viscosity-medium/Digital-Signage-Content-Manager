@@ -1,4 +1,4 @@
-import {ItemLimits, ScheduleFileInterface, ScheduleFolderInterface, ScheduleStructure} from "./scheduleStucture.types";
+import {ItemFileLimits, ScheduleFileInterface, ScheduleFolderInterface, ScheduleStructure} from "./scheduleStucture.types";
 import {GetSeparatedScheduleItems} from "./xml.types";
 
 export interface GoogleFile {
@@ -7,7 +7,7 @@ export interface GoogleFile {
     thumbnailLink: string,
     id: string,
     name: string
-    limits: ItemLimits
+    limits: ItemFileLimits
 }
 
 export interface GoogleFolder {

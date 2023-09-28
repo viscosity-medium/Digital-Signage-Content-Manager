@@ -9,20 +9,20 @@ import {useAppDispatch} from "../../../../../store/store";
 import dayjs from "dayjs";
 
 const TimeLimitations: FC<LimitationsProps> = ({
-   fileItem,
+   item,
    textColor,
    fileUniqueId
 }) => {
 
     const dispatch = useAppDispatch();
-    const [isActive, setIsActive] = useState<boolean>(fileItem.limits.timeIsActive);
+    const [isActive, setIsActive] = useState<boolean>(item.limits.timeIsActive);
     const scheduleStructure = useSelector(getScheduleStructure);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
 
     const textWidth = "150px";
     const switchText = isActive ? "Не указывать время" : "Указать время";
     const opacity = isActive ? "opacity-[1]" : "opacity-[0.5]";
-    const duration = fileItem?.limits?.time;
+    const duration = item?.limits?.time;
 
     return (
         <Div
@@ -57,7 +57,7 @@ const TimeLimitations: FC<LimitationsProps> = ({
                                 activeDirectoryId,
                                 scheduleStructure,
                                 itemLimits: {
-                                    ...fileItem.limits,
+                                    ...item.limits,
                                     time: dayJsData !== null ?
                                         dayJsData.toISOString() :
                                         "default"
@@ -85,7 +85,7 @@ const TimeLimitations: FC<LimitationsProps> = ({
                                 fileUniqueId,
                                 activeDirectoryId,
                                 scheduleStructure,
-                                itemLimits: fileItem.limits
+                                itemLimits: item.limits
                             })
                         }}
                     />

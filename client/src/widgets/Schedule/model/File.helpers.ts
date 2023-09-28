@@ -4,17 +4,17 @@ import {
     ScheduleFolderInterface
 } from "./Schedule.types";
 
-export const changeFileLimitsRecursively = ({
-    fileUniqueId,
+export const changeItemLimitsRecursively = ({
+    itemUniqueId,
     structure,
     itemLimits
 }: FindFileRecursively): (ScheduleFileInterface | ScheduleFolderInterface)[] => {
 
-    return structure.reduce((accumulator: (ScheduleFileInterface | ScheduleFolderInterface)[], structureItem) => {
+    return structure.reduce((accumulator: (ScheduleFileInterface | ScheduleFolderInterface)[], structureItem: any) => {
 
         if(structureItem.type === "file"){
 
-            if(structureItem.uniqueId === fileUniqueId){
+            if(structureItem.uniqueId === itemUniqueId){
                 return [
                     ...accumulator,
                     {
@@ -35,10 +35,11 @@ export const changeFileLimitsRecursively = ({
                 ...accumulator,
                 {
                     ...structureItem,
+                    limits: structureItem.uniqueId === itemUniqueId ? itemLimits : structureItem.limits,
                     content: [
-                        ...changeFileLimitsRecursively({
+                        ...changeItemLimitsRecursively({
                             structure: structureItem.content,
-                            fileUniqueId,
+                            itemUniqueId: itemUniqueId,
                             itemLimits
                         })
                     ]

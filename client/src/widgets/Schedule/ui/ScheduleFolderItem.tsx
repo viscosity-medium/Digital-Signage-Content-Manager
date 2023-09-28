@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Div, ListElement, Text} from "@/shared";
+import {Div, Hr, ListElement, Text} from "@/shared";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {ScheduleFolderProps} from "@/widgets/Schedule/model/Schedule.types";
 import {onFolderElementDoubleClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
@@ -16,6 +16,7 @@ import {FolderItemList} from "@/widgets/Schedule/ui/Folder/FolderItemList";
 import {FolderCloseButton} from "@/widgets/Schedule/ui/Folder/FolderCloseButton";
 import "./Folder/folder.css"
 import {useRouter, useSearchParams} from "next/navigation";
+import {FolderExtraSettings} from "@/widgets/Schedule/ui/Folder/FolderExtraSettings";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     item,
@@ -35,6 +36,7 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     const structureParams = searchParams.get("structure");
     const folderBorderColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "folderBorderColor";
     const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "folderBackgroundColor";
+    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
 
     return (
         <>
@@ -48,16 +50,14 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                 onDragStart={()=>{
                     onListElementClick(dispatch, handlerId, index);
                 }}
-                className={"overflow-hidden flex flex-col mt-3"}
+                className={"relative overflow-hidden flex flex-col mt-3"}
             >
-
                 <FolderItemHeader
                     item={item}
                     handlerId={handlerId}
                 />
-
                 <Div
-                    className={`flex flex-col relative justify-center min-h-[72px] px-3 text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderBorderColor} ${folderBackgroundColor} rounded`}
+                    className={`flex flex-col relative justify-center min-h-[116px] p-[8px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderBorderColor} ${folderBackgroundColor} rounded`}
                     onDoubleClick={()=>{
                         onFolderElementDoubleClick(
                             dispatch, 
@@ -69,24 +69,50 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                         );
                     }}
                 >
-                    <FolderItemList
-                        item={item}
-                        handlerId={handlerId}
-                    />
-                    <Text
-                        tag={"h3"}
-                        className={"absolute z-0 ml-auto mr-auto left-0 right-0 text-[40px] text-[#ffffff60] text-center select-none"}
+                    <Div
+                        className={"relative justify-between flex flex-grow-[1]"}
                     >
-                        {
-                            item.name
-                        }
-                    </Text>
-                    <FolderCloseButton
-                        item={item}
-                        index={index}
-                    />
+                        <Div
+                            className={"relative flex h-[auto] top-0 bottom-0"}
+                        >
+                            <Text
+                                tag={"p"}
+                                className={`min-w-[28px] self-center text-[#000] text-center ${textColor}`}
+                            >
+                                {
+                                    index + 1
+                                }
+                            </Text>
+                            <Hr
+                                className={"ml-[8px] mr-[4px] w-[2px] h-[100%] bg-[#79b7bd] border-none rounded"}
+                            />
+                            <FolderItemList
+                                item={item}
+                                handlerId={handlerId}
+                            />
+                        </Div>
+                        <Text
+                            tag={"h3"}
+                            className={"absolute z-0 left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-[auto] text-[40px] text-[#ffffff60] text-center select-none"}
+                        >
+                            {
+                                item.name
+                            }
+                        </Text>
+                        <Div
+                            className={"self-center"}
+                        >
+                            <FolderCloseButton
+                                item={item}
+                                index={index}
+                            />
+                        </Div>
+                    </Div>
                 </Div>
-
+                <FolderExtraSettings
+                    item={item}
+                    handlerId={handlerId}
+                />
             </ListElement>
         </>
     );

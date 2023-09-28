@@ -76,12 +76,13 @@ class XmlUtilities {
                 return (`${
                     accumulator
                 }${
-                    folderMultiItem(
-                        this.createXmlSchedule({
+                    folderMultiItem({
+                        content: this.createXmlSchedule({
                             schedule: currentItem.content,
                             folderWithContentPath: fileSystem.joinPath([folderWithContentPath, currentItem.name])
-                        })
-                    )
+                        }),
+                        folderItem: currentItem
+                    })
                 }`);
 
             } else {
