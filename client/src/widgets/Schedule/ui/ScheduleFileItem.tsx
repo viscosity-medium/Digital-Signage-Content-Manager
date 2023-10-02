@@ -5,12 +5,12 @@ import {ScheduleFileProps} from "../model/Schedule.types";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {useSelector} from "react-redux";
 import {
-    getScheduleActiveDirectoryId, getScheduleActiveItem,
-    getScheduleActiveItemIndex, getScheduleStructure
+    getScheduleActiveDirectoryId, getScheduleActiveItem, getScheduleStructure,
+    getScheduleActiveItemIndex, getScheduleActiveItemsIndexesRange,
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {useAppDispatch} from "../../../../store/store";
 import Image from "next/image";
-import {onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
+import {createArray, onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
 import {DateLimitations} from "@/widgets/Schedule/ui/File/DateLimitations";
 import {TimeLimitations} from "@/widgets/Schedule/ui/File/TimeLimitations";
 
@@ -23,24 +23,33 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
+    const activeItemsIndexesRange = useSelector(getScheduleActiveItemsIndexesRange);
     const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
 
-    const folderColorLight = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "whiteBorderColor";
-    const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "whiteBackgroundColor";
-    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
+    const indexesRange = createArray({
+        firstIndex: activeItemsIndexesRange?.startIndex,
+        secondIndex: activeItemsIndexesRange?.endIndex
+    });
+    const condition = ((activeItemIndex !== undefined && handlerId === scheduleActiveItem) || indexesRange.includes(index));
+    const fileBackgroundColor = condition ? "activeBackgroundColor" : "whiteBackgroundColor";
+    const fileColorLight = condition ? "activeBorderColor" : "whiteBorderColor";
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
     return (
         <ListElement
             reference={refListObject}
             style={{opacity}}
             dataHandlerId={handlerId}
-            onClick={()=>{
-                onListElementClick(dispatch, handlerId, index);
+            onClick={(event)=>{
+                onListElementClick({
+                    dispatch,
+                    handlerId,
+                    mouseEvent: event,
+                    activeElementIndex: index,
+                    previousActiveElementIndex: activeItemIndex
+                });
             }}
-            onDragStart={()=>{
-                onListElementClick(dispatch, handlerId, index);
-            }}
-            className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderColorLight} ${folderBackgroundColor} rounded`}
+            className={`flex justify-between mt-3 pr-3 min-h-[40px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${fileColorLight} ${fileBackgroundColor} rounded`}
         >
             <Div
                 className={"overflow-hidden flex items-center select-none py-[4px] px-[8px]"}

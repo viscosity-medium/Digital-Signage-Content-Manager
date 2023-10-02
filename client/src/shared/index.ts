@@ -1,3 +1,4 @@
+export { Body } from "./ui-kit/__HtmlTags/Body/ui/Body"
 export { Header } from "./ui-kit/__HtmlTags/Header/ui/Header";
 export { Main } from "./ui-kit/__HtmlTags/Main/ui/Main";
 export { Button } from "./ui-kit/__HtmlTags/Button/ui/ButtonHTML";

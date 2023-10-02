@@ -1,6 +1,5 @@
 import {fileSystem} from "./fileSystem.utilities";
 
-
 class JsonUtilities{
 
     getActualFilesListFromJson(jsonPath: string){

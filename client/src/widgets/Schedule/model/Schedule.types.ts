@@ -3,6 +3,8 @@ import {Dispatch, SetStateAction} from "react";
 import {Dayjs} from "dayjs";
 import {AppDispatch} from "../../../../store/store";
 
+export type ScheduleItemInterface = ScheduleFileInterface | ScheduleFolderInterface
+
 export interface ScheduleFileInterface {
     id: string
     name: string
@@ -16,22 +18,24 @@ export interface ScheduleFolderInterface {
     name: string
     uniqueId: string,
     type: "folder"
-    content: Array<ScheduleFileInterface | ScheduleFolderInterface>
+    content: Array<ScheduleItemInterface>
     isEditable: boolean
     limits: ItemFolderLimits
 }
 
 export interface ScheduleScheme {
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>
+    scheduleStructure: Array<ScheduleItemInterface>
     activeItem: Identifier | null
     activeItemIndex: number | undefined
+    activeItemsIndexesRange: ActiveItemsIndexesRange | undefined
     activeDirectoryId: "rootDirectory" | string
     activeDirectoryName: string
-    activeDirectoryScheduleItems: Array<ScheduleFileInterface | ScheduleFolderInterface>
+    activeDirectoryScheduleItems: Array<ScheduleItemInterface>,
+    scheduleBufferDataToCopy: Array<ScheduleItemInterface>
 }
 
 export interface ScheduleItemProps {
-    item: ScheduleFileInterface | ScheduleFolderInterface
+    item: ScheduleItemInterface
     index: number
     moveScheduleItem: (dragIndex: number, hoverIndex: number) => void
     activeDirectoryId: string
@@ -72,12 +76,12 @@ export interface GetSeparatedScheduleItems {
 
 export interface FindFileRecursively {
     itemUniqueId: string
-    structure: (ScheduleFileInterface | ScheduleFolderInterface)[]
+    structure: Array<ScheduleItemInterface>
     itemLimits: ItemFileLimits | ItemFolderLimits
 }
 
 export interface LimitationsProps {
-    item: ScheduleFileInterface | ScheduleFolderInterface
+    item: ScheduleItemInterface
     textColor: string
     fileUniqueId: string
 }
@@ -87,7 +91,7 @@ export interface OnPickerChangeProps {
     itemLimits: ItemFileLimits
     fileUniqueId: string
     activeDirectoryId: string
-    scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[]
+    scheduleStructure: Array<ScheduleItemInterface>
 }
 
 export interface ToggleScheduleSwitchProps {
@@ -96,7 +100,7 @@ export interface ToggleScheduleSwitchProps {
     isActive: boolean
     fileUniqueId: string
     setIsActive: Dispatch<SetStateAction<boolean>>
-    scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[]
+    scheduleStructure: Array<ScheduleItemInterface>
     activeDirectoryId: string
 }
 
@@ -112,4 +116,9 @@ export interface ItemFileLimits {
 
  export interface ItemFolderLimits extends ItemFileLimits{
     randomIsActive: boolean
+ }
+
+ export interface ActiveItemsIndexesRange {
+     startIndex: number
+     endIndex: number
  }

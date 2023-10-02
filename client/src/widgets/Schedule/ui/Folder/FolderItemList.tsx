@@ -2,29 +2,19 @@ import {Div, Text} from "@/shared";
 import {v4 as uuid} from "uuid";
 import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {FC} from "react";
-import {Identifier} from "dnd-core";
 import "./folder.css";
-import {useSelector} from "react-redux";
-import {
-    getScheduleActiveItem,
-    getScheduleActiveItemIndex,
-    getScheduleStructure
-} from "@/widgets/Schedule/model/Schedule.selectors";
 
 export interface FolderItemListProps{
     item: ScheduleFolderInterface,
-    handlerId: Identifier | null
-
+    condition: boolean
 }
 
 const FolderItemList: FC<FolderItemListProps> = ({
     item,
-    handlerId
+    condition
 }) => {
 
-    const scheduleActiveItem = useSelector(getScheduleActiveItem);
-    const activeItemIndex = useSelector(getScheduleActiveItemIndex);
-    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blackTextColor";
+    const textColor = condition ? "whiteTextColor" : "blackTextColor";
 
     return (
         <Div

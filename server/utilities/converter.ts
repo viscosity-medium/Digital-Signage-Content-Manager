@@ -1,13 +1,12 @@
-export const calculateActiveDays = ({
+import {
+    CalculateActiveDays,
+    CalculateTimeDuration
+} from "../types/converter.types";
+
+export const calculateActiveDays: CalculateActiveDays = ({
     minDay,
     maxDay
-}: {
-    minDay: string,
-    maxDay: string
-}): {
-    lowerLimit: number | undefined
-    upperLimit: number | undefined
-} => {
+}) => {
 
     const dateOfEasescreenCountdownIsoFormat = "1899-12-30T00:00:00+0000";
     const dateOfEasescreenCountdownMillisecondsFormat = new Date(dateOfEasescreenCountdownIsoFormat).getTime();
@@ -29,7 +28,7 @@ export const calculateActiveDays = ({
 
 }
 
-export const calculateTimeDuration = ({timeDuration}): number | undefined => {
+export const calculateTimeDuration: CalculateTimeDuration = ({timeDuration}) => {
 
     const timeArray = timeDuration.replace(/.*T\d{1,2}:|\.\d*Z$/gm, "").split(":");
     const resultsTimeInSeconds: number = timeArray.reduce((accumulator: number, currentItem: string, index: number) =>{

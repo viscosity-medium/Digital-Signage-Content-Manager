@@ -1,9 +1,9 @@
-import {CreateRecursiveContent, SidebarStructureItem} from "@/widgets/Sidebar/model/Sidebar.type";
+import {CreateRecursiveContent, SidebarStructure, SidebarStructureItem} from "@/widgets/Sidebar/model/Sidebar.type";
 import {SidebarFileItem} from "@/widgets/Sidebar/ui/SidebarFileItem";
 import {SidebarFolderItem} from "@/widgets/Sidebar/ui/SidebarFolderItem";
 import {AppDispatch} from "../../../../store/store";
 import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
-import {ScheduleFileInterface, ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {v4 as uuid} from "uuid";
 import {ChangeEvent} from "react";
 import {sidebarActions} from "@/widgets/Sidebar/model/Sidebar.slice";
@@ -12,22 +12,22 @@ import {modalActions} from "@/widgets/Modal/model/Modal.slice";
 
 
 export const createNewSchedule = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
-    internalItem: ScheduleFileInterface | ScheduleFolderInterface | any,
+    scheduleStructure: Array<ScheduleItemInterface>,
+    internalItem: SidebarStructureItem,
     activeDirectory: string,
     activeItemIndex: number
-): Array<ScheduleFileInterface | ScheduleFolderInterface> => {
+): Array<ScheduleItemInterface> => {
 
     return scheduleStructure.reduce((
-        accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface | any>,
-        currentItem: ScheduleFileInterface | ScheduleFolderInterface
+        accumulator: Array<ScheduleItemInterface | any>,
+        currentItem: ScheduleItemInterface
     ) => {
 
         if(currentItem.type === "folder"){
 
             if(currentItem.uniqueId === activeDirectory){
 
-                const content = currentItem.content.reduce((accum: any, currentItem, index) => {
+                const content = currentItem.content.reduce((accum: Array<ScheduleItemInterface | any>, currentItem, index) => {
                     if(activeItemIndex === index){
                         return ([
                                 ...accum,
@@ -36,7 +36,6 @@ export const createNewSchedule = (
                                     id: internalItem.id,
                                     name: internalItem.name,
                                     thumbnailLink: internalItem.thumbnailLink,
-                                    mimeType: internalItem.mimeType,
                                     type: "file",
                                     uniqueId: uuid(),
                                     limits: {
@@ -70,7 +69,6 @@ export const createNewSchedule = (
                             id: internalItem.id,
                             name: internalItem.name,
                             thumbnailLink: internalItem.thumbnailLink,
-                            mimeType: internalItem.mimeType,
                             type: "file",
                             uniqueId: uuid(),
                             limits: {
@@ -78,7 +76,9 @@ export const createNewSchedule = (
                                     start: "default",
                                     end: "default"
                                 },
-                                time: "default"
+                                dateIsActive: false,
+                                time: "default",
+                                timeIsActive: false
                             }
                         }]
                     }
@@ -104,11 +104,11 @@ export const createNewSchedule = (
 }
 
 const createNewActiveDirectoryItems = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string
-): Array<ScheduleFileInterface | ScheduleFolderInterface> => {
+): Array<ScheduleItemInterface> => {
 
-    return scheduleStructure.reduce((accum: Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem) => {
+    return scheduleStructure.reduce((accum: Array<ScheduleItemInterface>, currentItem) => {
 
         if(currentItem.type === "folder"){
             if( currentItem.uniqueId === activeDirectory){
@@ -126,7 +126,21 @@ const createNewActiveDirectoryItems = (
 
 }
 
-export const createRecursiveContent = ({
+const sortFolders = (a: SidebarStructure | SidebarStructureItem, b: SidebarStructure | SidebarStructureItem) => {
+
+    if(a?.name === "yabloneviy" && b?.name === "uglovoi"){
+        return -1
+    } else if(a?.name === "day" && b?.name === "night") {
+        return -1
+    } else if(a?.name > b?.name) {
+        return 1
+    } else {
+        return -1
+    }
+
+};
+
+export const createSidebarContentRecursively = ({
     structure,
     searchBarValue
 }: CreateRecursiveContent) => {
@@ -136,22 +150,8 @@ export const createRecursiveContent = ({
     return arrayOfItems.map((singleItem) => {
         
         if(Array.isArray(singleItem)){
-            
-            const sortFolders = (a: any, b: any) => {
-            
-                if(a?.name === "yabloneviy" && b?.name === "uglovoi"){
-                    return -1
-                } else if(a?.name === "day" && b?.name === "night") {
-                    return -1
-                } else if(a?.name > b?.name) {
-                    return 1
-                } else {
-                    return -1
-                }
-          
-            };
 
-            const sortedArray = [...singleItem].sort(sortFolders)
+            const sortedArray = [...singleItem].sort(sortFolders);
             
             return sortedArray.map((internalItem) => {
 
@@ -168,7 +168,6 @@ export const createRecursiveContent = ({
                             />
                         )
                     }
-                    
 
                 } else {
 
@@ -190,7 +189,7 @@ export const createRecursiveContent = ({
 
 export const onListElementClick = (
     dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     internalItem: SidebarStructureItem,
     scheduleActiveDirectory: string,
     activeItemIndex: number

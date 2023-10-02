@@ -1,12 +1,4 @@
-
-export interface VideoItemProps {
-    relativeMmsMediaPoolFilePath: string
-    timeDuration?: number | undefined
-    dateLimits: {
-        lowerLimit: number | undefined
-        upperLimit: number | undefined
-    },
-}
+import {VideoItemProps} from "../../types/xml.types";
 
 export const videoItem = ({
     relativeMmsMediaPoolFilePath,

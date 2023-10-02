@@ -2,13 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {axiosApi} from "@/shared/api/api";
 import {AxiosResponse} from "axios";
 
-import {
-    ScheduleFileInterface,
-    ScheduleFolderInterface,
-    ScheduleItemProps
-} from "@/widgets/Schedule/model/Schedule.types";
-import {useAppDispatch} from "../../../../store/store";
-import {modalActions} from "@/widgets/Modal/model/Modal.slice";
+import {ScheduleFolderInterface, ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
 
 export const fetchScheduleStructure = createAsyncThunk(
     "schedule/fetchScheduleStructure",
@@ -20,7 +14,7 @@ export const fetchScheduleStructure = createAsyncThunk(
 
 export const updateScheduleStructure = createAsyncThunk(
     "schedule/updateScheduleStructure",
-    async ({scheduleStructure}: {scheduleStructure: Array<ScheduleFolderInterface | ScheduleFileInterface>}) => {
+    async ({scheduleStructure}: {scheduleStructure: Array<ScheduleItemInterface>}) => {
 
         const axiosResponse: AxiosResponse<{
             schedule: Array<ScheduleFolderInterface>
@@ -39,7 +33,7 @@ export const updateScheduleStructure = createAsyncThunk(
 
 export const uploadXmlFilesOnMmsServer = createAsyncThunk(
     "schedule/uploadXmlFilesOnMmsServer",
-    async ({scheduleStructure}: {scheduleStructure: Array<ScheduleFolderInterface | ScheduleFileInterface>}) => {
+    async ({scheduleStructure}: {scheduleStructure: Array<ScheduleItemInterface>}) => {
 
         const axiosResponse: AxiosResponse<{
             response: string

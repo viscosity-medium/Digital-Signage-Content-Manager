@@ -1,4 +1,4 @@
-import {ItemFileLimits, ScheduleFileInterface, ScheduleFolderInterface, ScheduleStructure} from "./scheduleStucture.types";
+import {ItemFileLimits, ScheduleItemInterface, ScheduleStructure} from "./scheduleStucture.types";
 import {GetSeparatedScheduleItems} from "./xml.types";
 
 export interface GoogleFile {
@@ -20,7 +20,7 @@ export type GoogleItem = GoogleFile | GoogleFolder;
 
 export type GetActualGoogleFilesList = (structure: GoogleItem) => string[];
 
-export type GetSeparatedScreenSchedules = (parentItem: (ScheduleFolderInterface | ScheduleFileInterface)[]) => GetSeparatedScheduleItems;
+export type GetSeparatedScreenSchedules = (parentItem: Array<ScheduleItemInterface>) => GetSeparatedScheduleItems;
 
 export interface DataForXml {
     schedule: ScheduleStructure,
@@ -47,6 +47,6 @@ export type CreateMultipleXmlSchedules = (data: DataForMultipleXmlFiles) => ({
 })
 
 export type GetUniqueFilesList = (
-    structure: (ScheduleFolderInterface | ScheduleFileInterface)[],
+    structure: Array<ScheduleItemInterface>,
     startArray: string[]
 ) => string[]

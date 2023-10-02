@@ -5,22 +5,20 @@ import {useAppDispatch} from "../../../../../store/store";
 import {useSelector} from "react-redux";
 import {
     getScheduleActiveDirectoryId,
-    getScheduleActiveItem,
     getScheduleActiveItemIndex,
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
-import {Identifier} from "dnd-core";
 import "../Folder/folder.css"
 
 export interface FolderItemHeaderProps {
     item: ScheduleFolderInterface
-    handlerId: Identifier | null
+    condition: boolean
 }
 
 const FolderItemHeader: FC<FolderItemHeaderProps> = ({
     item,
-    handlerId
+    condition
 }) => {
 
     const dispatch = useAppDispatch();
@@ -28,12 +26,11 @@ const FolderItemHeader: FC<FolderItemHeaderProps> = ({
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [folderName, setFolderName] = useState(item.name);
-    const scheduleActiveItem = useSelector(getScheduleActiveItem);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
 
-    const folderColorLight = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "folderBackgroundColor";
-    const folderColorDark = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColorDark" : "folderBackgroundColorDark";
-    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
+    const folderColorLight = condition ? "activeBackgroundColor" : "folderBackgroundColor";
+    const folderColorDark = condition ? "activeBackgroundColorDark" : "folderBackgroundColorDark";
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
     return (
         <Div className={"relative z-[1] flex justify-between"}>

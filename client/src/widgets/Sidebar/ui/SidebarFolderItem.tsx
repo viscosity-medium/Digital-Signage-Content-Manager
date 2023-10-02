@@ -3,7 +3,7 @@
 import {Div, ListElement, Text, UnorderedList} from "@/shared";
 import FolderIcon from "@/assets/folder-icon.svg";
 import DownArrowIcon from "@/assets/down-arrow.svg";
-import {createRecursiveContent} from "@/widgets/Sidebar/model/Sidebar.helpers";
+import {createSidebarContentRecursively} from "@/widgets/Sidebar/model/Sidebar.helpers";
 import {useRef, useState} from "react";
 import { useAppDispatch } from "../../../../store/store";
 import { useSelector } from "react-redux";
@@ -60,7 +60,7 @@ const SidebarFolderItem = ({
                     className={`flex flex-col mx-[20px]`}
                 >
                     {
-                        createRecursiveContent({
+                        createSidebarContentRecursively({
                             structure: {
                                 [folderId]: folderStructure
                             },

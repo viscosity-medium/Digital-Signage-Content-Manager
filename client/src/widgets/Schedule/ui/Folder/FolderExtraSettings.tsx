@@ -3,28 +3,23 @@ import {FC, useState} from "react";
 import DownArrowIcon from "@/assets/down-arrow.svg";
 import {TimeLimitations} from "@/widgets/Schedule/ui/File/TimeLimitations";
 import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
-import {useSelector} from "react-redux";
-import {getScheduleActiveItem, getScheduleActiveItemIndex} from "@/widgets/Schedule/model/Schedule.selectors";
-import {Identifier} from "dnd-core";
 import {RandomOrder} from "@/widgets/Schedule/ui/File/RandomOrder";
 import {onOpenExtraSettingsButtonClick} from "@/widgets/Schedule/model/Schedule.helpers";
 
 export interface FolderExtraSettingsProps {
     item: ScheduleFolderInterface
-    handlerId: Identifier | null
+    condition: boolean
 }
 
 const FolderExtraSettings: FC<FolderExtraSettingsProps> = ({
     item,
-    handlerId,
+    condition
 }) => {
 
     const [isOpen, setIsOpen] = useState<boolean>(item.limits.timeIsActive || item.limits.randomIsActive);
-    const scheduleActiveItem = useSelector(getScheduleActiveItem);
-    const activeItemIndex = useSelector(getScheduleActiveItemIndex);
 
-    const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColorDark" : "folderBackgroundColorDark" ;
-    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
+    const folderBackgroundColor = condition ? "activeBackgroundColorDark" : "folderBackgroundColorDark" ;
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
 
     return (
@@ -51,8 +46,8 @@ const FolderExtraSettings: FC<FolderExtraSettingsProps> = ({
                 />
                 <RandomOrder
                     folderItem={item}
-                    handlerId={handlerId}
                     fileUniqueId={item.uniqueId}
+                    condition={condition}
                 />
             </Div>
         ) :

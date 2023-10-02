@@ -33,7 +33,8 @@ const SidebarFileItem: FC<SidebarFileItemProps> = ({
                 height: refObj.current?.clientHeight
             }}
             onClick={()=>{
-                if(activeDirectoryId !== "rootDirectory"){
+                // для запрета на добавление файлов в корневые папки необходимо следующее условие
+                if( !["rootDirectory", "Yabloneviy", "Uglovoi"].includes(activeDirectoryId) ){
                     onListElementClick(dispatch, schedule, internalItem, activeDirectoryId, activeItemIndex !== undefined ? activeItemIndex : activeItems.length - 1)
                 }
             }}

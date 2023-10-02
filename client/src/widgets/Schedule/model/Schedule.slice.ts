@@ -1,38 +1,39 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {fetchScheduleStructure, updateScheduleStructure, uploadXmlFilesOnMmsServer} from "@/widgets/Schedule/model/Schedule.asyncThunks";
 import {
-    fetchScheduleStructure,
-    updateScheduleStructure,
-    uploadXmlFilesOnMmsServer
-} from "@/widgets/Schedule/model/Schedule.asyncThunks";
-import {ScheduleScheme} from "@/widgets/Schedule/model/Schedule.types";
-import {ScheduleFileInterface} from "@/widgets/Schedule/model/Schedule.types";
-import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
+    ActiveItemsIndexesRange,
+    ScheduleFolderInterface,
+    ScheduleItemInterface,
+    ScheduleScheme
+} from "@/widgets/Schedule/model/Schedule.types";
 import {getChildrenFolderContent, getChildrenFolderName} from "@/widgets/Schedule/model/Schedule.helpers";
 import {Identifier} from "dnd-core";
-import {useAppDispatch} from "../../../../store/store";
-import {modalActions} from "@/widgets/Modal/model/Modal.slice";
 
 const initialState: ScheduleScheme = {
     scheduleStructure: [],
     activeItem: null,
     activeItemIndex: undefined,
+    activeItemsIndexesRange: undefined,
     activeDirectoryId: "rootDirectory",
     activeDirectoryName: "rootDirectory",
-    activeDirectoryScheduleItems: []
+    activeDirectoryScheduleItems: [],
+    scheduleBufferDataToCopy: []
 }
 
 const scheduleSlice = createSlice({
     name: "schedule",
     initialState,
     reducers: {
-        setScheduleStructure: (state, action: PayloadAction<Array<ScheduleFileInterface | ScheduleFolderInterface>>) => {
+        setScheduleStructure: (state, action: PayloadAction<Array<ScheduleItemInterface>>) => {
             state.scheduleStructure = action.payload
         },
         setActiveItem: (state, action: PayloadAction<Identifier | null>) => {state.activeItem = action.payload},
         setActiveItemIndex: (state, action: PayloadAction<number | undefined>) => {state.activeItemIndex = action.payload},
+        setActiveItemsIndexesRange: (state, action: PayloadAction<ActiveItemsIndexesRange | undefined>) => {state.activeItemsIndexesRange = action.payload},
         setActiveDirectoryId: (state, action: PayloadAction<string>) => {state.activeDirectoryId = action.payload},
         setActiveDirectoryName: (state, action: PayloadAction<string>) => {state.activeDirectoryName = action.payload},
-        setActiveDirectoryItems: (state, action: PayloadAction<Array<ScheduleFileInterface | ScheduleFolderInterface>>) => {state.activeDirectoryScheduleItems = action.payload},
+        setActiveDirectoryItems: (state, action: PayloadAction<Array<ScheduleItemInterface>>) => {state.activeDirectoryScheduleItems = action.payload},
+        setCopyBuffer: (state, action: PayloadAction<Array<ScheduleItemInterface>>) => {state.scheduleBufferDataToCopy = action.payload},
     },
     extraReducers: (builder) => {
 
@@ -53,7 +54,7 @@ const scheduleSlice = createSlice({
 
         // update schedule structure
         builder.addCase(updateScheduleStructure.fulfilled, (state, action: PayloadAction<{
-            newSchedule: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+            newSchedule: Array<ScheduleItemInterface>,
             response: string
         }>)=> {
             state.scheduleStructure = action?.payload?.newSchedule;

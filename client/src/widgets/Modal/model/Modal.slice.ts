@@ -7,13 +7,11 @@ export interface ModalContent {
 
 export interface ModalSchema {
     modalIsShown: boolean
-    contentType: any
     modalContent: ModalContent
 }
 
 const initialState: ModalSchema = {
     modalIsShown: false,
-    contentType: "upload",
     modalContent: {
         response: undefined,
         error: undefined

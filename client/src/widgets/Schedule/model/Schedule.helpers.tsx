@@ -5,18 +5,18 @@ import {AppDispatch} from "../../../../store/store";
 import {updateScheduleStructure, uploadXmlFilesOnMmsServer} from "@/widgets/Schedule/model/Schedule.asyncThunks";
 import {ScheduleFolderItem} from "@/widgets/Schedule/ui/ScheduleFolderItem";
 import {v4 as uuid} from "uuid";
-import {ScheduleFileInterface, ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ActiveItemsIndexesRange, ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {Identifier} from "dnd-core";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
-import {ChangeEvent, Dispatch, SetStateAction} from "react";
+import {ChangeEvent, Dispatch, SetStateAction, MouseEvent} from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 export const getChildrenFolderContent = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: "rootDirectory" | string
-): Array<ScheduleFileInterface | ScheduleFolderInterface> => {
+): Array<ScheduleItemInterface> => {
 
-    return scheduleStructure.reduce((accumulator:  Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem ) => {
+    return scheduleStructure.reduce((accumulator:  Array<ScheduleItemInterface>, currentItem ) => {
 
         if(currentItem.type === "folder"){
             if(currentItem.uniqueId === activeDirectory){
@@ -35,7 +35,7 @@ export const getChildrenFolderContent = (
 }
 
 export const getChildrenFolderName = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: "rootDirectory" | string
 ): string => {
 
@@ -56,11 +56,11 @@ export const getChildrenFolderName = (
 }
 
 export const getParentFolderContent = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: "rootDirectory" | string,
-): Array<ScheduleFileInterface | ScheduleFolderInterface> => {
+): Array<ScheduleItemInterface> => {
 
-    return scheduleStructure.reduce(( accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem ) => {
+    return scheduleStructure.reduce(( accumulator: Array<ScheduleItemInterface>, currentItem ) => {
 
         if(currentItem.type === "folder"){
             if(currentItem.uniqueId === activeDirectory){
@@ -79,7 +79,7 @@ export const getParentFolderContent = (
 }
 
 export const getParentFolderId = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: "rootDirectory" | string,
     parentFolderId?: string
 ): string | undefined => {
@@ -102,7 +102,7 @@ export const getParentFolderId = (
 }
 
 export const getParentFolderName = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: "rootDirectory" | string,
     parentFolderName?: string
 ): string | undefined => {
@@ -129,8 +129,8 @@ export const getParentFolderName = (
 
 export const moveScheduleItem = (
     dispatch: AppDispatch,
-    directoryItems: Array<ScheduleFileInterface | ScheduleFolderInterface>,
-    activeDirectoryItems: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    directoryItems: Array<ScheduleItemInterface>,
+    activeDirectoryItems: Array<ScheduleItemInterface>,
     activeDirectory: string
 ) => (dragIndex: number, hoverIndex: number) => {
 
@@ -142,13 +142,13 @@ export const moveScheduleItem = (
     });
 
     const recursiveEditInternalItems = (
-        directoryItems: Array<ScheduleFileInterface | ScheduleFolderInterface>,
-        newActiveItems: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+        directoryItems: Array<ScheduleItemInterface>,
+        newActiveItems: Array<ScheduleItemInterface>,
         activeDirectory: string
-    ): Array<ScheduleFileInterface | ScheduleFolderInterface> => {
+    ): Array<ScheduleItemInterface> => {
 
         return directoryItems.reduce((
-            accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+            accumulator: Array<ScheduleItemInterface>,
             currentItem
         )=>{
 
@@ -196,14 +196,14 @@ export const moveScheduleItem = (
 };
 
 const createNewScheduleStructure = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string,
     activeItemIndex: number
-): Array<ScheduleFileInterface | ScheduleFolderInterface>  => {
+): Array<ScheduleItemInterface>  => {
 
     return scheduleStructure.reduce((
-        accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface | any>,
-        currentItem: ScheduleFileInterface | ScheduleFolderInterface
+        accumulator: Array<ScheduleItemInterface>,
+        currentItem: ScheduleItemInterface
     ) => {
 
         if(currentItem.type === "folder"){
@@ -279,11 +279,11 @@ const createNewScheduleStructure = (
 }
 
 export const createNewActiveDirectoryItems = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string
-): Array<ScheduleFileInterface | ScheduleFolderInterface> => {
+): Array<ScheduleItemInterface> => {
 
-    return scheduleStructure.reduce((accum: Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem) => {
+    return scheduleStructure.reduce((accum: Array<ScheduleItemInterface>, currentItem) => {
 
         if(currentItem.type === "folder"){
             if( currentItem.uniqueId === activeDirectory){
@@ -302,14 +302,14 @@ export const createNewActiveDirectoryItems = (
 }
 
 const createNewScheduleStructureByDeletion = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string,
     deleteIndex: number
-): Array<ScheduleFileInterface | ScheduleFolderInterface>  => {
+): Array<ScheduleItemInterface>  => {
 
     return scheduleStructure.reduce((
-        accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface | any>,
-        currentItem: ScheduleFileInterface | ScheduleFolderInterface
+        accumulator: Array<ScheduleItemInterface | any>,
+        currentItem: ScheduleItemInterface
     ) => {
 
         if(currentItem.type === "folder"){
@@ -346,37 +346,14 @@ const createNewScheduleStructureByDeletion = (
     }, [])
 }
 
-const createNewActiveDirectoryItemsAfterDeletion = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface | any>,
-    activeDirectory: string
-): Array<ScheduleFileInterface | ScheduleFolderInterface | any> => {
-
-    return scheduleStructure.reduce((accum: Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem) => {
-
-        if(currentItem.type === "folder"){
-            if( currentItem.uniqueId === activeDirectory){
-                return [...currentItem.content];
-            } else {
-                return [
-                    ...accum,
-                    ...createNewActiveDirectoryItemsAfterDeletion(currentItem.content, activeDirectory)];
-            }
-        } else {
-            return accum;
-        }
-
-    }, []);
-
-}
-
 const recursiveRenameFolder = (
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string,
     activeItemIndex: number,
     newName: string
-): Array<ScheduleFileInterface | ScheduleFolderInterface> => {
+): Array<ScheduleItemInterface> => {
 
-    return scheduleStructure.reduce((accumulator: Array<ScheduleFileInterface | ScheduleFolderInterface>, currentItem) => {
+    return scheduleStructure.reduce((accumulator: Array<ScheduleItemInterface>, currentItem) => {
 
         if(currentItem.type === "folder"){
             if(currentItem.uniqueId === activeDirectory){
@@ -429,7 +406,7 @@ const recursiveRenameFolder = (
 }
 
 export const renderScheduleItemsHelper = (
-    item: ScheduleFileInterface | ScheduleFolderInterface,
+    item: ScheduleItemInterface,
     index: number,
     moveScheduleItem: (dragIndex: number, hoverIndex: number) => void
 ) => {
@@ -458,11 +435,215 @@ export const renderScheduleItemsHelper = (
 
 }
 
-export const onListElementClick = (dispatch: AppDispatch, handlerId: Identifier | null, activeElementIndex: number ) => {
-    dispatch(scheduleActions.setActiveItem(handlerId))
-    dispatch(scheduleActions.setActiveItemIndex(activeElementIndex));
-};
+export const createArray = ({
+    firstIndex,
+    secondIndex
+}: {
+    firstIndex: number | undefined,
+    secondIndex: number | undefined
+}) => {
 
+    if(secondIndex !== undefined){
+
+        const firstIndexEdited = (firstIndex !== undefined ? firstIndex : 0);
+        const bottomBorder = secondIndex - firstIndexEdited > 0 ? firstIndexEdited : secondIndex;
+        const topBorder = secondIndex - firstIndexEdited > 0 ? secondIndex : firstIndexEdited;
+        const result: number[] = Array(topBorder - bottomBorder + 1);
+
+        for (let i = 0; i < result.length; ++i) {
+            result[i] = bottomBorder + i;
+        }
+
+        return result;
+
+    } else {
+        return []
+    }
+}
+
+export const copyScheduleElementToBuffer = ({
+    dispatch,
+    activeItemIndex,
+    activeItemsIndexesRange,
+    activeDirectoryScheduleItems
+}: {
+    dispatch: AppDispatch,
+    activeItemIndex: number | undefined
+    activeDirectoryScheduleItems: Array<ScheduleItemInterface>
+    activeItemsIndexesRange: ActiveItemsIndexesRange | undefined
+}) => {
+
+    if(activeItemsIndexesRange){
+
+        const {startIndex, endIndex} = activeItemsIndexesRange;
+        const copiedItems = activeDirectoryScheduleItems.slice(startIndex, endIndex + 1);
+
+        dispatch(scheduleActions.setCopyBuffer(copiedItems));
+
+    } else if(activeItemIndex !== undefined){
+
+        const copiedItems = activeDirectoryScheduleItems.slice(activeItemIndex, activeItemIndex + 1);
+
+        dispatch(scheduleActions.setCopyBuffer(copiedItems));
+
+    }
+
+}
+
+const pasteMultipleElementsRecursively = ({
+    scheduleStructure,
+    activeDirectoryId,
+    copyAfterIndex,
+    scheduleBufferDataToCopy
+}: {
+    copyAfterIndex: number
+    activeDirectoryId: string
+    scheduleStructure: Array<ScheduleItemInterface>
+    scheduleBufferDataToCopy: Array<ScheduleItemInterface>,
+}): Array<ScheduleItemInterface> => {
+    return scheduleStructure.reduce((accumulator: Array<ScheduleItemInterface>, currentItem: ScheduleItemInterface)=> {
+
+        if(currentItem.type === "folder"){
+
+            if(currentItem.uniqueId === activeDirectoryId){
+
+                const returnBufferDataWithNewIds = () => [
+                    ...scheduleBufferDataToCopy.reduce((
+                        bufferAccumulator: Array<ScheduleItemInterface>,
+                        currentBufferItem: ScheduleItemInterface
+                    ) => {
+                        return [
+                            ...bufferAccumulator,
+                            {
+                                ...currentBufferItem,
+                                id: uuid(),
+                                uniqueId: uuid(),
+                            }
+                        ]
+                    },[])
+                ];
+
+                const content = currentItem.content.reduce((accum: Array<ScheduleItemInterface>, currentItem: ScheduleItemInterface, index)=>{
+                    if(copyAfterIndex === index){
+                        if(index !== 0){
+                            return ([
+                                ...accum,
+                                currentItem,
+                                ...returnBufferDataWithNewIds()
+                            ])
+                        } else {
+                            return ([
+                                ...accum,
+                                ...returnBufferDataWithNewIds(),
+                                currentItem,
+                            ])
+                        }
+                    } else {
+                        return [
+                            ...accum,
+                            currentItem
+                        ]
+                    }
+
+                }, [])
+
+                return [
+                    ...accumulator,
+                    {
+                        ...currentItem,
+                        content: content.length !== 0 ? content : returnBufferDataWithNewIds()
+                    }
+                ];
+
+            } else {
+                return [
+                    ...accumulator,
+                    {
+                        ...currentItem,
+                        content: pasteMultipleElementsRecursively({
+                            scheduleStructure: currentItem.content,
+                            copyAfterIndex,
+                            activeDirectoryId,
+                            scheduleBufferDataToCopy
+                        })
+                    }
+                ]
+            }
+
+        } else if (currentItem.type === "file") {
+
+            return [
+                ...accumulator,
+                currentItem
+            ]
+
+        }
+
+        return accumulator
+    }, [])
+}
+
+export const pasteCopiedElementsFromBufferToSchedule = ({
+    dispatch,
+    activeItemIndex,
+    activeDirectoryId,
+    scheduleStructure,
+    scheduleBufferDataToCopy,
+    activeItemsIndexesRange
+}: {
+    dispatch: AppDispatch,
+    activeDirectoryId: string
+    activeItemIndex: number | undefined
+    scheduleStructure: Array<ScheduleItemInterface>
+    scheduleBufferDataToCopy: Array<ScheduleItemInterface>,
+    activeItemsIndexesRange: ActiveItemsIndexesRange | undefined
+}) => {
+    if(scheduleBufferDataToCopy.length !== 0 && activeItemsIndexesRange === undefined){
+
+        const copyAfterIndex = activeItemIndex !== undefined ? activeItemIndex : 0;
+        const newSchedule = pasteMultipleElementsRecursively({
+            copyAfterIndex,
+            scheduleStructure,
+            activeDirectoryId,
+            scheduleBufferDataToCopy
+        });
+        const newActiveDirectoryContent = createNewActiveDirectoryItems(newSchedule, activeDirectoryId);
+
+        dispatch(scheduleActions.setScheduleStructure(newSchedule));
+        dispatch(scheduleActions.setActiveDirectoryItems(newActiveDirectoryContent));
+
+    }
+}
+
+export const onListElementClick = ({
+    dispatch,
+    handlerId,
+    previousActiveElementIndex,
+    activeElementIndex,
+    mouseEvent
+}:{
+    dispatch: AppDispatch,
+    handlerId: Identifier | null,
+    activeElementIndex: number
+    previousActiveElementIndex: number| undefined,
+    mouseEvent: MouseEvent<HTMLLIElement>
+}) => {
+
+    if(!mouseEvent.shiftKey){
+        dispatch(scheduleActions.setActiveItem(handlerId));
+        dispatch(scheduleActions.setActiveItemIndex(activeElementIndex));
+        dispatch(scheduleActions.setActiveItemsIndexesRange(undefined));
+    }
+
+    if(mouseEvent.shiftKey && activeElementIndex !== undefined) {
+        dispatch(scheduleActions.setActiveItemsIndexesRange({
+            startIndex: previousActiveElementIndex !== undefined ? previousActiveElementIndex : 0,
+            endIndex: activeElementIndex
+        }));
+        dispatch(scheduleActions.setActiveItemIndex(undefined));
+    }
+
+};
 
 export const onOpenExtraSettingsButtonClick = (setIsOpen: Dispatch<SetStateAction<boolean>>) => {
     setIsOpen(prevState => !prevState)
@@ -478,14 +659,14 @@ export const onInputChange = (e: ChangeEvent<HTMLInputElement>, setFolderName:  
 
 export const onSaveEditedFolderName = (
     dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string,
     activeItemIndex: number,
     newName: string
 ) => {
 
     const newSchedule = recursiveRenameFolder(scheduleStructure, activeDirectory, activeItemIndex, newName)
-    const newActiveDirectoryContent = createNewActiveDirectoryItemsAfterDeletion(newSchedule, activeDirectory)
+    const newActiveDirectoryContent = createNewActiveDirectoryItems(newSchedule, activeDirectory)
 
     dispatch(scheduleActions.setScheduleStructure(newSchedule));
     dispatch(scheduleActions.setActiveDirectoryItems(newActiveDirectoryContent));
@@ -494,7 +675,7 @@ export const onSaveEditedFolderName = (
 
 export const onCloseCurrentFolderClick = (
     dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectoryId: string,
     router: AppRouterInstance,
     structureParams: string | null
@@ -520,7 +701,7 @@ export const onCloseCurrentFolderClick = (
 
 export const onCreateFolderButtonClick = (
     dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string,
     activeItemIndex: number
 ) => {
@@ -535,7 +716,7 @@ export const onCreateFolderButtonClick = (
 
 export const onFolderElementDoubleClick = (
     dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     uniqueId: string,
     folderName: string,
     router: AppRouterInstance,
@@ -554,7 +735,7 @@ export const onFolderElementDoubleClick = (
 
 };
 
-export const onSaveButtonClick = async (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleFileInterface | ScheduleFolderInterface>) => {
+export const onSaveButtonClick = async (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleItemInterface>) => {
 
     const modalContent = await dispatch(updateScheduleStructure({scheduleStructure}))
     .then((serverResponse: any) => {
@@ -574,7 +755,7 @@ export const onSaveButtonClick = async (dispatch: AppDispatch, scheduleStructure
 
 };
 
-export const onDeployButtonClick = async (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleFileInterface | ScheduleFolderInterface>) => {
+export const onDeployButtonClick = async (dispatch: AppDispatch, scheduleStructure:  Array<ScheduleItemInterface>) => {
     const modalContent = await dispatch(uploadXmlFilesOnMmsServer({scheduleStructure}))
     .then((serverResponse: any) => {
         return {
@@ -594,13 +775,13 @@ export const onDeployButtonClick = async (dispatch: AppDispatch, scheduleStructu
 
 export const onDeleteButtonClick = (
     dispatch: AppDispatch,
-    scheduleStructure: Array<ScheduleFileInterface | ScheduleFolderInterface>,
+    scheduleStructure: Array<ScheduleItemInterface>,
     activeDirectory: string,
     deleteIndex: number
 ) => {
 
     const newSchedule = createNewScheduleStructureByDeletion(scheduleStructure, activeDirectory, deleteIndex)
-    const newFolderContent = createNewActiveDirectoryItemsAfterDeletion(newSchedule, activeDirectory)
+    const newFolderContent = createNewActiveDirectoryItems(newSchedule, activeDirectory)
 
     dispatch(scheduleActions.setScheduleStructure(newSchedule));
     dispatch(scheduleActions.setActiveDirectoryItems(newFolderContent));

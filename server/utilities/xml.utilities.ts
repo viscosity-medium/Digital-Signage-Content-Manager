@@ -16,8 +16,6 @@ import {GetSeparatedScheduleItems, StaticFolders} from "../types/xml.types";
 import {createXmlContent} from "../xml/_xml_elements/xmlBase";
 import xmlFormat from "xml-formatter";
 
-const regExpShortCondition = /^\s*<(?!\/*(TMultiItem|Items|TMovieItem|FileName|easescreen.*|Comment)).*>*.*(\n|\r)/;
-
 class XmlUtilities {
 
     parseXmlToJson = (xmlString: string) => {

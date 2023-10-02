@@ -114,6 +114,9 @@ const Schedule = () => {
                 <UnorderedList
                     id={"unorderedTrackList"}
                     className={"overflow-y-scroll mt-[20px] h-[100%] pr-[16px]"}
+                    onKeyDown={()=>{
+                        console.log("keyDown!")
+                    }}
                 >
                     {
                         activeDirectoryItems.map((item, index) => (

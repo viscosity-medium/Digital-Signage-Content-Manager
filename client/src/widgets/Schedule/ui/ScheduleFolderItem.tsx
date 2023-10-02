@@ -2,14 +2,12 @@ import {FC} from "react";
 import {Div, Hr, ListElement, Text} from "@/shared";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {ScheduleFolderProps} from "@/widgets/Schedule/model/Schedule.types";
-import {onFolderElementDoubleClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
+import {createArray, onFolderElementDoubleClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
 import {useAppDispatch} from "../../../../store/store";
 import {useSelector} from "react-redux";
 import {
-    getScheduleActiveDirectoryId,
-    getScheduleActiveItem,
-    getScheduleActiveItemIndex,
-    getScheduleStructure
+    getScheduleActiveDirectoryId, getScheduleActiveItem,
+    getScheduleActiveItemIndex, getScheduleActiveItemsIndexesRange, getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {FolderItemHeader} from "@/widgets/Schedule/ui/Folder/FolderItemHeader";
 import {FolderItemList} from "@/widgets/Schedule/ui/Folder/FolderItemList";
@@ -19,9 +17,7 @@ import {useRouter, useSearchParams} from "next/navigation";
 import {FolderExtraSettings} from "@/widgets/Schedule/ui/Folder/FolderExtraSettings";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
-    item,
-    index,
-    moveScheduleItem
+    item, index, moveScheduleItem
 }) => {
 
     const router = useRouter();
@@ -29,14 +25,20 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     const searchParams = useSearchParams();
     const scheduleStructure = useSelector(getScheduleStructure);
     const scheduleActiveItem = useSelector(getScheduleActiveItem);
-    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId)
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
+    const activeItemsIndexesRange = useSelector(getScheduleActiveItemsIndexesRange);
     const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
 
     const structureParams = searchParams.get("structure");
-    const folderBorderColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBorderColor" : "folderBorderColor";
-    const folderBackgroundColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "activeBackgroundColor" : "folderBackgroundColor";
-    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
+    const indexesRange = createArray({
+        firstIndex: activeItemsIndexesRange?.startIndex,
+        secondIndex: activeItemsIndexesRange?.endIndex
+    });
+    const condition = ((activeItemIndex !== undefined && handlerId === scheduleActiveItem) || indexesRange.includes(index));
+    const folderBackgroundColor = condition ? "activeBackgroundColor" : "folderBackgroundColor";
+    const folderBorderColor = condition ? "activeBorderColor" : "folderBorderColor";
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
     return (
         <>
@@ -44,17 +46,20 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                 reference={refListObject}
                 style={{opacity}}
                 dataHandlerId={handlerId}
-                onClick={()=>{
-                    onListElementClick(dispatch, handlerId, index);
-                }}
-                onDragStart={()=>{
-                    onListElementClick(dispatch, handlerId, index);
+                onClick={(event)=>{
+                    onListElementClick({
+                        dispatch,
+                        handlerId,
+                        mouseEvent: event,
+                        activeElementIndex: index,
+                        previousActiveElementIndex: activeItemIndex
+                    });
                 }}
                 className={"relative overflow-hidden flex flex-col mt-3"}
             >
                 <FolderItemHeader
                     item={item}
-                    handlerId={handlerId}
+                    condition={condition}
                 />
                 <Div
                     className={`flex flex-col relative justify-center min-h-[116px] p-[8px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderBorderColor} ${folderBackgroundColor} rounded`}
@@ -88,7 +93,7 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                             />
                             <FolderItemList
                                 item={item}
-                                handlerId={handlerId}
+                                condition={condition}
                             />
                         </Div>
                         <Text
@@ -111,7 +116,7 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                 </Div>
                 <FolderExtraSettings
                     item={item}
-                    handlerId={handlerId}
+                    condition={condition}
                 />
             </ListElement>
         </>

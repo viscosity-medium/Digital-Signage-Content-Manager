@@ -44,3 +44,12 @@ export interface GetSeparatedScheduleItems {
         [StaticFolders.Night]: ScheduleFolderInterface | undefined
     }
 }
+
+export interface VideoItemProps {
+    relativeMmsMediaPoolFilePath: string
+    timeDuration?: number | undefined
+    dateLimits: {
+        lowerLimit: number | undefined
+        upperLimit: number | undefined
+    },
+}

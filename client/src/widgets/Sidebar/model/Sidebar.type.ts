@@ -1,12 +1,10 @@
-import { AppDispatch } from "../../../../store/store"
-import {Dayjs} from "dayjs";
 import {ItemFileLimits} from "@/widgets/Schedule/model/Schedule.types";
 
 export interface SidebarStructureItem {
-    kind: string,
-    mimeType: string,
     id: string,
     name: string
+    kind: string,
+    mimeType: string,
     thumbnailLink: string
     limits: ItemFileLimits
 }

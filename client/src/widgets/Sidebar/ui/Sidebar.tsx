@@ -1,7 +1,7 @@
 import {useAppDispatch} from "../../../../store/store";
 import {Aside, Button, Input, Text, UnorderedList} from "@/shared";
 import {
-    createRecursiveContent,
+    createSidebarContentRecursively,
     onGoogleStructureButtonClick,
     onInputChange
 } from "@/widgets/Sidebar/model/Sidebar.helpers";
@@ -43,7 +43,7 @@ const Sidebar = () => {
                 className={"mt-[20px] px-[12px] w-[100%] h-[32px]"}
             />
             <UnorderedList>
-                {createRecursiveContent({
+                {createSidebarContentRecursively({
                     structure,
                     searchBarValue
                 })}

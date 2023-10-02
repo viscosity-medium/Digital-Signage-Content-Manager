@@ -1,4 +1,4 @@
-import {VideoItemProps} from "./videoItem";
+import {VideoItemProps} from "../../types/xml.types";
 
 export const pictureItem = ({
     relativeMmsMediaPoolFilePath,

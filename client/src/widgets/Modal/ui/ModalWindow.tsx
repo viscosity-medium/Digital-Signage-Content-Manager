@@ -13,7 +13,7 @@ const ModalWindow: FC<ModalWindowProps> = ({
 
 }) => {
 
-    const [portal, setPortal] = useState<any>(null);
+    const [portal, setPortal] = useState<HTMLElement| null>(null);
     const isModalShown = useSelector(getModalState);
     const modalContent = useSelector(getModalContent);
 

@@ -1,7 +1,5 @@
 import {
-    ItemFileLimits,
-    ScheduleFileInterface,
-    ScheduleFolderInterface,
+    ItemFileLimits, ScheduleItemInterface,
     ToggleScheduleSwitchProps
 } from "@/widgets/Schedule/model/Schedule.types";
 import {changeItemLimitsRecursively} from "@/widgets/Schedule/model/File.helpers";
@@ -14,7 +12,7 @@ const getEditedScheduleData = ({
     itemLimits,
     isActive
 }: {
-    scheduleStructure: (ScheduleFileInterface | ScheduleFolderInterface)[],
+    scheduleStructure: Array<ScheduleItemInterface>,
     fileUniqueId: string,
     itemLimits: ItemFileLimits,
     isActive: boolean

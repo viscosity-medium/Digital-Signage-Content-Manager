@@ -1,39 +1,29 @@
 import {Div, Input, Text} from "@/shared";
-import {TimePicker} from "antd";
-import dayjs from "dayjs";
-import {onTimePickerChange, onToggleValidTimeSwitch} from "@/widgets/Schedule/model/TimeLimitations.helpers";
-import {ScheduleFileInterface, ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {FC, useState} from "react";
 import {useAppDispatch} from "../../../../../store/store";
 import {useSelector} from "react-redux";
-import {
-    getScheduleActiveDirectoryId,
-    getScheduleActiveItem, getScheduleActiveItemIndex,
-    getScheduleStructure
-} from "@/widgets/Schedule/model/Schedule.selectors";
-import {Identifier} from "dnd-core";
+import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
 import {onToggleRandomOrderSwitch} from "@/widgets/Schedule/model/RandomOrder.helpers";
 
 export interface RandomOrderProps {
     folderItem: ScheduleFolderInterface
-    handlerId: Identifier | null
     fileUniqueId: string
+    condition: boolean
 }
 
 const RandomOrder: FC<RandomOrderProps> = ({
-    handlerId,
     folderItem,
-    fileUniqueId
+    fileUniqueId,
+    condition
 }) => {
 
     const dispatch = useAppDispatch();
     const [isActive, setIsActive] = useState<boolean>(folderItem.limits.randomIsActive);
     const scheduleStructure = useSelector(getScheduleStructure);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
-    const scheduleActiveItem = useSelector(getScheduleActiveItem);
-    const activeItemIndex = useSelector(getScheduleActiveItemIndex);
 
-    const textColor = activeItemIndex !== undefined && handlerId === scheduleActiveItem ? "whiteTextColor" : "blueTextColor";
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
     const opacity = isActive ? "opacity-[1]" : "opacity-[0.5]";
     const switchText = isActive ? "Отключить" : "Включить";
 
