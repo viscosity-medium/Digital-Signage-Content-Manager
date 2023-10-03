@@ -1,7 +1,6 @@
 import {Div, Input, Text} from "@/shared";
-import {onChangeIsEditMode, onInputChange, onSaveEditedFolderName} from "@/widgets/Schedule/model/Schedule.helpers";
 import {FC, useState} from "react";
-import {useAppDispatch} from "../../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
 import {
     getScheduleActiveDirectoryId,
@@ -10,6 +9,11 @@ import {
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
 import "../Folder/folder.css"
+import {
+    onChangeIsEditMode,
+    onInputChange,
+    onSaveEditedFolderName
+} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
 
 export interface FolderItemHeaderProps {
     item: ScheduleFolderInterface

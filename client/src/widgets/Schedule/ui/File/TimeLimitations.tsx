@@ -4,8 +4,8 @@ import {FC, useState} from "react";
 import {LimitationsProps} from "@/widgets/Schedule/model/Schedule.types";
 import {useSelector} from "react-redux";
 import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
-import {onTimePickerChange, onToggleValidTimeSwitch} from "@/widgets/Schedule/model/TimeLimitations.helpers";
-import {useAppDispatch} from "../../../../../store/store";
+import {onTimePickerChange, onToggleValidTimeSwitch} from "@/widgets/Schedule/model/helpers/TimeLimitations.helpers";
+import {useAppDispatch} from "@/store/store";
 import dayjs from "dayjs";
 
 const TimeLimitations: FC<LimitationsProps> = ({

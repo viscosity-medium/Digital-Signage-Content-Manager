@@ -1,7 +1,7 @@
 'use client'
 
 import {DetailedHTMLProps, FC, HTMLAttributes} from "react";
-import {useAppDispatch} from "../../../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
 import {
     getActiveDirectoryScheduleItems, getScheduleActiveDirectoryId, getScheduleActiveItemIndex,

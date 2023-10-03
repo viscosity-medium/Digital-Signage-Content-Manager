@@ -1,11 +1,20 @@
-import {CreateRecursiveContent, SidebarStructure, SidebarStructureItem} from "@/widgets/Sidebar/model/Sidebar.type";
+import {
+    CreateRecursiveContent,
+    InternalProperties,
+    SidebarStructure,
+    SidebarStructureItem
+} from "@/widgets/Sidebar/model/Sidebar.type";
 import {SidebarFileItem} from "@/widgets/Sidebar/ui/SidebarFileItem";
 import {SidebarFolderItem} from "@/widgets/Sidebar/ui/SidebarFolderItem";
-import {AppDispatch} from "../../../../store/store";
+import {AppDispatch} from "@/store/store";
 import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
-import {ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {
+    ScheduleFileInterface,
+    ScheduleFolderInterface,
+    ScheduleItemInterface
+} from "@/widgets/Schedule/model/Schedule.types";
 import {v4 as uuid} from "uuid";
-import {ChangeEvent} from "react";
+import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import {sidebarActions} from "@/widgets/Sidebar/model/Sidebar.slice";
 import {fetchActualGoogleStructure} from "@/widgets/Sidebar/model/Sidebar.asyncThunks";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
@@ -19,35 +28,38 @@ export const createNewSchedule = (
 ): Array<ScheduleItemInterface> => {
 
     return scheduleStructure.reduce((
-        accumulator: Array<ScheduleItemInterface | any>,
+        accumulator: Array<ScheduleItemInterface>,
         currentItem: ScheduleItemInterface
-    ) => {
+    ): Array<ScheduleItemInterface> => {
 
         if(currentItem.type === "folder"){
 
             if(currentItem.uniqueId === activeDirectory){
 
-                const content = currentItem.content.reduce((accum: Array<ScheduleItemInterface | any>, currentItem, index) => {
+                const content = currentItem.content.reduce((accum: Array<ScheduleItemInterface>, currentItem, index) => {
                     if(activeItemIndex === index){
+
+                        const newFolderItem: ScheduleFileInterface = {
+                            id: internalItem.id,
+                            name: internalItem.name,
+                            thumbnailLink: internalItem.thumbnailLink,
+                            type: "file",
+                            uniqueId: uuid(),
+                            limits: {
+                                date: {
+                                    start: "default",
+                                    end: "default"
+                                },
+                                dateIsActive: false,
+                                time: "default",
+                                timeIsActive: false,
+                            }
+                        }
+
                         return ([
                                 ...accum,
                                 currentItem,
-                                {
-                                    id: internalItem.id,
-                                    name: internalItem.name,
-                                    thumbnailLink: internalItem.thumbnailLink,
-                                    type: "file",
-                                    uniqueId: uuid(),
-                                    limits: {
-                                        date: {
-                                            start: "default",
-                                            end: "default"
-                                        },
-                                        dateIsActive: false,
-                                        time: "default",
-                                        timeIsActive: false
-                                    }
-                                }
+                                newFolderItem
                             ]
 
                         )
@@ -155,7 +167,7 @@ export const createSidebarContentRecursively = ({
             
             return sortedArray.map((internalItem) => {
 
-                const internalProperties = Object.entries(internalItem);
+                const internalProperties = Object.entries(internalItem) as InternalProperties;
                 
                 if(internalProperties[2][1] !== "folder" && !Array.isArray(internalProperties[0][1])){
                     
@@ -229,3 +241,7 @@ export const onGoogleStructureButtonClick = async (dispatch: AppDispatch) => {
     dispatch(modalActions.setModalContent(modalContent));
 
 }
+
+export const onFolderItemClick = ({setIsOpen}: {setIsOpen:  Dispatch<SetStateAction<boolean>>}) => {
+    setIsOpen(prevState => !prevState);
+};

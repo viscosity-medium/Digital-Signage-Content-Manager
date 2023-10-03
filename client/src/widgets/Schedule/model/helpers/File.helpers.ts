@@ -1,7 +1,7 @@
 import {
     FindFileRecursively,
     ScheduleItemInterface
-} from "./Schedule.types";
+} from "../Schedule.types";
 
 export const changeItemLimitsRecursively = ({
     itemUniqueId,

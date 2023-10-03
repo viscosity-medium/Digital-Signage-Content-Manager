@@ -6,8 +6,11 @@ import {
     ScheduleItemInterface,
     ScheduleScheme
 } from "@/widgets/Schedule/model/Schedule.types";
-import {getChildrenFolderContent, getChildrenFolderName} from "@/widgets/Schedule/model/Schedule.helpers";
 import {Identifier} from "dnd-core";
+import {
+    getChildrenFolderContent,
+    getChildrenFolderName
+} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
 
 const initialState: ScheduleScheme = {
     scheduleStructure: [],

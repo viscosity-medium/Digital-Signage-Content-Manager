@@ -7,7 +7,7 @@ import {
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {useSelector} from "react-redux";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import Image from "next/image";
 import {onListElementClick} from "../model/Sidebar.helpers";
 import {FC, useRef} from "react";

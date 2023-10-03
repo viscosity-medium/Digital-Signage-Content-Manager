@@ -1,12 +1,12 @@
 'use client'
 
 import {Div, Main} from "@/shared";
-import {Sidebar, Schedule, AuthModal} from "@/widgets";
+import {AuthModal, Schedule, Sidebar} from "@/widgets";
+import {useSetLocalStorageCredentials} from "@/hooks/localStorageSetters.hook";
 
 export default function Home() {
 
-    const login = localStorage.getItem("login");
-    const password = localStorage.getItem("password");
+    const { login, password } = useSetLocalStorageCredentials();
 
     return (
         <Main className={"flex w-full h-[100vh] bg-[#79b7bd]"}>

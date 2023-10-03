@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {fetchSidebarStructure} from "@/widgets/Sidebar/model/Sidebar.asyncThunks";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 
 export const useFetchSidebarStructure = () => {
 
@@ -8,6 +8,6 @@ export const useFetchSidebarStructure = () => {
 
     useEffect(()=>{
         dispatch(fetchSidebarStructure());
-    },[]);
+    },[dispatch]);
 
 }

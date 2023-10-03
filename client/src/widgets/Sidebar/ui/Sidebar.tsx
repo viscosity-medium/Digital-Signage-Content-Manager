@@ -1,4 +1,4 @@
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import {Aside, Button, Input, Text, UnorderedList} from "@/shared";
 import {
     createSidebarContentRecursively,

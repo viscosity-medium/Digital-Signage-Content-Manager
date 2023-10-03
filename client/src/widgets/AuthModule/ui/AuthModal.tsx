@@ -4,7 +4,7 @@ import {
     onPasswordInputChange,
     onSubmitButtonClick
 } from "@/widgets/AuthModule/model/AuthModal.helpers";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
 import {getAuthModuleLogin, getAuthModulePassword} from "@/widgets/AuthModule/model/AuthModal.selectors";
 

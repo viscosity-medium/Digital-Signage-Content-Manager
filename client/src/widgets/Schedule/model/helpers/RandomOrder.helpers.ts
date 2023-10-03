@@ -2,9 +2,11 @@ import {
     ItemFileLimits, ScheduleItemInterface,
     ToggleScheduleSwitchProps
 } from "@/widgets/Schedule/model/Schedule.types";
-import {changeItemLimitsRecursively} from "@/widgets/Schedule/model/File.helpers";
+import {changeItemLimitsRecursively} from "@/widgets/Schedule/model/helpers/File.helpers";
 import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
-import {createNewActiveDirectoryItems} from "@/widgets/Schedule/model/Schedule.helpers";
+
+
+import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
 
 const getEditedScheduleData = ({
     scheduleStructure,
@@ -57,7 +59,7 @@ export const onToggleRandomOrderSwitch = ({
         itemLimits, isActive
     });
 
-    const updatedActiveItems = createNewActiveDirectoryItems(
+    const updatedActiveItems = createNewActiveDirectoryItemsRecursively(
         editedScheduleData,
         activeDirectoryId
     );

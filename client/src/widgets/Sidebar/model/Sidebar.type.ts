@@ -26,3 +26,9 @@ export interface SidebarScheme {
     structure: SidebarStructure
     searchBarValue: string
 }
+
+export type InternalProperties = [
+    [string, SidebarStructureItem[]],
+    ["name", string],
+    ["mimeType", string],
+]

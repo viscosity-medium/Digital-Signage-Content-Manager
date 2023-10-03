@@ -8,11 +8,13 @@ import {
     getScheduleActiveDirectoryId, getScheduleActiveItem, getScheduleStructure,
     getScheduleActiveItemIndex, getScheduleActiveItemsIndexesRange,
 } from "@/widgets/Schedule/model/Schedule.selectors";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import Image from "next/image";
-import {createArray, onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
 import {DateLimitations} from "@/widgets/Schedule/ui/File/DateLimitations";
 import {TimeLimitations} from "@/widgets/Schedule/ui/File/TimeLimitations";
+import {onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
+
+import {createArrayFromAToB} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
 
 const ScheduleFileItem: FC<ScheduleFileProps> = ({
     item, index, moveScheduleItem,
@@ -26,7 +28,7 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
     const activeItemsIndexesRange = useSelector(getScheduleActiveItemsIndexesRange);
     const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
 
-    const indexesRange = createArray({
+    const indexesRange = createArrayFromAToB({
         firstIndex: activeItemsIndexesRange?.startIndex,
         secondIndex: activeItemsIndexesRange?.endIndex
     });

@@ -3,15 +3,17 @@
 import {Div, ListElement, Text, UnorderedList} from "@/shared";
 import FolderIcon from "@/assets/folder-icon.svg";
 import DownArrowIcon from "@/assets/down-arrow.svg";
-import {createSidebarContentRecursively} from "@/widgets/Sidebar/model/Sidebar.helpers";
+import {createSidebarContentRecursively, onFolderItemClick} from "@/widgets/Sidebar/model/Sidebar.helpers";
 import {useRef, useState} from "react";
-import { useAppDispatch } from "../../../../store/store";
-import { useSelector } from "react-redux";
-import { getSearchBarValue } from "../model/Sidebar.selectors";
+import {useSelector} from "react-redux";
+import {getSearchBarValue} from "../model/Sidebar.selectors";
+import {InternalProperties} from "../model/Sidebar.type";
 
 const SidebarFolderItem = ({
     internalProperties
-}: {internalProperties:  [string, any][]}) => {
+}: {
+    internalProperties: InternalProperties
+}) => {
 
     const [isOpen, setIsOpen] = useState(true);
     const folderContentRef = useRef<HTMLUListElement>(null);
@@ -20,9 +22,6 @@ const SidebarFolderItem = ({
     const folderId = internalProperties[0][0];
     const folderStructure = internalProperties[0][1];
     const folderName = internalProperties[1][1];
-    const onFolderHeight = () => {
-        setIsOpen(prevState => !prevState);
-    };
 
     return(
         <ListElement
@@ -34,7 +33,9 @@ const SidebarFolderItem = ({
             >
                 <Div
                     className={`flex cursor-pointer`}
-                    onClick={onFolderHeight}
+                    onClick={() => {
+                        onFolderItemClick({setIsOpen})
+                    }}
                 >
                     <FolderIcon
                         className={`w-[20px]`}

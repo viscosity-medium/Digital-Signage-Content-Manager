@@ -1,7 +1,7 @@
 import {Identifier} from "dnd-core";
 import {Dispatch, SetStateAction} from "react";
 import {Dayjs} from "dayjs";
-import {AppDispatch} from "../../../../store/store";
+import {AppDispatch} from "@/store/store";
 
 export type ScheduleItemInterface = ScheduleFileInterface | ScheduleFolderInterface
 

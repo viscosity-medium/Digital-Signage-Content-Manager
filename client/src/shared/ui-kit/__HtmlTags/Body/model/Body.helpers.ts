@@ -1,10 +1,10 @@
 import {KeyboardEvent} from "react"
+import {AppDispatch} from "@/store/store";
+import {ActiveItemsIndexesRange, ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {
     copyScheduleElementToBuffer,
     pasteCopiedElementsFromBufferToSchedule
-} from "@/widgets/Schedule/model/Schedule.helpers";
-import {AppDispatch} from "../../../../../../store/store";
-import {ActiveItemsIndexesRange, ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+} from "@/widgets/Schedule/model/helpers/ScheduleCopyPaste.helpers";
 
 export interface OnBodyKeyDownProps {
     event:  KeyboardEvent<HTMLBodyElement>

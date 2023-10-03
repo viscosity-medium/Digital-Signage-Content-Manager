@@ -2,8 +2,7 @@ import {FC} from "react";
 import {Div, Hr, ListElement, Text} from "@/shared";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {ScheduleFolderProps} from "@/widgets/Schedule/model/Schedule.types";
-import {createArray, onFolderElementDoubleClick, onListElementClick} from "@/widgets/Schedule/model/Schedule.helpers";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
 import {
     getScheduleActiveDirectoryId, getScheduleActiveItem,
@@ -15,6 +14,12 @@ import {FolderCloseButton} from "@/widgets/Schedule/ui/Folder/FolderCloseButton"
 import "./Folder/folder.css"
 import {useRouter, useSearchParams} from "next/navigation";
 import {FolderExtraSettings} from "@/widgets/Schedule/ui/Folder/FolderExtraSettings";
+import {
+    onFolderElementDoubleClick,
+    onListElementClick
+} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
+
+import {createArrayFromAToB} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     item, index, moveScheduleItem
@@ -31,7 +36,7 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     const { opacity, handlerId, refListObject } = useDragAndDrop({item, index, moveScheduleItem, activeDirectoryId});
 
     const structureParams = searchParams.get("structure");
-    const indexesRange = createArray({
+    const indexesRange = createArrayFromAToB({
         firstIndex: activeItemsIndexesRange?.startIndex,
         secondIndex: activeItemsIndexesRange?.endIndex
     });

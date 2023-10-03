@@ -2,7 +2,7 @@
 
 import {Button, Div, Text, UnorderedList} from "@/shared";
 import {useSelector} from "react-redux";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import {
     getActiveDirectoryScheduleItems,
     getScheduleActiveDirectoryId, getScheduleActiveDirectoryName,
@@ -12,12 +12,15 @@ import {
 import {useFetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.hooks";
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
-    moveScheduleItem,
-    onCloseCurrentFolderClick,
-    onCreateFolderButtonClick, onDeployButtonClick,
-    onSaveButtonClick,
     renderScheduleItemsHelper
-} from "@/widgets/Schedule/model/Schedule.helpers";
+} from "@/widgets/Schedule/model/helpers/ScheduleRender.helpers";
+import {
+    onCloseCurrentFolderClick,
+    onCreateFolderButtonClick,
+    onDeployButtonClick,
+    onSaveButtonClick
+} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
+import {moveScheduleItem} from "@/widgets/Schedule/model/helpers/ScheduleDragAndDrop.helpers";
 
 const Schedule = () => {
 

@@ -1,4 +1,4 @@
-import {StateScheme} from "../../../../store/stateScheme";
+import {StateScheme} from "@/store/stateScheme";
 
 export const getScheduleStructure = (state: StateScheme) => state.schedule.scheduleStructure;
 export const getScheduleActiveItem = (state: StateScheme) => state.schedule.activeItem;

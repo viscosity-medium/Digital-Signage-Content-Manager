@@ -4,7 +4,8 @@ import DownArrowIcon from "@/assets/down-arrow.svg";
 import {TimeLimitations} from "@/widgets/Schedule/ui/File/TimeLimitations";
 import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
 import {RandomOrder} from "@/widgets/Schedule/ui/File/RandomOrder";
-import {onOpenExtraSettingsButtonClick} from "@/widgets/Schedule/model/Schedule.helpers";
+
+import {onOpenExtraSettingsButtonClick} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
 
 export interface FolderExtraSettingsProps {
     item: ScheduleFolderInterface

@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {Button, Text} from "@/shared";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
-import {useAppDispatch} from "../../../../../store/store";
+import {useAppDispatch} from "@/store/store";
 import {UploadInformationProps} from "@/widgets/Modal/model/Modal.types";
 
 const UploadInformation: FC<UploadInformationProps> = ({modalContent}) => {
