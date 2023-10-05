@@ -14,7 +14,7 @@ const FolderItemList: FC<FolderItemListProps> = ({
     condition
 }) => {
 
-    const textColor = condition ? "whiteTextColor" : "blackTextColor";
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
     return (
         <Div

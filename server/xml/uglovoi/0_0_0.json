@@ -1,0 +1,256 @@
+{
+    "easescreen": {
+        "$": {
+            "type": "day"
+        },
+        "TMultiItem": [
+            {
+                "Date": [
+                    "\r\n            Default 20.00\r\n        "
+                ],
+                "Length": [
+                    "\r\n            02.00\r\n        "
+                ],
+                "Comment": [
+                    "\r\n            'Night'\r\n        "
+                ],
+                "Effect.TransitionNr": [
+                    "\r\n            0\r\n        "
+                ],
+                "DefaultTime": [
+                    "\r\n            15\r\n        "
+                ],
+                "Items": [
+                    {
+                        "TMultiItem": [
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_1'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            },
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_2'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            },
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_3'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            },
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_4'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "Date": [
+                    "\r\n            Default 08.00\r\n        "
+                ],
+                "Length": [
+                    "\r\n            12.00\r\n        "
+                ],
+                "Comment": [
+                    "\r\n            'Day-1344'\r\n        "
+                ],
+                "Effect.TransitionNr": [
+                    "\r\n            0\r\n        "
+                ],
+                "DefaultTime": [
+                    "\r\n            15\r\n        "
+                ],
+                "Items": [
+                    {
+                        "TMultiItem": [
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_1'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            },
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_2'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            },
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_3'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            },
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_4'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            },
+                            {
+                                "Comment": [
+                                    "\r\n                    'ENKA_blockitem_5'\r\n                "
+                                ],
+                                "DisplayTime": [
+                                    "\r\n                    -1\r\n                "
+                                ],
+                                "Effect.TransitionNr": [
+                                    "\r\n                    0\r\n                "
+                                ],
+                                "DefaultTime": [
+                                    "\r\n                    15\r\n                "
+                                ],
+                                "Items": [
+                                    "\r\n                "
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "TPictureItem": [
+            {
+                "Date": [
+                    "\r\n            Default 00.00\r\n        "
+                ],
+                "Length": [
+                    "\r\n            08.00\r\n        "
+                ],
+                "Log": [
+                    "\r\n            True\r\n        "
+                ],
+                "Effect.TransitionNr": [
+                    "\r\n            1\r\n        "
+                ],
+                "Effect.TransitionParam": [
+                    "\r\n            1\r\n        "
+                ],
+                "Effect.TransitionLength": [
+                    "\r\n            400\r\n        "
+                ],
+                "FileName": [
+                    "\r\n            'ENKA\\1344x1152\\black.png'\r\n        "
+                ]
+            },
+            {
+                "Date": [
+                    "\r\n            Default 22.00\r\n        "
+                ],
+                "Length": [
+                    "\r\n            01.50\r\n        "
+                ],
+                "Log": [
+                    "\r\n            True\r\n        "
+                ],
+                "Effect.TransitionNr": [
+                    "\r\n            1\r\n        "
+                ],
+                "Effect.TransitionParam": [
+                    "\r\n            1\r\n        "
+                ],
+                "Effect.TransitionLength": [
+                    "\r\n            400\r\n        "
+                ],
+                "FileName": [
+                    "\r\n            'ENKA\\1344x1152\\black.png'\r\n        "
+                ]
+            }
+        ]
+    }
+}

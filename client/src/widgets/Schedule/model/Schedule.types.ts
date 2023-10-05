@@ -10,6 +10,7 @@ export interface ScheduleFileInterface {
     name: string
     uniqueId: string,
     type: "file"
+    mimeType: string
     thumbnailLink: string
     limits: ItemFileLimits
 }

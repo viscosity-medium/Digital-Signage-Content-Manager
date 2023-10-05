@@ -1,5 +1,5 @@
 import {
-    FindFileRecursively,
+    FindFileRecursively, ItemFolderLimits,
     ScheduleItemInterface
 } from "../Schedule.types";
 
@@ -28,13 +28,13 @@ export const changeItemLimitsRecursively = ({
                 ];
             }
 
-        } else if(structureItem.type === "folder" && "randomIsActive" in itemLimits){
+        } else if(structureItem.type === "folder"){
 
             return [
                 ...accumulator,
                 {
                     ...structureItem,
-                    limits: structureItem.uniqueId === itemUniqueId ? itemLimits : structureItem.limits,
+                    limits: structureItem.uniqueId === itemUniqueId ? itemLimits as ItemFolderLimits : structureItem.limits,
                     content: [
                         ...changeItemLimitsRecursively({
                             structure: structureItem.content,

@@ -236,6 +236,8 @@ class XmlUtilities {
             }
         });
 
+        //console.log(YabloneviyDaySchedule)
+
         const YabloneviyXmlSchedule = createXmlContent(YabloneviyDaySchedule, YabloneviyNightSchedule);
         const UglovoiXmlSchedule = createXmlContent(UglovoiDaySchedule, UglovoiNightSchedule);
 

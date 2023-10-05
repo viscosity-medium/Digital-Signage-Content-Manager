@@ -44,6 +44,7 @@ export const createNewSchedule = (
                             name: internalItem.name,
                             thumbnailLink: internalItem.thumbnailLink,
                             type: "file",
+                            mimeType: internalItem.mimeType,
                             uniqueId: uuid(),
                             limits: {
                                 date: {
@@ -81,6 +82,7 @@ export const createNewSchedule = (
                             id: internalItem.id,
                             name: internalItem.name,
                             thumbnailLink: internalItem.thumbnailLink,
+                            mimeType: internalItem.mimeType,
                             type: "file",
                             uniqueId: uuid(),
                             limits: {

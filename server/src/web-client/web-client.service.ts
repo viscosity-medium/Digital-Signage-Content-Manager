@@ -37,7 +37,7 @@ export class WebClientService {
         const actualFileListData = getActualGoogleFilesList(googleFolderFileStructure);
         const actualFileListPath = fileSystem.createAbsolutePathFromProjectRoot(["model", "actualFilesList.json"]);
 
-        fileSystem.writeFile(actualFileListPath, actualFileListData);
+        //fileSystem.writeFile(actualFileListPath, actualFileListData);
 
         fileSystem.createMultipleFoldersRecursively([
             "C:\\mms\\Media\\ENKA\\yabloneviy\\day",
@@ -49,9 +49,9 @@ export class WebClientService {
         const screensUniqueContent = getSeparatedFileListFromGoogleStructure(googleFolderFileStructure);
         const beautifiedGoogleFileStructure = JSON.stringify(googleFolderFileStructure, null, 4);
 
-        // const jsonPathsArray = xmlUtilities.createMultipleJsonFilesFromXmlAndReturnJsonPathsInArray(["yabloneviy", "uglovoi"]);
+        const jsonPathsArray = xmlUtilities.createMultipleJsonFilesFromXmlAndReturnJsonPathsInArray(["yabloneviy", "uglovoi"]);
 
-        // fileSystem.copyMultipleFilesFromMmsMedia(jsonPathsArray);
+        fileSystem.copyMultipleFilesFromMmsMedia(jsonPathsArray);
 
         // const actualYabloneviyFileList = xmlUtilities.getActualFilesListFromJson(yabloneviyJsonPath);
         // const actualUglovoiFileList = xmlUtilities.getActualFilesListFromJson(yabloneviyJsonPath);
