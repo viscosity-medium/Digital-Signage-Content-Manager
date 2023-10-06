@@ -39,7 +39,7 @@ const Schedule = () => {
     
     return (
         <Div
-            className={"flex flex-col justify-between m-[50px] p-[50px] w-[100%] max-h-[100vh] border-[4px] border-solid border-white"}
+            className={"flex flex-col justify-between m-[50px] p-[20px] w-[100%] max-h-[100vh] border-[4px] border-solid border-white"}
         >
             <Div
                 className={"flex flex-col max-h-[90%] pb-[16px]"}
@@ -115,8 +115,7 @@ const Schedule = () => {
                     }
                 </Div>
                 <UnorderedList
-                    id={"unorderedTrackList"}
-                    className={"overflow-y-scroll mt-[20px] h-[100%] pr-[16px]"}
+                    className={"overflow-y-scroll mt-[20px] h-[100%] pr-[16px] unorderedTrackList"}
                     onKeyDown={()=>{
                         console.log("keyDown!")
                     }}

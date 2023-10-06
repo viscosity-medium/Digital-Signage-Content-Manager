@@ -1,9 +1,7 @@
 import {useAppDispatch} from "@/store/store";
 import {Aside, Button, Input, Text, UnorderedList} from "@/shared";
 import {
-    createSidebarContentRecursively,
-    onGoogleStructureButtonClick,
-    onInputChange
+    createSidebarContentRecursively, onGoogleStructureButtonClick, onInputChange
 } from "@/widgets/Sidebar/model/Sidebar.helpers";
 import {getSearchBarValue, getSidebarStructure} from "@/widgets/Sidebar/model/Sidebar.selectors";
 import {useSelector} from "react-redux";
@@ -19,7 +17,7 @@ const Sidebar = () => {
 
     return (
         <Aside
-            className={"p-[12px] h-[100%] w-[100%] overflow-y-scroll"}
+            className={"flex flex-col p-[12px] h-[100%] w-[100%]"}
         >
             <Button
                 className={"w-[100%] border-[3px] border-[#65ff94] rounded transition duration-300 hover:bg-[#00000033]"}
@@ -40,9 +38,11 @@ const Sidebar = () => {
                     onInputChange(event, dispatch)
                 }}
                 placeholder={"Введите текст для поиска ..."}
-                className={"mt-[20px] px-[12px] w-[100%] h-[32px]"}
+                className={"mt-3 px-[12px] w-[100%] h-[32px]"}
             />
-            <UnorderedList>
+            <UnorderedList
+                className={"flex-1 mt-3 overflow-y-scroll unorderedTrackList"}
+            >
                 {createSidebarContentRecursively({
                     structure,
                     searchBarValue

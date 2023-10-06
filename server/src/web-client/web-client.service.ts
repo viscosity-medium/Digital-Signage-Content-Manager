@@ -51,7 +51,7 @@ export class WebClientService {
 
         const jsonPathsArray = xmlUtilities.createMultipleJsonFilesFromXmlAndReturnJsonPathsInArray(["yabloneviy", "uglovoi"]);
 
-        fileSystem.copyMultipleFilesFromMmsMedia(jsonPathsArray);
+        //fileSystem.copyMultipleFilesFromMmsMedia(jsonPathsArray);
 
         // const actualYabloneviyFileList = xmlUtilities.getActualFilesListFromJson(yabloneviyJsonPath);
         // const actualUglovoiFileList = xmlUtilities.getActualFilesListFromJson(yabloneviyJsonPath);

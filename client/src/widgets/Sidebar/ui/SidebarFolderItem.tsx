@@ -15,63 +15,66 @@ const SidebarFolderItem = ({
     internalProperties: InternalProperties
 }) => {
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const folderContentRef = useRef<HTMLUListElement>(null);
     const searchBarValue = useSelector(getSearchBarValue);
 
     const folderId = internalProperties[0][0];
-    const folderStructure = internalProperties[0][1];
     const folderName = internalProperties[1][1];
+    const folderStructure = internalProperties[0][1];
+    const folderFilteredContent = createSidebarContentRecursively({
+        structure: {
+            [folderId]: folderStructure
+        },
+        searchBarValue
+    });
 
-    return(
-        <ListElement
-            key={`${folderId}`}
-            className={`flex flex-col`}
-        >
-            <Div
-                className={`flex mt-[8px]`}
+    if(folderFilteredContent[0]?.length !== 0){
+        return(
+            <ListElement
+                key={`${folderId}`}
+                className={`flex flex-col`}
             >
                 <Div
-                    className={`flex cursor-pointer`}
-                    onClick={() => {
-                        onFolderItemClick({setIsOpen})
-                    }}
+                    className={`flex mt-[8px]`}
                 >
-                    <FolderIcon
-                        className={`w-[20px]`}
-                    />
-                    <DownArrowIcon
-                        className={`w-[16px] mx-[12px] ${isOpen ? "" : "rotate-180"}`}
-                    />
-                    <Text
-                        tag={"p"}
-                        className={"text-[white]"}
+                    <Div
+                        className={`flex cursor-pointer`}
+                        onClick={() => {
+                            onFolderItemClick({setIsOpen})
+                        }}
+                    >
+                        <FolderIcon
+                            className={`w-[20px]`}
+                        />
+                        <DownArrowIcon
+                            className={`w-[16px] mx-[12px] ${isOpen ? "" : "rotate-180"}`}
+                        />
+                        <Text
+                            tag={"p"}
+                            className={"text-[white]"}
+                        >
+                            {
+                                folderName
+                            }
+                        </Text>
+                    </Div>
+                </Div>
+                <Div
+                    className={`${isOpen ? `py-[8px] h-[auto]` : `py-[0px] h-[0]`} overflow-hidden`}
+                >
+                    <UnorderedList
+                        reference={folderContentRef}
+                        className={`flex flex-col mx-[20px]`}
                     >
                         {
-                            folderName
+                            folderFilteredContent.map(item => item)
                         }
-                    </Text>
+                    </UnorderedList>
                 </Div>
-            </Div>
-            <Div
-                className={`${isOpen ? `py-[8px] h-[auto]` : `py-[0px] h-[0]`} overflow-hidden`}
-            >
-                <UnorderedList
-                    reference={folderContentRef}
-                    className={`flex flex-col mx-[20px]`}
-                >
-                    {
-                        createSidebarContentRecursively({
-                            structure: {
-                                [folderId]: folderStructure
-                            },
-                            searchBarValue
-                        })
-                    }
-                </UnorderedList>
-            </Div>
-        </ListElement>
-    )
+            </ListElement>
+        )
+    }
 
 };
 

@@ -194,10 +194,10 @@ export const createSidebarContentRecursively = ({
 
                 }
 
-            })
+            }).filter((item)=> item)
         }
 
-    }).filter((item)=> item)
+    })
 
 }
 
