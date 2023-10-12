@@ -929,6 +929,9 @@
                                                 "Date": [
                                                     ""
                                                 ],
+                                                "DisplayTime": [
+                                                    "\r\n                            10\r\n                        "
+                                                ],
                                                 "Log": [
                                                     "\r\n                            True\r\n                        "
                                                 ],
@@ -1213,6 +1216,41 @@
                                                 ],
                                                 "FileName": [
                                                     "\r\n                            'ENKA\\yabloneviy\\day\\dvijenie_pervih_10-01_1344.mp4'\r\n                        "
+                                                ],
+                                                "FilmEnd": [
+                                                    "\r\n                            15\r\n                        "
+                                                ],
+                                                "FilmLen": [
+                                                    "\r\n                            15\r\n                        "
+                                                ]
+                                            },
+                                            {
+                                                "Date": [
+                                                    ""
+                                                ],
+                                                "DisplayTime": [
+                                                    "\r\n                            -1\r\n                        "
+                                                ],
+                                                "MinDate": [
+                                                    "\r\n                            45204\r\n                        "
+                                                ],
+                                                "Log": [
+                                                    "\r\n                            True\r\n                        "
+                                                ],
+                                                "Effect.TransitionNr": [
+                                                    "\r\n                            1\r\n                        "
+                                                ],
+                                                "Effect.TransitionParam": [
+                                                    "\r\n                            1\r\n                        "
+                                                ],
+                                                "Effect.TransitionLength": [
+                                                    "\r\n                            400\r\n                        "
+                                                ],
+                                                "Effect.BackColor": [
+                                                    "\r\n                            clDefault\r\n                        "
+                                                ],
+                                                "FileName": [
+                                                    "\r\n                            'ENKA\\yabloneviy\\day\\dvijenie_pervih_10-05_1344.mp4'\r\n                        "
                                                 ],
                                                 "FilmEnd": [
                                                     "\r\n                            15\r\n                        "
@@ -1732,6 +1770,9 @@
                                                 "Date": [
                                                     ""
                                                 ],
+                                                "DisplayTime": [
+                                                    "\r\n                            5\r\n                        "
+                                                ],
                                                 "Log": [
                                                     "\r\n                            True\r\n                        "
                                                 ],
@@ -1748,6 +1789,9 @@
                                             {
                                                 "Date": [
                                                     ""
+                                                ],
+                                                "DisplayTime": [
+                                                    "\r\n                            5\r\n                        "
                                                 ],
                                                 "Log": [
                                                     "\r\n                            True\r\n                        "
@@ -3311,6 +3355,9 @@
                                                 "Date": [
                                                     ""
                                                 ],
+                                                "DisplayTime": [
+                                                    "\r\n                            5\r\n                        "
+                                                ],
                                                 "Log": [
                                                     "\r\n                            True\r\n                        "
                                                 ],
@@ -3327,6 +3374,9 @@
                                             {
                                                 "Date": [
                                                     ""
+                                                ],
+                                                "DisplayTime": [
+                                                    "\r\n                            5\r\n                        "
                                                 ],
                                                 "Log": [
                                                     "\r\n                            True\r\n                        "

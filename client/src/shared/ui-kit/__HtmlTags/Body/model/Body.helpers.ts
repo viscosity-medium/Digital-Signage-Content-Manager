@@ -7,7 +7,7 @@ import {
 } from "@/widgets/Schedule/model/helpers/ScheduleCopyPaste.helpers";
 
 export interface OnBodyKeyDownProps {
-    event:  KeyboardEvent<HTMLBodyElement>
+    event: KeyboardEvent<HTMLBodyElement>
     dispatch: AppDispatch,
     activeDirectoryId: string
     activeItemIndex: number | undefined
@@ -28,7 +28,9 @@ export const onBodyKeyDown = ({
     scheduleBufferDataToCopy
 }: OnBodyKeyDownProps) => {
 
-    if(event.ctrlKey && event.code === "KeyC"){
+    const htmlElement = event.target as HTMLElement
+
+    if(event.ctrlKey && event.code === "KeyC" && htmlElement.tagName.toUpperCase() !== "INPUT"){
         copyScheduleElementToBuffer({
             dispatch,
             activeItemIndex,
@@ -37,7 +39,7 @@ export const onBodyKeyDown = ({
         })
     }
 
-    if(event.ctrlKey && event.code === "KeyV"){
+    if(event.ctrlKey && event.code === "KeyV" && htmlElement.tagName.toUpperCase() !== "INPUT"){
         pasteCopiedElementsFromBufferToSchedule({
             dispatch,
             activeItemIndex,

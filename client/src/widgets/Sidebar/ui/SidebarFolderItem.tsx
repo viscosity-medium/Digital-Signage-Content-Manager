@@ -36,7 +36,7 @@ const SidebarFolderItem = ({
                 className={`flex flex-col`}
             >
                 <Div
-                    className={`flex mt-[8px]`}
+                    className={`mt-[8px]`}
                 >
                     <Div
                         className={`flex cursor-pointer`}
@@ -52,7 +52,7 @@ const SidebarFolderItem = ({
                         />
                         <Text
                             tag={"p"}
-                            className={"text-[white]"}
+                            className={"max-w-[70%] max-h-[48px] truncate text-[white] select-none"}
                         >
                             {
                                 folderName

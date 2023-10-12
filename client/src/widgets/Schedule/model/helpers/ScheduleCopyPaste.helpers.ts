@@ -39,16 +39,16 @@ const pasteMultipleElementsRecursively = ({
     copyAfterIndex,
     scheduleBufferDataToCopy
 }: {
-    copyAfterIndex: number
+    copyAfterIndex: number | undefined
     activeDirectoryId: string
     scheduleStructure: Array<ScheduleItemInterface>
     scheduleBufferDataToCopy: Array<ScheduleItemInterface>,
 }): Array<ScheduleItemInterface> => {
-    return scheduleStructure.reduce((accumulator: Array<ScheduleItemInterface>, currentItem: ScheduleItemInterface) => {
+    return scheduleStructure.reduce((accumulator: Array<ScheduleItemInterface>, currentParentItem: ScheduleItemInterface) => {
 
-        if (currentItem.type === "folder") {
+        if (currentParentItem.type === "folder") {
 
-            if (currentItem.uniqueId === activeDirectoryId) {
+            if (currentParentItem.uniqueId === activeDirectoryId) {
 
                 const returnBufferDataWithNewIds = () => [
                     ...scheduleBufferDataToCopy.reduce((
@@ -66,34 +66,38 @@ const pasteMultipleElementsRecursively = ({
                     }, [])
                 ];
 
-                const content = currentItem.content.reduce((accum: Array<ScheduleItemInterface>, currentItem: ScheduleItemInterface, index) => {
-                    if (copyAfterIndex === index) {
-                        if (index !== 0) {
+                const nonUndefinedCopyAfterIndex = copyAfterIndex !== undefined ? copyAfterIndex :
+                    currentParentItem.content.length > 0 ? currentParentItem.content.length - 1 : 0;
+
+                const content = currentParentItem.content.reduce((accum: Array<ScheduleItemInterface>, currentChildItem: ScheduleItemInterface, index) => {
+
+                    if (nonUndefinedCopyAfterIndex === index) {
+                        if (currentParentItem.content.length > 0) {
                             return ([
                                 ...accum,
-                                currentItem,
+                                currentChildItem,
                                 ...returnBufferDataWithNewIds()
                             ])
                         } else {
                             return ([
                                 ...accum,
                                 ...returnBufferDataWithNewIds(),
-                                currentItem,
+                                currentChildItem,
                             ])
                         }
                     } else {
                         return [
                             ...accum,
-                            currentItem
+                            currentChildItem
                         ]
                     }
 
-                }, [])
+                }, []);
 
                 return [
                     ...accumulator,
                     {
-                        ...currentItem,
+                        ...currentParentItem,
                         content: content.length !== 0 ? content : returnBufferDataWithNewIds()
                     }
                 ];
@@ -102,9 +106,9 @@ const pasteMultipleElementsRecursively = ({
                 return [
                     ...accumulator,
                     {
-                        ...currentItem,
+                        ...currentParentItem,
                         content: pasteMultipleElementsRecursively({
-                            scheduleStructure: currentItem.content,
+                            scheduleStructure: currentParentItem.content,
                             copyAfterIndex,
                             activeDirectoryId,
                             scheduleBufferDataToCopy
@@ -113,11 +117,11 @@ const pasteMultipleElementsRecursively = ({
                 ]
             }
 
-        } else if (currentItem.type === "file") {
+        } else if (currentParentItem.type === "file") {
 
             return [
                 ...accumulator,
-                currentItem
+                currentParentItem
             ]
 
         }
@@ -142,7 +146,7 @@ export const pasteCopiedElementsFromBufferToSchedule = ({
 }) => {
     if (scheduleBufferDataToCopy.length !== 0 && activeItemsIndexesRange === undefined) {
 
-        const copyAfterIndex = activeItemIndex !== undefined ? activeItemIndex : 0;
+        const copyAfterIndex = activeItemIndex;
         const newSchedule = pasteMultipleElementsRecursively({
             copyAfterIndex,
             scheduleStructure,

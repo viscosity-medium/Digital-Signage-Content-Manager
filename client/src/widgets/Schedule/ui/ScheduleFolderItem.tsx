@@ -46,8 +46,6 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     const folderBorderColor = condition ? "activeBorderColor" : "folderBorderColor";
     const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
-    console.log(item.limits.time)
-
     const itemTime = item.limits.time !== "default" ? `[${dayjs(item.limits.time).toString().replace(/^.*\s\d{2}:|\s\w{3}/gm, "")}]` : "";
     const itemRandom = item.limits.randomIsActive ? `[R]` : "";
 

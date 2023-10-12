@@ -18,6 +18,7 @@ import {
     createNewScheduleStructureAfterDeletionRecursively, createNewScheduleStructureRecursively
 } from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
 import {renameFolderNameRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsEditors.helpers";
+import {stringValidators} from "@/shared/helpers/stringValidators";
 
 export const onListElementClick = ({
    dispatch,
@@ -54,8 +55,14 @@ export const onOpenExtraSettingsButtonClick = (setIsOpen: Dispatch<SetStateActio
 export const onChangeIsEditMode = (setIsEditMode: Dispatch<SetStateAction<boolean>>) => {
     setIsEditMode(prevState => !prevState);
 }
-export const onInputChange = (e: ChangeEvent<HTMLInputElement>, setFolderName: Dispatch<SetStateAction<string>>) => {
-    setFolderName(e.target.value)
+export const onInputChange = (event: ChangeEvent<HTMLInputElement>, setFolderName: Dispatch<SetStateAction<string>>) => {
+
+    const protectiveCondition = stringValidators.validateInputValue({event});
+
+    if(protectiveCondition) {
+        setFolderName(event.target.value);
+    }
+
 }
 export const onSaveEditedFolderName = (
     dispatch: AppDispatch,

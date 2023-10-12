@@ -17,7 +17,7 @@ const FolderExtraSettings: FC<FolderExtraSettingsProps> = ({
     condition
 }) => {
 
-    const isOpenCondition = item.limits.timeIsActive || item.limits.randomIsActive
+    const isOpenCondition = item.limits.timeIsActive || item.limits.randomIsActive;
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const folderBackgroundColor = condition ? "activeBackgroundColorDark" : "folderBackgroundColorDark" ;

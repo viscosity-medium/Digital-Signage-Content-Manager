@@ -481,6 +481,9 @@
                     </TMovieItem>
                     <TPictureItem>
                         <Date></Date>
+                        <DisplayTime>
+                            10
+                        </DisplayTime>
                         <Log>
                             True
                         </Log>
@@ -1257,6 +1260,39 @@
                         <DisplayTime>
                             -1
                         </DisplayTime>
+                        <MinDate>
+                            45204
+                        </MinDate>
+                        <Log>
+                            True
+                        </Log>
+                        <Effect.TransitionNr>
+                            1
+                        </Effect.TransitionNr>
+                        <Effect.TransitionParam>
+                            1
+                        </Effect.TransitionParam>
+                        <Effect.TransitionLength>
+                            400
+                        </Effect.TransitionLength>
+                        <Effect.BackColor>
+                            clDefault
+                        </Effect.BackColor>
+                        <FileName>
+                            'ENKA\yabloneviy\day\dvijenie&#95;pervih&#95;10-05&#95;1344.mp4'
+                        </FileName>
+                        <FilmEnd>
+                            15
+                        </FilmEnd>
+                        <FilmLen>
+                            15
+                        </FilmLen>
+                    </TMovieItem>
+                    <TMovieItem>
+                        <Date></Date>
+                        <DisplayTime>
+                            -1
+                        </DisplayTime>
                         <Log>
                             True
                         </Log>
@@ -1314,6 +1350,9 @@
                     </TMovieItem>
                     <TPictureItem>
                         <Date></Date>
+                        <DisplayTime>
+                            5
+                        </DisplayTime>
                         <Log>
                             True
                         </Log>
@@ -1509,6 +1548,9 @@
                     </TMovieItem>
                     <TPictureItem>
                         <Date></Date>
+                        <DisplayTime>
+                            5
+                        </DisplayTime>
                         <Log>
                             True
                         </Log>
@@ -2625,6 +2667,9 @@
                     </TMovieItem>
                     <TPictureItem>
                         <Date></Date>
+                        <DisplayTime>
+                            5
+                        </DisplayTime>
                         <Log>
                             True
                         </Log>
@@ -2886,6 +2931,9 @@
                     </TMovieItem>
                     <TPictureItem>
                         <Date></Date>
+                        <DisplayTime>
+                            5
+                        </DisplayTime>
                         <Log>
                             True
                         </Log>

@@ -18,6 +18,7 @@ import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import {sidebarActions} from "@/widgets/Sidebar/model/Sidebar.slice";
 import {fetchActualGoogleStructure} from "@/widgets/Sidebar/model/Sidebar.asyncThunks";
 import {modalActions} from "@/widgets/Modal/model/Modal.slice";
+import {stringValidators} from "@/shared/helpers/stringValidators";
 
 
 export const createNewSchedule = (
@@ -170,10 +171,11 @@ export const createSidebarContentRecursively = ({
             return sortedArray.map((internalItem) => {
 
                 const internalProperties = Object.entries(internalItem) as InternalProperties;
+                const protectiveCondition = stringValidators.validateItemName({name: internalItem.name as string});
                 
                 if(internalProperties[2][1] !== "folder" && !Array.isArray(internalProperties[0][1])){
                     
-                    if((typeof internalItem.name === "string" && internalItem.name.match(searchBarValue))){
+                    if((typeof internalItem.name === "string" && internalItem.name.match(searchBarValue) && protectiveCondition)){
                         
                         return (
                             <SidebarFileItem
@@ -181,6 +183,7 @@ export const createSidebarContentRecursively = ({
                                 internalItem={internalItem as SidebarStructureItem}
                             />
                         )
+
                     }
 
                 } else {
@@ -217,7 +220,13 @@ export const onListElementClick = (
 }
 
 export const onInputChange = (event: ChangeEvent<HTMLInputElement>, dispatch: AppDispatch) => {
-    dispatch(sidebarActions.setSearchBarValue(event.target.value));
+
+    const protectiveCondition = stringValidators.validateInputValue({event});
+
+    if(protectiveCondition) {
+        dispatch(sidebarActions.setSearchBarValue(event.target.value));
+    }
+
 }
 
 export const onGoogleStructureButtonClick = async (dispatch: AppDispatch) => {

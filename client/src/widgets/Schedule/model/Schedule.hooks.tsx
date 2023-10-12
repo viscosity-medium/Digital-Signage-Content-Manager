@@ -6,29 +6,48 @@ import {fetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.asyncThu
 import {useAppDispatch} from "@/store/store";
 import {useRouter, useSearchParams} from "next/navigation";
 import { scheduleActions } from "./Schedule.slice";
+import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
+import {useSelector} from "react-redux";
+import {getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
+import {getChildrenFolderName} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
 
 export const useFetchScheduleStructure = () => {
 
     const dispatch = useAppDispatch();
     const router = useRouter();
     const searchParams = useSearchParams();
-
+    const scheduleStructure = useSelector(getScheduleStructure);
     const structureParams = searchParams.get("structure");
-    const initialActiveDirectory = structureParams?.replace(/.*\//, "");
+    const activeDirectoryId = structureParams?.replace(/.*\//, "");
 
-    useEffect(()=>{
-        
-        if(initialActiveDirectory){
-            dispatch(scheduleActions.setActiveDirectoryId(initialActiveDirectory));
+
+    useEffect(() => {
+
+        if(activeDirectoryId){
+
+            const folderName = getChildrenFolderName(scheduleStructure, activeDirectoryId) || "";
+            const activeDirectoryItems = createNewActiveDirectoryItemsRecursively(
+                scheduleStructure,
+                activeDirectoryId
+            );
+
+            dispatch(scheduleActions.setActiveDirectoryId(activeDirectoryId));
+            dispatch(scheduleActions.setActiveDirectoryItems(activeDirectoryItems));
+            dispatch(scheduleActions.setActiveDirectoryName(folderName))
+
         }
 
         if(["", "/", null].includes(structureParams) || structureParams?.startsWith("undefined")){
             router.push(`/?structure=/rootDirectory`)
         }
 
+    }, [dispatch, router, activeDirectoryId, structureParams]);
+
+    useEffect(()=>{
+
         dispatch(fetchScheduleStructure());
 
-    },[dispatch, initialActiveDirectory, router, structureParams]);
+    },[dispatch]);
 
 }
 

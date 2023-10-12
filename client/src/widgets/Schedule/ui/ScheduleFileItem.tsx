@@ -1,6 +1,7 @@
 import {FC} from "react";
 import {Button, Div, Hr, ListElement, Text} from "@/shared";
-import CrossSvg from "@/assets/cross.svg"
+import CrossSvg from "@/assets/cross.svg";
+import NoImg from "@/assets/no-image.jpg";
 import {ScheduleFileProps} from "../model/Schedule.types";
 import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
 import {useSelector} from "react-redux";
@@ -72,13 +73,13 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
                     />
                 </Div>
                 <Image
-                    src={item.thumbnailLink}
+                    src={item.thumbnailLink || NoImg}
                     alt={item.name}
                     width={120}
                     height={120}
                     className={"bg-white ml-[8px] max-h-[125px]"}
                     style={{
-                        width: 'auto',
+                        width: '120px',
                         height: '100%',
                         objectFit: 'contain'
                     }}

@@ -23,7 +23,6 @@ const SidebarFileItem: FC<SidebarFileItemProps> = ({
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const dispatch = useAppDispatch();
 
-
     return(
         <ListElement
             key={`${internalItem.id}`}

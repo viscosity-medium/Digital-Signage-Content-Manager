@@ -29,7 +29,7 @@ const FolderItemHeader: FC<FolderItemHeaderProps> = ({
     const scheduleStructure = useSelector(getScheduleStructure);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
-    const [folderName, setFolderName] = useState(item.name);
+    const [folderName, setFolderName] = useState<string>(item.name);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
 
     const folderColorLight = condition ? "activeBackgroundColor" : "folderBackgroundColor";

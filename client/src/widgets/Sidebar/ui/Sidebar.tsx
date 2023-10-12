@@ -13,7 +13,7 @@ const Sidebar = () => {
     const structure = useSelector(getSidebarStructure);
     const searchBarValue = useSelector(getSearchBarValue);
 
-   useFetchSidebarStructure();
+    useFetchSidebarStructure();
 
     return (
         <Aside
