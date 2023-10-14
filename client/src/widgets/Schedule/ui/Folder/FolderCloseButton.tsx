@@ -10,11 +10,13 @@ import {onDeleteButtonClick} from "@/widgets/Schedule/model/helpers/ScheduleEven
 interface FolderCloseButtonProps {
     item: ScheduleFolderInterface
     index: number
+    className: string | undefined
 }
 
 const FolderCloseButton: FC<FolderCloseButtonProps> = ({
     item,
-    index
+    index,
+    className
 }) => {
 
     const dispatch = useAppDispatch();
@@ -24,11 +26,11 @@ const FolderCloseButton: FC<FolderCloseButtonProps> = ({
     if(item.isEditable){
         return (
             <Button
+                className={className}
                 onClick={(event)=>{
                     event.stopPropagation();
                     onDeleteButtonClick(dispatch, scheduleStructure, activeDirectoryId, index)
                 }}
-                className={" z-0"}
             >
                 <CrossSvg
                     className={"w-[24px] fill-red-500"}

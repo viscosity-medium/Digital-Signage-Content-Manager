@@ -18,7 +18,7 @@ import {
     createNewScheduleStructureAfterDeletionRecursively, createNewScheduleStructureRecursively
 } from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
 import {renameFolderNameRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsEditors.helpers";
-import {stringValidators} from "@/shared/helpers/stringValidators";
+import {stringValidators} from "@/shared";
 
 export const onListElementClick = ({
    dispatch,

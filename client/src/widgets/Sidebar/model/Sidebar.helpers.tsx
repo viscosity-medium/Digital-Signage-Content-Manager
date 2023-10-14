@@ -15,10 +15,10 @@ import {
 } from "@/widgets/Schedule/model/Schedule.types";
 import {v4 as uuid} from "uuid";
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
-import {sidebarActions} from "@/widgets/Sidebar/model/Sidebar.slice";
-import {fetchActualGoogleStructure} from "@/widgets/Sidebar/model/Sidebar.asyncThunks";
-import {modalActions} from "@/widgets/Modal/model/Modal.slice";
-import {stringValidators} from "@/shared/helpers/stringValidators";
+import {sidebarActions} from "./Sidebar.slice";
+import {fetchActualGoogleStructure} from "./Sidebar.asyncThunks";
+import {modalActions} from "../../Modal/model/Modal.slice";
+import {stringValidators} from "@/shared";
 
 
 export const createNewSchedule = (

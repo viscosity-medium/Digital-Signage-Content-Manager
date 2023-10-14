@@ -38,7 +38,7 @@ export const renameFolderNameRecursively = (
                     }
                 ];
             } else {
-                console.log(currentItem)
+                
                 return [
                     ...accumulator,
                     {

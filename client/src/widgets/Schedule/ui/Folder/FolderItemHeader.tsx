@@ -37,7 +37,7 @@ const FolderItemHeader: FC<FolderItemHeaderProps> = ({
     const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
     return (
-        <Div className={"relative z-[1] flex justify-between"}>
+        <Div className={"relative z-[0] flex justify-between"}>
             <Div
                 className={`flex items-center w-[40%] h-[20px] translate-y-[3px] px-[8px] rounded-t-md ${folderColorDark}`}
             />

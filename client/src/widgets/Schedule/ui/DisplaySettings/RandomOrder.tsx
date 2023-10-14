@@ -28,13 +28,13 @@ const RandomOrder: FC<RandomOrderProps> = ({
     const switchText = isActive ? "Отключить" : "Включить";
 
     return (
-        <Div className={"flex items-center px-[8px]"}>
+        <Div className={"flex items-center mt-[4px] px-[8px]"}>
             <Div
                 className={`w-[308px] ${opacity}`}
             >
                 <Text
                     tag={"p"}
-                    className={`${textColor} text-[16px]`}
+                    className={`${textColor} text-[14px]`}
                 >
                     Произвольный порядок проигрывания
                 </Text>
@@ -47,7 +47,7 @@ const RandomOrder: FC<RandomOrderProps> = ({
                 >
                     <Input
                         type={"checkbox"}
-                        className={"w-[20px] h-[20px] outline-none"}
+                        className={"w-[18px] h-[18px] outline-none"}
                         checked={isActive}
                         onChange={() => {
                             onToggleRandomOrderSwitch({
@@ -63,7 +63,7 @@ const RandomOrder: FC<RandomOrderProps> = ({
                     />
                     <Text
                         tag={"p"}
-                        className={`ml-[8px] text-[16px] ${textColor} text-start`}
+                        className={`ml-[8px] text-[14px] ${textColor} text-start`}
                     >
                         {
                             switchText

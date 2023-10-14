@@ -44,12 +44,12 @@ const DateLimitations: FC<LimitationsProps> = ({
                 <Div className={`flex items-center`}>
                     <Text
                         tag={"p"}
-                        className={`${textColor} text-[16px] w-[${textWidth}]`}
+                        className={`${textColor} text-[14px] w-[${textWidth}]`}
                     >
                         Дата начала
                     </Text>
                     <DatePicker
-                        className={"w-[150px] h-[24px]"}
+                        className={"w-[150px] h-[20px]"}
                         value={ startDate !== "default" ? dayjs(startDate) : null }
                         onChange={(dayJsData) => {
                             onDatePickerChange({
@@ -60,7 +60,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                                 itemLimits: {
                                     ...item.limits,
                                     date: {
-                                        start: dayJsData !== null ? dayJsData.toISOString() : "default",
+                                        start: dayJsData !== null ? dayJsData : "default",
                                         end: item.limits.date.end,
                                     }
                                 },
@@ -69,16 +69,16 @@ const DateLimitations: FC<LimitationsProps> = ({
                     />
                 </Div>
                 <Div
-                    className={"flex items-center mt-[8px]"}
+                    className={"flex items-center mt-[4px]"}
                 >
                     <Text
                         tag={"p"}
-                        className={`${textColor} text-[16px] w-[${textWidth}]`}
+                        className={`${textColor} text-[14px] w-[${textWidth}]`}
                     >
                         Дата окончания
                     </Text>
                     <DatePicker
-                        className={"w-[150px] h-[24px]"}
+                        className={"w-[150px] h-[20px] f-[14px]"}
                         value={ endDate !== "default" ? dayjs(endDate) : null }
                         onChange={(dayJsData) => {
                             onDatePickerChange({
@@ -90,7 +90,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                                     ...item.limits,
                                     date: {
                                         start: item.limits.date.start,
-                                        end: dayJsData !== null ? dayJsData.toISOString() : null,
+                                        end: dayJsData !== null ? dayJsData : "default",
                                     }
                                 }
                             })
@@ -106,7 +106,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                 >
                     <Input
                         type={"checkbox"}
-                        className={"w-[20px] h-[20px] outline-none"}
+                        className={"w-[18px] h-[18px] outline-none"}
                         checked={isActive}
                         onChange={() => {
                             onToggleValidDaysSwitch({
@@ -122,7 +122,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                     />
                     <Text
                         tag={"p"}
-                        className={`ml-[8px] text-[16px] ${textColor} text-start`}
+                        className={`ml-[8px] text-[14px] ${textColor} text-start`}
                     >
                         {
                             switchText

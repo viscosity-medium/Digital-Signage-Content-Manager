@@ -45,7 +45,17 @@ export interface GetSeparatedScheduleItems {
     }
 }
 
-export interface VideoItemProps {
+export interface MediaFolderProps {
+    content: string,
+    folderItem: ScheduleFolderInterface
+    timeDuration?: number | undefined
+    dateLimits: {
+        lowerLimit: number | undefined
+        upperLimit: number | undefined
+    },
+}
+
+export interface MediaContentItemProps {
     relativeMmsMediaPoolFilePath: string
     timeDuration?: number | undefined
     dateLimits: {

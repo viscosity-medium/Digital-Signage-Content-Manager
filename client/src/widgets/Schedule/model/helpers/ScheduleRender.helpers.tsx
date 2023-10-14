@@ -1,5 +1,5 @@
-import {ScheduleFileItem} from "@/widgets/Schedule/ui/ScheduleFileItem";
-import {ScheduleFolderItem} from "@/widgets/Schedule/ui/ScheduleFolderItem";
+        import {ScheduleFileItem} from "@/widgets/Schedule/ui/File/ScheduleFileItem";
+import {ScheduleFolderItem} from "@/widgets/Schedule/ui/Folder/ScheduleFolderItem";
 import {ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
 
 export const renderScheduleItemsHelper = (
@@ -11,7 +11,7 @@ export const renderScheduleItemsHelper = (
     if(item.type === "file"){
         return (
             <ScheduleFileItem
-                key={`${item.uniqueId}`}
+                key={`${item.uniqueId}__${item.id}__${item.name}`}
                 item={item}
                 index={index}
                 activeDirectoryId={item.uniqueId}
@@ -21,7 +21,7 @@ export const renderScheduleItemsHelper = (
     } else {
         return (
             <ScheduleFolderItem
-                key={`${item.uniqueId}`}
+                key={`${item.uniqueId}__${item.name}`}
                 item={item}
                 index={index}
                 activeDirectoryId={item.uniqueId}

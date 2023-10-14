@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {Div, Hr, ListElement, Text} from "@/shared";
-import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
+import {useDragAndDrop} from "@/widgets/Schedule/model/hooks/Schedule.hooks";
 import {ScheduleFolderProps} from "@/widgets/Schedule/model/Schedule.types";
 import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
@@ -11,7 +11,7 @@ import {
 import {FolderItemHeader} from "@/widgets/Schedule/ui/Folder/FolderItemHeader";
 import {FolderItemList} from "@/widgets/Schedule/ui/Folder/FolderItemList";
 import {FolderCloseButton} from "@/widgets/Schedule/ui/Folder/FolderCloseButton";
-import "./Folder/folder.css"
+import "./folder.css"
 import {useRouter, useSearchParams} from "next/navigation";
 import {FolderExtraSettings} from "@/widgets/Schedule/ui/Folder/FolderExtraSettings";
 import {
@@ -20,7 +20,7 @@ import {
 } from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
 
 import {createArrayFromAToB} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
-import dayjs, {Dayjs} from "dayjs";
+import dayjs from "dayjs";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     item, index, moveScheduleItem
@@ -117,14 +117,11 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                                 itemRandom
                             }
                         </Text>
-                        <Div
-                            className={"self-center"}
-                        >
-                            <FolderCloseButton
-                                item={item}
-                                index={index}
-                            />
-                        </Div>
+                        <FolderCloseButton
+                            item={item}
+                            index={index}
+                            className={"self-center z-[1]"}
+                        />
                     </Div>
                 </Div>
                 <FolderExtraSettings

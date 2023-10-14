@@ -69,6 +69,12 @@ class XmlUtilities {
 
         return schedule.reduce((accumulator, currentItem) => {
 
+            const dateLimits = calculateActiveDays({
+                minDay: currentItem.limits.date.start,
+                maxDay: currentItem.limits.date.end
+            });
+            const timeDuration = calculateTimeDuration({timeDuration: currentItem.limits.time});
+
             if(currentItem.type === "folder"){
 
                 return (`${
@@ -79,7 +85,10 @@ class XmlUtilities {
                             schedule: currentItem.content,
                             folderWithContentPath: fileSystem.joinPath([folderWithContentPath, currentItem.name])
                         }),
-                        folderItem: currentItem
+                        folderItem: currentItem,
+                        timeDuration,
+                        dateLimits
+                        
                     })
                 }`);
 
@@ -90,12 +99,6 @@ class XmlUtilities {
                     .replace(/C:\\mms\\Media\\/gm, "")
                     .replace(regExpConditionToDeleteIntermediateFoldersOnPath, "")
                     .replace(/_/gm, "&#95;");
-
-                const dateLimits = calculateActiveDays({
-                    minDay: currentItem.limits.date.start,
-                    maxDay: currentItem.limits.date.end
-                });
-                const timeDuration = calculateTimeDuration({timeDuration: currentItem.limits.time});
 
                 if(currentItem.mimeType?.match("video")){
 

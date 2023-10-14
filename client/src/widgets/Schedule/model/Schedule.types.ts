@@ -1,5 +1,5 @@
 import {Identifier} from "dnd-core";
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, RefObject, SetStateAction} from "react";
 import {Dayjs} from "dayjs";
 import {AppDispatch} from "@/store/store";
 
@@ -115,11 +115,15 @@ export interface ItemFileLimits {
     timeIsActive: boolean
 }
 
- export interface ItemFolderLimits extends ItemFileLimits{
+export interface ItemFolderLimits extends ItemFileLimits{
     randomIsActive: boolean
- }
+}
 
- export interface ActiveItemsIndexesRange {
-     startIndex: number
-     endIndex: number
- }
+export interface ActiveItemsIndexesRange {
+    startIndex: number
+    endIndex: number
+}
+
+export interface AutoScrollToTop {
+    unOrderListRef: RefObject<HTMLUListElement>
+}

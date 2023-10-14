@@ -2,8 +2,8 @@ import {FC} from "react";
 import {Button, Div, Hr, ListElement, Text} from "@/shared";
 import CrossSvg from "@/assets/cross.svg";
 import NoImg from "@/assets/no-image.jpg";
-import {ScheduleFileProps} from "../model/Schedule.types";
-import {useDragAndDrop} from "@/widgets/Schedule/model/Schedule.hooks";
+import {ScheduleFileProps} from "../../model/Schedule.types";
+import {useDragAndDrop} from "@/widgets/Schedule/model/hooks/Schedule.hooks";
 import {useSelector} from "react-redux";
 import {
     getScheduleActiveDirectoryId, getScheduleActiveItem, getScheduleStructure,
@@ -11,8 +11,8 @@ import {
 } from "@/widgets/Schedule/model/Schedule.selectors";
 import {useAppDispatch} from "@/store/store";
 import Image from "next/image";
-import {DateLimitations} from "@/widgets/Schedule/ui/File/DateLimitations";
-import {TimeLimitations} from "@/widgets/Schedule/ui/File/TimeLimitations";
+import {DateLimitations} from "@/widgets/Schedule/ui/DisplaySettings/DateLimitations";
+import {TimeLimitations} from "@/widgets/Schedule/ui/DisplaySettings/TimeLimitations";
 import {onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
 
 import {createArrayFromAToB} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";

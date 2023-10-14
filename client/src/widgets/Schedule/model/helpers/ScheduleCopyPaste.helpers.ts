@@ -5,6 +5,30 @@ import {v4 as uuid} from "uuid";
 
 import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
 
+export const changeInternalItemsId = ({
+    scheduleInternalStructure
+}: {
+    scheduleInternalStructure: Array<ScheduleItemInterface>
+}): Array<ScheduleItemInterface> => {
+
+    return scheduleInternalStructure.map((internalItem: ScheduleItemInterface) => {
+        if(internalItem.type === "folder") {
+            return {
+                ...internalItem,
+                uniqueId: uuid(),
+                content: changeInternalItemsId({scheduleInternalStructure: internalItem.content})
+            }
+        } else if(internalItem.type === "file") {
+            return {
+                ...internalItem,
+                uniqueId: uuid()
+            }
+        } else {
+            return internalItem
+        }
+    });
+}
+
 export const copyScheduleElementToBuffer = ({
     dispatch,
     activeItemIndex,
@@ -55,14 +79,28 @@ const pasteMultipleElementsRecursively = ({
                         bufferAccumulator: Array<ScheduleItemInterface>,
                         currentBufferItem: ScheduleItemInterface
                     ) => {
-                        return [
-                            ...bufferAccumulator,
-                            {
-                                ...currentBufferItem,
-                                id: uuid(),
-                                uniqueId: uuid(),
-                            }
-                        ]
+
+                        if(currentBufferItem.type === "folder"){
+                            return [
+                                ...bufferAccumulator,
+                                {
+                                    ...currentBufferItem,
+                                    id: uuid(),
+                                    uniqueId: uuid(),
+                                    content: changeInternalItemsId({scheduleInternalStructure: currentBufferItem.content})
+                                }
+                            ]
+                        } else {
+                            return [
+                                ...bufferAccumulator,
+                                {
+                                    ...currentBufferItem,
+                                    id: uuid(),
+                                    uniqueId: uuid(),
+                                }
+                            ]
+                        }
+
                     }, [])
                 ];
 

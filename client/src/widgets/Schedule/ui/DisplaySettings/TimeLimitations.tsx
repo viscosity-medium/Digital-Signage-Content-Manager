@@ -26,7 +26,7 @@ const TimeLimitations: FC<LimitationsProps> = ({
 
     return (
         <Div
-            className={"relative flex items-center mt-[8px]"}
+            className={"relative flex items-center mt-[4px]"}
         >
             <Div
                 className={`relative flex flex-col items-start px-[8px] ${opacity}`}
@@ -42,12 +42,12 @@ const TimeLimitations: FC<LimitationsProps> = ({
                 <Div className={"flex items-center"}>
                     <Text
                         tag={"p"}
-                        className={`${textColor} text-[16px] w-[${textWidth}]`}
+                        className={`${textColor} text-[14px] w-[${textWidth}]`}
                     >
                         Длительность
                     </Text>
                     <TimePicker
-                        className={"w-[150px] h-[24px]"}
+                        className={"w-[150px] h-[20px]"}
                         format={"mm:ss"}
                         value={ duration !== "default" ? dayjs(duration) : null }
                         onChange={(dayJsData) => {
@@ -75,7 +75,7 @@ const TimeLimitations: FC<LimitationsProps> = ({
                 >
                     <Input
                         type={"checkbox"}
-                        className={"w-[20px] h-[20px] outline-none"}
+                        className={"w-[18px] h-[18px] outline-none"}
                         checked={isActive}
                         onChange={() => {
                             onToggleValidTimeSwitch({
@@ -91,7 +91,7 @@ const TimeLimitations: FC<LimitationsProps> = ({
                     />
                     <Text
                         tag={"p"}
-                        className={`ml-[8px] text-[16px] ${textColor} text-start`}
+                        className={`ml-[8px] text-[14px] ${textColor} text-start`}
                     >
                         {
                             switchText

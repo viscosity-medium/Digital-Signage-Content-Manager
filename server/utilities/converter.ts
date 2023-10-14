@@ -11,10 +11,10 @@ export const calculateActiveDays: CalculateActiveDays = ({
     const dateOfEasescreenCountdownIsoFormat = "1899-12-30T00:00:00+0000";
     const dateOfEasescreenCountdownMillisecondsFormat = new Date(dateOfEasescreenCountdownIsoFormat).getTime();
     const upperLimit: number | object = Math.floor(
-        (new Date(maxDay).getTime() - new Date(dateOfEasescreenCountdownMillisecondsFormat).getTime()) / (1000*60*60*24)
+        (new Date(maxDay.replace(/T.*/,"T00:00:00.000Z")).getTime() - new Date(dateOfEasescreenCountdownMillisecondsFormat).getTime()) / (1000*60*60*24)
     );
     const lowerLimit: number | object = Math.floor(
-        (new Date(minDay).getTime() - new Date(dateOfEasescreenCountdownMillisecondsFormat).getTime()) / (1000*60*60*24)
+        (new Date(minDay.replace(/T.*/,"T00:00:00.000Z")).getTime() - new Date(dateOfEasescreenCountdownMillisecondsFormat).getTime()) / (1000*60*60*24)
     );
 
     return {

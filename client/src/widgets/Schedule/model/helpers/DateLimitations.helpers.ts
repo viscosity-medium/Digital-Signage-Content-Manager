@@ -1,9 +1,8 @@
-import {OnPickerChangeProps, ToggleScheduleSwitchProps} from "@/widgets/Schedule/model/Schedule.types";
-import {changeItemLimitsRecursively} from "@/widgets/Schedule/model/helpers/File.helpers";
-import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
-
-
-import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
+import {ItemFileLimits, OnPickerChangeProps, ToggleScheduleSwitchProps} from "../Schedule.types";
+import {changeItemLimitsRecursively} from "./File.helpers";
+import {scheduleActions} from "../Schedule.slice";
+import {createNewActiveDirectoryItemsRecursively} from "./ScheduleItemsCreators.helpers";
+import {dateWithoutTimezone} from "@/shared";
 
 export const onDatePickerChange = ({
     dispatch,
@@ -13,11 +12,24 @@ export const onDatePickerChange = ({
     activeDirectoryId
 }: OnPickerChangeProps) => {
 
+    const editedItemLimits: ItemFileLimits = {
+        ...itemLimits,
+        date: {
+            start: typeof itemLimits.date.start === "object" && itemLimits.date.start ?
+                dateWithoutTimezone(itemLimits.date.start.hour(0).minute(0).second(0).millisecond(0).toDate()) :
+                itemLimits.date.start,
+            end: typeof itemLimits.date.end === "object" && itemLimits.date.end ?
+                dateWithoutTimezone(itemLimits.date.end.hour(0).minute(0).second(0).millisecond(0).toDate()) :
+                itemLimits.date.end
+        }
+    }
+
     const editedScheduleData = changeItemLimitsRecursively({
         structure: scheduleStructure,
         itemUniqueId: fileUniqueId,
-        itemLimits
+        itemLimits: editedItemLimits
     });
+
 
     const updatedActiveItems = createNewActiveDirectoryItemsRecursively(
         editedScheduleData,

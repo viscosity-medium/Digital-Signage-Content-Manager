@@ -1,10 +1,10 @@
-import {VideoItemProps} from "../../types/xml.types";
+import {MediaContentItemProps} from "../../types/xml.types";
 
 export const videoItem = ({
     relativeMmsMediaPoolFilePath,
     dateLimits,
     timeDuration
-}: VideoItemProps) => {
+}: MediaContentItemProps) => {
 
     return(
     `   <TMovieItem>
@@ -23,7 +23,8 @@ export const videoItem = ({
             <Effect.BackColor>clDefault</Effect.BackColor>
             <FileName>
                 '${relativeMmsMediaPoolFilePath}'
-            </FileName>${
+            </FileName>
+            ${
                 timeDuration ?
                 (`
                     <FilmEnd>${timeDuration}</FilmEnd>

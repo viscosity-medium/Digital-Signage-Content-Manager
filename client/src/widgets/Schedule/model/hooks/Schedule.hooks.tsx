@@ -1,17 +1,45 @@
 import {useDrag, useDrop} from "react-dnd";
 import {Identifier, XYCoord} from "dnd-core";
-import {DragItem, ScheduleItemProps, StaticFolders} from "./Schedule.types";
+import {AutoScrollToTop, DragItem, ScheduleItemProps, StaticFolders} from "../Schedule.types";
 import {useEffect, useRef} from "react";
 import {fetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.asyncThunks";
 import {useAppDispatch} from "@/store/store";
 import {useRouter, useSearchParams} from "next/navigation";
-import { scheduleActions } from "./Schedule.slice";
+import { scheduleActions } from "../Schedule.slice";
 import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
 import {useSelector} from "react-redux";
-import {getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
+import {
+    getActiveDirectoryScheduleItems,
+    getScheduleActiveDirectoryId,
+    getScheduleStructure
+} from "@/widgets/Schedule/model/Schedule.selectors";
 import {getChildrenFolderName} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
 
 export const useFetchScheduleStructure = () => {
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchScheduleStructure());
+    },[dispatch]);
+
+}
+
+export const useAutoScrollToTop = ({
+   unOrderListRef
+}: AutoScrollToTop) => {
+
+    const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
+
+    useEffect(() => {
+
+        unOrderListRef.current?.scrollTo(0,0);
+
+    }, [activeDirectoryId, unOrderListRef]);
+
+};
+
+export const useChangeFolderProperties = () => {
 
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -19,7 +47,6 @@ export const useFetchScheduleStructure = () => {
     const scheduleStructure = useSelector(getScheduleStructure);
     const structureParams = searchParams.get("structure");
     const activeDirectoryId = structureParams?.replace(/.*\//, "");
-
 
     useEffect(() => {
 
@@ -33,7 +60,7 @@ export const useFetchScheduleStructure = () => {
 
             dispatch(scheduleActions.setActiveDirectoryId(activeDirectoryId));
             dispatch(scheduleActions.setActiveDirectoryItems(activeDirectoryItems));
-            dispatch(scheduleActions.setActiveDirectoryName(folderName))
+            dispatch(scheduleActions.setActiveDirectoryName(folderName));
 
         }
 
@@ -41,15 +68,9 @@ export const useFetchScheduleStructure = () => {
             router.push(`/?structure=/rootDirectory`)
         }
 
-    }, [dispatch, router, activeDirectoryId, structureParams]);
+    }, [dispatch, router, activeDirectoryId, structureParams, scheduleStructure]);
 
-    useEffect(()=>{
-
-        dispatch(fetchScheduleStructure());
-
-    },[dispatch]);
-
-}
+};
 
 export const useDragAndDrop = ({
     item,

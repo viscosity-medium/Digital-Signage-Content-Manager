@@ -9,7 +9,11 @@ import {
     getScheduleActiveItemIndex,
     getScheduleStructure
 } from "@/widgets/Schedule/model/Schedule.selectors";
-import {useFetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.hooks";
+import {
+    useAutoScrollToTop,
+    useChangeFolderProperties,
+    useFetchScheduleStructure
+} from "@/widgets/Schedule/model/hooks/Schedule.hooks";
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
     renderScheduleItemsHelper
@@ -21,10 +25,12 @@ import {
     onSaveButtonClick
 } from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
 import {moveScheduleItem} from "@/widgets/Schedule/model/helpers/ScheduleDragAndDrop.helpers";
+import {useRef} from "react";
 
 const Schedule = () => {
 
     const dispatch = useAppDispatch();
+    const unOrderListRef = useRef<HTMLUListElement>(null);
     const activeDirectoryItems = useSelector(getActiveDirectoryScheduleItems);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const activeDirectoryName = useSelector(getScheduleActiveDirectoryName);
@@ -35,7 +41,9 @@ const Schedule = () => {
     const structure = searchParams.get("structure");
     const defaultFolderName = "Корневой каталог";
 
+    useChangeFolderProperties()
     useFetchScheduleStructure();
+    useAutoScrollToTop({unOrderListRef});
     
     return (
         <Div
@@ -115,10 +123,8 @@ const Schedule = () => {
                     }
                 </Div>
                 <UnorderedList
+                    reference={unOrderListRef}
                     className={"overflow-y-scroll mt-[20px] h-[100%] pr-[16px] unorderedTrackList"}
-                    onKeyDown={()=>{
-                        console.log("keyDown!")
-                    }}
                 >
                     {
                         activeDirectoryItems.map((item, index) => (
