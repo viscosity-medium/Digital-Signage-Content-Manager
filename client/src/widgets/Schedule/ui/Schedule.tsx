@@ -8,23 +8,23 @@ import {
     getScheduleActiveDirectoryId, getScheduleActiveDirectoryName,
     getScheduleActiveItemIndex,
     getScheduleStructure
-} from "@/widgets/Schedule/model/Schedule.selectors";
+} from "../model/Schedule.selectors";
 import {
     useAutoScrollToTop,
     useChangeFolderProperties,
     useFetchScheduleStructure
-} from "@/widgets/Schedule/model/hooks/Schedule.hooks";
+} from "../model/hooks/Schedule.hooks";
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
     renderScheduleItemsHelper
-} from "@/widgets/Schedule/model/helpers/ScheduleRender.helpers";
+} from "../model/helpers/ScheduleRender.helpers";
 import {
     onCloseCurrentFolderClick,
     onCreateFolderButtonClick,
     onDeployButtonClick,
     onSaveButtonClick
-} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
-import {moveScheduleItem} from "@/widgets/Schedule/model/helpers/ScheduleDragAndDrop.helpers";
+} from "../model/helpers/ScheduleEventListeners.helpers";
+import {moveScheduleItem} from "../model/helpers/ScheduleDragAndDrop.helpers";
 import {useRef} from "react";
 
 const Schedule = () => {
@@ -177,4 +177,4 @@ const Schedule = () => {
     );
 };
 
-export {Schedule};
+export default Schedule

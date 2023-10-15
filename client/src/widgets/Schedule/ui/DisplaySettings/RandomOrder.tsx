@@ -1,10 +1,10 @@
 import {Div, Input, Text} from "@/shared";
-import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleFolderInterface} from "../../model/Schedule.types";
 import {FC, useState} from "react";
 import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
-import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
-import {onToggleRandomOrderSwitch} from "@/widgets/Schedule/model/helpers/RandomOrder.helpers";
+import {getScheduleActiveDirectoryId, getScheduleStructure} from "../../model/Schedule.selectors";
+import {onToggleRandomOrderSwitch} from "../../model/helpers/RandomOrder.helpers";
 
 export interface RandomOrderProps {
     folderItem: ScheduleFolderInterface

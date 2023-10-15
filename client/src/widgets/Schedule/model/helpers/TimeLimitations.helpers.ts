@@ -1,9 +1,7 @@
-import {OnPickerChangeProps, ToggleScheduleSwitchProps} from "@/widgets/Schedule/model/Schedule.types";
-import {changeItemLimitsRecursively} from "@/widgets/Schedule/model/helpers/File.helpers";
-import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
-
-
-import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
+import {OnPickerChangeProps, ToggleScheduleSwitchProps} from "../Schedule.types";
+import {changeItemLimitsRecursively} from "./File.helpers";
+import {scheduleActions} from "../Schedule.slice";
+import {createNewActiveDirectoryItemsRecursively} from "./ScheduleItemsCreators.helpers";
 
 export const onTimePickerChange = ({
     dispatch,

@@ -1,7 +1,7 @@
 import {AppDispatch} from "@/store/store";
-import {ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleItemInterface} from "../Schedule.types";
+import {scheduleActions} from "../Schedule.slice";
 import update from "immutability-helper";
-import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
 
 export const moveScheduleItem = (
     dispatch: AppDispatch,

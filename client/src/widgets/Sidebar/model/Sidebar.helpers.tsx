@@ -3,16 +3,16 @@ import {
     InternalProperties,
     SidebarStructure,
     SidebarStructureItem
-} from "@/widgets/Sidebar/model/Sidebar.type";
-import {SidebarFileItem} from "@/widgets/Sidebar/ui/SidebarFileItem";
-import {SidebarFolderItem} from "@/widgets/Sidebar/ui/SidebarFolderItem";
+} from "./Sidebar.type";
+import {SidebarFileItem} from "../ui/SidebarFileItem";
+import {SidebarFolderItem} from "../ui/SidebarFolderItem";
 import {AppDispatch} from "@/store/store";
-import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
+import {scheduleActions} from "../../Schedule/model/Schedule.slice";
 import {
     ScheduleFileInterface,
     ScheduleFolderInterface,
     ScheduleItemInterface
-} from "@/widgets/Schedule/model/Schedule.types";
+} from "../../Schedule/model/Schedule.types";
 import {v4 as uuid} from "uuid";
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
 import {sidebarActions} from "./Sidebar.slice";

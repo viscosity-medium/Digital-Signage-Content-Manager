@@ -1,8 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {axiosApi} from "@/shared/api/api";
 import {AxiosResponse} from "axios";
-
-import {ScheduleFolderInterface, ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleFolderInterface, ScheduleItemInterface} from "./Schedule.types";
 
 export const fetchScheduleStructure = createAsyncThunk(
     "schedule/fetchScheduleStructure",

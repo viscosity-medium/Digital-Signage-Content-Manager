@@ -1,16 +1,16 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {fetchScheduleStructure, updateScheduleStructure, uploadXmlFilesOnMmsServer} from "@/widgets/Schedule/model/Schedule.asyncThunks";
+import {fetchScheduleStructure, updateScheduleStructure, uploadXmlFilesOnMmsServer} from "./Schedule.asyncThunks";
 import {
     ActiveItemsIndexesRange,
     ScheduleFolderInterface,
     ScheduleItemInterface,
     ScheduleScheme
-} from "@/widgets/Schedule/model/Schedule.types";
+} from "./Schedule.types";
 import {Identifier} from "dnd-core";
 import {
     getChildrenFolderContent,
     getChildrenFolderName
-} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
+} from "./helpers/ScheduleItemsGetters.helpers";
 
 const initialState: ScheduleScheme = {
     scheduleStructure: [],
@@ -50,9 +50,6 @@ const scheduleSlice = createSlice({
             state.activeDirectoryScheduleItems = directoryItems;
             state.activeDirectoryName = directoryName;
 
-        });
-        builder.addCase(fetchScheduleStructure.rejected, (state, action) => {
-            console.log(action)
         });
 
         // update schedule structure

@@ -1,6 +1,6 @@
 import {ChangeEvent} from "react";
 import {AppDispatch} from "@/store/store";
-import {authModuleActions} from "@/widgets/AuthModule/model/AuthModal.slice";
+import {authModuleActions} from "./AuthModal.slice";
 
 export const onSubmitButtonClick = ({ login, password }: { login: string, password: string }) => {
 

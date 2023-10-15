@@ -1,9 +1,9 @@
 import {AppDispatch} from "@/store/store";
-import {ActiveItemsIndexesRange, ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
-import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
+import {ActiveItemsIndexesRange, ScheduleItemInterface} from "../Schedule.types";
+import {scheduleActions} from "../Schedule.slice";
 import {v4 as uuid} from "uuid";
 
-import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
+import {createNewActiveDirectoryItemsRecursively} from "./ScheduleItemsCreators.helpers";
 
 export const changeInternalItemsId = ({
     scheduleInternalStructure

@@ -1,10 +1,10 @@
 import {FC} from "react";
 import {Button, Text} from "@/shared";
-import {modalActions} from "@/widgets/Modal/model/Modal.slice";
+import {modalActions} from "../../model/Modal.slice";
 import {useAppDispatch} from "@/store/store";
-import {UploadInformationProps} from "@/widgets/Modal/model/Modal.types";
+import {UploadInformationProps} from "../../model/Modal.types";
 
-const UploadInformation: FC<UploadInformationProps> = ({modalContent}) => {
+const ModalContent: FC<UploadInformationProps> = ({modalContent}) => {
 
     const dispatch = useAppDispatch();
 
@@ -23,7 +23,7 @@ const UploadInformation: FC<UploadInformationProps> = ({modalContent}) => {
                 ) : (
                     <Text
                         tag={"h2"}
-                        className={"text-[20px] text-red-500"}
+                        className={"whitespace-pre-line text-center text-[20px] text-red-500"}
                     >
                         {
                             modalContent.error
@@ -44,4 +44,4 @@ const UploadInformation: FC<UploadInformationProps> = ({modalContent}) => {
 
 };
 
-export {UploadInformation};
+export {ModalContent};

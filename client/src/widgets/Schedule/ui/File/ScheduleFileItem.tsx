@@ -3,19 +3,19 @@ import {Button, Div, Hr, ListElement, Text} from "@/shared";
 import CrossSvg from "@/assets/cross.svg";
 import NoImg from "@/assets/no-image.jpg";
 import {ScheduleFileProps} from "../../model/Schedule.types";
-import {useDragAndDrop} from "@/widgets/Schedule/model/hooks/Schedule.hooks";
+import {useDragAndDrop} from "../../model/hooks/Schedule.hooks";
 import {useSelector} from "react-redux";
 import {
     getScheduleActiveDirectoryId, getScheduleActiveItem, getScheduleStructure,
     getScheduleActiveItemIndex, getScheduleActiveItemsIndexesRange,
-} from "@/widgets/Schedule/model/Schedule.selectors";
+} from "../../model/Schedule.selectors";
 import {useAppDispatch} from "@/store/store";
 import Image from "next/image";
-import {DateLimitations} from "@/widgets/Schedule/ui/DisplaySettings/DateLimitations";
-import {TimeLimitations} from "@/widgets/Schedule/ui/DisplaySettings/TimeLimitations";
-import {onDeleteButtonClick, onListElementClick} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
+import {DateLimitations} from "../DisplaySettings/DateLimitations";
+import {TimeLimitations} from "../DisplaySettings/TimeLimitations";
+import {onDeleteButtonClick, onListElementClick} from "../../model/helpers/ScheduleEventListeners.helpers";
 
-import {createArrayFromAToB} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
+import {createArrayFromAToB} from "../../model/helpers/ScheduleItemsCreators.helpers";
 
 const ScheduleFileItem: FC<ScheduleFileProps> = ({
     item, index, moveScheduleItem,

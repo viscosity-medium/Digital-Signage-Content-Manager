@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {scheduleReducer} from "@/widgets/Schedule/model/Schedule.slice";
 import {modalReducer} from "@/widgets/Modal/model/Modal.slice";
 import {authModuleReducer} from "@/widgets/AuthModule/model/AuthModal.slice";
+import {userDataReducer} from "@/shared/ui-kit/SpecialClientComponents/model/UserData.slice";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         sidebar: sidebarReducer,
         schedule: scheduleReducer,
         modal: modalReducer,
+        userData: userDataReducer
     }
 });
 

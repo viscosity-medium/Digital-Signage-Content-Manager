@@ -2,10 +2,10 @@ import CrossSvg from "@/assets/cross.svg";
 import {Button} from "@/shared";
 import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
-import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
+import {getScheduleActiveDirectoryId, getScheduleStructure} from "../../model/Schedule.selectors";
 import {FC} from "react";
-import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
-import {onDeleteButtonClick} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
+import {ScheduleFolderInterface} from "../../model/Schedule.types";
+import {onDeleteButtonClick} from "../../model/helpers/ScheduleEventListeners.helpers";
 
 interface FolderCloseButtonProps {
     item: ScheduleFolderInterface

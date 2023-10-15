@@ -3,11 +3,10 @@ import {
     onLoginInputChange,
     onPasswordInputChange,
     onSubmitButtonClick
-} from "@/widgets/AuthModule/model/AuthModal.helpers";
+} from "../model/AuthModal.helpers";
 import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
-import {getAuthModuleLogin, getAuthModulePassword} from "@/widgets/AuthModule/model/AuthModal.selectors";
-
+import {getAuthModuleLogin, getAuthModulePassword} from "../model/AuthModal.selectors";
 
 const AuthModal = () => {
 
@@ -87,4 +86,4 @@ const AuthModal = () => {
 
 };
 
-export {AuthModal};
+export default AuthModal

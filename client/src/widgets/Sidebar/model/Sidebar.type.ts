@@ -1,4 +1,4 @@
-import {ItemFileLimits} from "@/widgets/Schedule/model/Schedule.types";
+import {ItemFileLimits} from "../../Schedule/model/Schedule.types";
 
 export interface SidebarStructureItem {
     id: string,

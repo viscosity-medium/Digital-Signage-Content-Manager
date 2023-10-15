@@ -3,7 +3,7 @@
 import {Div, ListElement, Text, UnorderedList} from "@/shared";
 import FolderIcon from "@/assets/folder-icon.svg";
 import DownArrowIcon from "@/assets/down-arrow.svg";
-import {createSidebarContentRecursively, onFolderItemClick} from "@/widgets/Sidebar/model/Sidebar.helpers";
+import {createSidebarContentRecursively, onFolderItemClick} from "../model/Sidebar.helpers";
 import {useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {getSearchBarValue} from "../model/Sidebar.selectors";

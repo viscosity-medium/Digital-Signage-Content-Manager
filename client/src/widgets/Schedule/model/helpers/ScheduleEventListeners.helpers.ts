@@ -1,23 +1,23 @@
 import {AppDispatch} from "@/store/store";
 import {Identifier} from "dnd-core";
 import {ChangeEvent, Dispatch, MouseEvent, SetStateAction} from "react";
-import {scheduleActions} from "@/widgets/Schedule/model/Schedule.slice";
-import {ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {scheduleActions} from "../Schedule.slice";
+import {ScheduleItemInterface} from "../Schedule.types";
 import {AppRouterInstance} from "next/dist/shared/lib/app-router-context";
-import {updateScheduleStructure, uploadXmlFilesOnMmsServer} from "@/widgets/Schedule/model/Schedule.asyncThunks";
-import {modalActions} from "@/widgets/Modal/model/Modal.slice";
+import {updateScheduleStructure, uploadXmlFilesOnMmsServer} from "../Schedule.asyncThunks";
+import {modalActions} from "../../../Modal/model/Modal.slice";
 import {
     getChildrenFolderContent,
     getParentFolderContent,
     getParentFolderId,
     getParentFolderName
-} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
+} from "./ScheduleItemsGetters.helpers";
 
 import {
     createNewActiveDirectoryItemsRecursively,
     createNewScheduleStructureAfterDeletionRecursively, createNewScheduleStructureRecursively
-} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
-import {renameFolderNameRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsEditors.helpers";
+} from "./ScheduleItemsCreators.helpers";
+import {renameFolderNameRecursively} from "./ScheduleItemsEditors.helpers";
 import {stringValidators} from "@/shared";
 
 export const onListElementClick = ({

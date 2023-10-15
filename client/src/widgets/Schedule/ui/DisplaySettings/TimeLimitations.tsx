@@ -1,10 +1,10 @@
 import {TimePicker} from "antd";
 import {Div, Input, Text} from "@/shared";
 import {FC, useState} from "react";
-import {LimitationsProps} from "@/widgets/Schedule/model/Schedule.types";
+import {LimitationsProps} from "../../model/Schedule.types";
 import {useSelector} from "react-redux";
-import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
-import {onTimePickerChange, onToggleValidTimeSwitch} from "@/widgets/Schedule/model/helpers/TimeLimitations.helpers";
+import {getScheduleActiveDirectoryId, getScheduleStructure} from "../../model/Schedule.selectors";
+import {onTimePickerChange, onToggleValidTimeSwitch} from "../../model/helpers/TimeLimitations.helpers";
 import {useAppDispatch} from "@/store/store";
 import dayjs from "dayjs";
 

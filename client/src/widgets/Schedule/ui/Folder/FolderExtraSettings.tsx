@@ -1,12 +1,12 @@
 import {Button, Div} from "@/shared";
 import {FC, useState} from "react";
 import DownArrowIcon from "@/assets/down-arrow.svg";
-import {TimeLimitations} from "@/widgets/Schedule/ui/DisplaySettings/TimeLimitations";
-import {ScheduleFolderInterface} from "@/widgets/Schedule/model/Schedule.types";
-import {RandomOrder} from "@/widgets/Schedule/ui/DisplaySettings/RandomOrder";
+import {TimeLimitations} from "../DisplaySettings/TimeLimitations";
+import {ScheduleFolderInterface} from "../../model/Schedule.types";
+import {RandomOrder} from "../DisplaySettings/RandomOrder";
 
-import {onOpenExtraSettingsButtonClick} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
-import {DateLimitations} from "@/widgets/Schedule/ui/DisplaySettings/DateLimitations";
+import {onOpenExtraSettingsButtonClick} from "../../model/helpers/ScheduleEventListeners.helpers";
+import {DateLimitations} from "../DisplaySettings/DateLimitations";
 
 export interface FolderExtraSettingsProps {
     item: ScheduleFolderInterface

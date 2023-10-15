@@ -1,10 +1,10 @@
 import {DatePicker} from "antd";
 import {Div, Input, Text} from "@/shared";
 import {FC, useState} from "react";
-import {onDatePickerChange, onToggleValidDaysSwitch} from "@/widgets/Schedule/model/helpers/DateLimitations.helpers";
-import {LimitationsProps} from "@/widgets/Schedule/model/Schedule.types";
+import {onDatePickerChange, onToggleValidDaysSwitch} from "../../model/helpers/DateLimitations.helpers";
+import {LimitationsProps} from "../../model/Schedule.types";
 import {useSelector} from "react-redux";
-import {getScheduleActiveDirectoryId, getScheduleStructure} from "@/widgets/Schedule/model/Schedule.selectors";
+import {getScheduleActiveDirectoryId, getScheduleStructure} from "../../model/Schedule.selectors";
 import {useAppDispatch} from "@/store/store";
 import dayjs from "dayjs";
 

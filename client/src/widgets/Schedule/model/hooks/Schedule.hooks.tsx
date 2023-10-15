@@ -2,25 +2,44 @@ import {useDrag, useDrop} from "react-dnd";
 import {Identifier, XYCoord} from "dnd-core";
 import {AutoScrollToTop, DragItem, ScheduleItemProps, StaticFolders} from "../Schedule.types";
 import {useEffect, useRef} from "react";
-import {fetchScheduleStructure} from "@/widgets/Schedule/model/Schedule.asyncThunks";
+import {fetchScheduleStructure} from "../Schedule.asyncThunks";
 import {useAppDispatch} from "@/store/store";
 import {useRouter, useSearchParams} from "next/navigation";
 import { scheduleActions } from "../Schedule.slice";
-import {createNewActiveDirectoryItemsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
+import {createNewActiveDirectoryItemsRecursively} from "../helpers/ScheduleItemsCreators.helpers";
 import {useSelector} from "react-redux";
 import {
-    getActiveDirectoryScheduleItems,
     getScheduleActiveDirectoryId,
     getScheduleStructure
-} from "@/widgets/Schedule/model/Schedule.selectors";
-import {getChildrenFolderName} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
+} from "../Schedule.selectors";
+import {getChildrenFolderName} from "../helpers/ScheduleItemsGetters.helpers";
+import {modalActions} from "../../../Modal/model/Modal.slice";
 
 export const useFetchScheduleStructure = () => {
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchScheduleStructure());
+        (async ()=>{
+            const serverResponse: any = await dispatch(fetchScheduleStructure())
+            .then((serverResponse: any) => {
+                return {
+                    response: serverResponse.payload.response
+                }
+            })
+            .catch(() => {
+                return {
+                    response: "",
+                    error: "Сервер не смог загрузить данные\nОбратитесь к администрации ресурса"
+                }
+            });
+
+            if(serverResponse.error){
+                dispatch(modalActions.setModalIsShown(true));
+                dispatch(modalActions.setModalContent(serverResponse));
+            }
+
+        })()
     },[dispatch]);
 
 }

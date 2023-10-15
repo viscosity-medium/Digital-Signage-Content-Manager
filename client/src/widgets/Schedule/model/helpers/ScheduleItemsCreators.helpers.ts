@@ -1,4 +1,4 @@
-import {ScheduleFolderInterface, ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleFolderInterface, ScheduleItemInterface} from "../Schedule.types";
 import {v4 as uuid} from "uuid";
 
 export const createNewScheduleStructureRecursively = (

@@ -7,8 +7,7 @@ import {ReactNode, useEffect} from "react";
 const LayoutWrapper = ({children}: {children: ReactNode}) => {
 
     const dispatch = useAppDispatch();
-
-
+    
     useEffect(() => {
 
         const escFunction = (event: KeyboardEvent) => {

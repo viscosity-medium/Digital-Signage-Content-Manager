@@ -1,26 +1,29 @@
 import {FC} from "react";
 import {Div, Hr, ListElement, Text} from "@/shared";
-import {useDragAndDrop} from "@/widgets/Schedule/model/hooks/Schedule.hooks";
-import {ScheduleFolderProps} from "@/widgets/Schedule/model/Schedule.types";
+import {useDragAndDrop} from "../../model/hooks/Schedule.hooks";
+import {ScheduleFolderProps} from "../../model/Schedule.types";
 import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
 import {
-    getScheduleActiveDirectoryId, getScheduleActiveItem,
-    getScheduleActiveItemIndex, getScheduleActiveItemsIndexesRange, getScheduleStructure
-} from "@/widgets/Schedule/model/Schedule.selectors";
-import {FolderItemHeader} from "@/widgets/Schedule/ui/Folder/FolderItemHeader";
-import {FolderItemList} from "@/widgets/Schedule/ui/Folder/FolderItemList";
-import {FolderCloseButton} from "@/widgets/Schedule/ui/Folder/FolderCloseButton";
+    getScheduleActiveDirectoryId,
+    getScheduleActiveItem,
+    getScheduleActiveItemIndex,
+    getScheduleActiveItemsIndexesRange,
+    getScheduleStructure
+} from "../../model/Schedule.selectors";
+import {FolderItemHeader} from "./FolderItemHeader";
+import {FolderItemList} from "./FolderItemList";
+import {FolderCloseButton} from "./FolderCloseButton";
 import "./folder.css"
 import {useRouter, useSearchParams} from "next/navigation";
-import {FolderExtraSettings} from "@/widgets/Schedule/ui/Folder/FolderExtraSettings";
+import {FolderExtraSettings} from "./FolderExtraSettings";
 import {
     onFolderElementDoubleClick,
     onListElementClick
-} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
+} from "../../model/helpers/ScheduleEventListeners.helpers";
 
-import {createArrayFromAToB} from "@/widgets/Schedule/model/helpers/ScheduleItemsCreators.helpers";
-import dayjs from "dayjs";
+import {createArrayFromAToB} from "../../model/helpers/ScheduleItemsCreators.helpers";
+import {getItemDuration} from "../../model/helpers/Folder.helpers";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     item, index, moveScheduleItem
@@ -46,7 +49,7 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     const folderBorderColor = condition ? "activeBorderColor" : "folderBorderColor";
     const textColor = condition ? "whiteTextColor" : "blueTextColor";
 
-    const itemTime = item.limits.time !== "default" ? `[${dayjs(item.limits.time).toString().replace(/^.*\s\d{2}:|\s\w{3}/gm, "")}]` : "";
+    const itemDuration = getItemDuration({item});
     const itemRandom = item.limits.randomIsActive ? `[R]` : "";
 
     return (
@@ -112,7 +115,7 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                             {
                                 item.name
                             } {
-                                itemTime
+                                itemDuration
                             } {
                                 itemRandom
                             }

@@ -1,4 +1,4 @@
-import {ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleItemInterface} from "../Schedule.types";
 
 export const renameFolderNameRecursively = (
     scheduleStructure: Array<ScheduleItemInterface>,

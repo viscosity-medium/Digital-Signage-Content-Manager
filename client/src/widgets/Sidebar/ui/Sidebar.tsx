@@ -1,11 +1,13 @@
+'use client'
+
 import {useAppDispatch} from "@/store/store";
 import {Aside, Button, Input, Text, UnorderedList} from "@/shared";
 import {
     createSidebarContentRecursively, onGoogleStructureButtonClick, onInputChange
-} from "@/widgets/Sidebar/model/Sidebar.helpers";
-import {getSearchBarValue, getSidebarStructure} from "@/widgets/Sidebar/model/Sidebar.selectors";
+} from "../model/Sidebar.helpers";
+import {getSearchBarValue, getSidebarStructure} from "../model/Sidebar.selectors";
 import {useSelector} from "react-redux";
-import {useFetchSidebarStructure} from "@/widgets/Sidebar/model/Sidebar.hooks";
+import {useFetchSidebarStructure} from "../model/Sidebar.hooks";
 
 const Sidebar = () => {
 
@@ -53,4 +55,4 @@ const Sidebar = () => {
 
 };
 
-export {Sidebar};
+export default Sidebar

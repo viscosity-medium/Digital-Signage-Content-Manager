@@ -1,6 +1,6 @@
-        import {ScheduleFileItem} from "@/widgets/Schedule/ui/File/ScheduleFileItem";
-import {ScheduleFolderItem} from "@/widgets/Schedule/ui/Folder/ScheduleFolderItem";
-import {ScheduleItemInterface} from "@/widgets/Schedule/model/Schedule.types";
+import {ScheduleFileItem} from "../../ui/File/ScheduleFileItem";
+import {ScheduleFolderItem} from "../../ui/Folder/ScheduleFolderItem";
+import {ScheduleItemInterface} from "../Schedule.types";
 
 export const renderScheduleItemsHelper = (
     item: ScheduleItemInterface,

@@ -1,11 +1,11 @@
 import {Div, ListElement, Text} from "@/shared";
-import {SidebarFileItemProps} from "@/widgets/Sidebar/model/Sidebar.type";
+import {SidebarFileItemProps} from "../model/Sidebar.type";
 import {
     getActiveDirectoryScheduleItems,
     getScheduleActiveDirectoryId,
-    getScheduleActiveItem, getScheduleActiveItemIndex,
+    getScheduleActiveItemIndex,
     getScheduleStructure
-} from "@/widgets/Schedule/model/Schedule.selectors";
+} from "../../Schedule/model/Schedule.selectors";
 import {useSelector} from "react-redux";
 import {useAppDispatch} from "@/store/store";
 import Image from "next/image";

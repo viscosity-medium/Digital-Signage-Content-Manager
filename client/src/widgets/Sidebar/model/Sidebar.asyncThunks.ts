@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {axiosApi} from "@/shared/api/api";
 import {AxiosResponse} from "axios";
-import {SidebarStructure} from "@/widgets/Sidebar/model/Sidebar.type";
+import {SidebarStructure} from "./Sidebar.type";
 
 export const fetchActualGoogleStructure = createAsyncThunk(
     "googleStructure",
