@@ -8,7 +8,7 @@ import {
     getScheduleActiveDirectoryId,
     getScheduleActiveItem,
     getScheduleActiveItemIndex,
-    getScheduleActiveItemsIndexesRange,
+    getScheduleActiveItemsIndexesRange, getScheduleScrollProperties,
     getScheduleStructure
 } from "../../model/Schedule.selectors";
 import {FolderItemHeader} from "./FolderItemHeader";
@@ -24,8 +24,7 @@ import {
 
 import {createArrayFromAToB} from "../../model/helpers/ScheduleItemsCreators.helpers";
 import {getDirectoryTotalDuration} from "../../model/helpers/ScheduleTimeConverters.helpers";
-import {getFoldersElementsColors} from "@/widgets/Schedule/model/helpers/ScheduleItemsColor.helpers";
-import {getItemIsActiveCondition} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
+import {getFoldersElementsColors, getItemIsActiveCondition} from "../../model/helpers/ScheduleItemsGetters.helpers";
 
 const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     item,
@@ -41,6 +40,7 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const activeItemsIndexesRange = useSelector(getScheduleActiveItemsIndexesRange);
+    const scheduleScrollProperties = useSelector(getScheduleScrollProperties);
     const { opacity, handlerId, refListObject } = useDragAndDrop({ item, index, moveScheduleItem, activeDirectoryId });
 
     const structureParams = searchParams.get("structure");
@@ -74,14 +74,15 @@ const ScheduleFolderItem: FC<ScheduleFolderProps> = ({
                 <Div
                     className={`flex flex-col relative justify-center min-h-[116px] p-[8px] text-[24px] text-white cursor-pointer active:cursor-grabbing border-[3px] ${folderBorderColor} ${folderBackgroundColor} rounded`}
                     onDoubleClick={()=>{
-                        onFolderElementDoubleClick(
-                            dispatch, 
-                            scheduleStructure, 
-                            item.uniqueId, 
-                            item.name,
+                        onFolderElementDoubleClick({
+                            dispatch,
+                            scheduleStructure,
+                            uniqueId: item.uniqueId,
+                            folderName: item.name,
                             router,
-                            structureParams
-                        );
+                            structureParams,
+                            scrollProperties: scheduleScrollProperties,
+                        });
                     }}
                 >
                     <Div

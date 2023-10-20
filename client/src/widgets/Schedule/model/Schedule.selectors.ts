@@ -8,3 +8,5 @@ export const getScheduleActiveDirectoryId = (state: StateScheme) => state.schedu
 export const getScheduleActiveDirectoryName = (state: StateScheme) => state.schedule.activeDirectoryName;
 export const getActiveDirectoryScheduleItems = (state: StateScheme) => state.schedule.activeDirectoryScheduleItems;
 export const getScheduleBufferDataToCopy = (state: StateScheme) => state.schedule.scheduleBufferDataToCopy;
+export const getScheduleScrollProperties = (state: StateScheme) => state.schedule.scheduleScrollProperties;
+export const getFullDirectoriesPath = (state: StateScheme) => state.schedule.fullDirectoriesPath;

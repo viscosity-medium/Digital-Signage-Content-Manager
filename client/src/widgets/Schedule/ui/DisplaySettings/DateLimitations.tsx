@@ -1,12 +1,15 @@
 import {DatePicker} from "antd";
 import {Div, Input, Text} from "@/shared";
 import {FC, useState} from "react";
-import {onDatePickerChange, onToggleValidDaysSwitch} from "../../model/helpers/ScheduleDateLimitations.helpers";
 import {LimitationsProps} from "../../model/Schedule.types";
 import {useSelector} from "react-redux";
 import {getScheduleActiveDirectoryId, getScheduleStructure} from "../../model/Schedule.selectors";
 import {useAppDispatch} from "@/store/store";
 import dayjs from "dayjs";
+import {
+    onDatePickerChange,
+    onToggleValidDays
+} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
 
 const DateLimitations: FC<LimitationsProps> = ({
     item,
@@ -109,7 +112,7 @@ const DateLimitations: FC<LimitationsProps> = ({
                         className={"w-[18px] h-[18px] outline-none"}
                         checked={isActive}
                         onChange={() => {
-                            onToggleValidDaysSwitch({
+                            onToggleValidDays({
                                 dispatch,
                                 isActive,
                                 setIsActive,

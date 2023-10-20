@@ -1,5 +1,6 @@
-import {ScheduleFileInterface, ScheduleItemInterface} from "../Schedule.types";
+import {ItemFileLimits, ScheduleItemInterface} from "../Schedule.types";
 import {Identifier} from "dnd-core";
+import {changeItemLimitsRecursively} from "@/widgets/Schedule/model/helpers/ScheduleFile.helpers";
 
 export const getChildrenFolderContent = (
     scheduleStructure: Array<ScheduleItemInterface>,
@@ -130,4 +131,61 @@ export const getItemIsActiveCondition = ({
     scheduleActiveItem: Identifier | null,
 }) => {
     return (activeItemIndex !== undefined && handlerId === scheduleActiveItem) || indexesRange.includes(index);
+}
+export const getFoldersElementsColors = ({condition}: { condition: boolean }) => {
+    const folderBackgroundColor = condition ? "activeBackgroundColor" : "folderBackgroundColor";
+    const folderBorderColor = condition ? "activeBorderColor" : "folderBorderColor";
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
+
+    return {
+        textColor,
+        folderBorderColor,
+        folderBackgroundColor
+    }
+};
+export const getFileElementsColors = ({condition}: { condition: boolean }) => {
+    const fileBackgroundColor = condition ? "activeBackgroundColor" : "whiteBackgroundColor";
+    const fileColorLight = condition ? "activeBorderColor" : "whiteBorderColor";
+    const textColor = condition ? "whiteTextColor" : "blueTextColor";
+
+    return {
+        textColor,
+        fileColorLight,
+        fileBackgroundColor
+    }
+}
+export const getEditedScheduleDataLimits = ({
+    scheduleStructure,
+    fileUniqueId,
+    itemLimits,
+    isActive
+}: {
+    scheduleStructure: Array<ScheduleItemInterface>,
+    fileUniqueId: string,
+    itemLimits: ItemFileLimits,
+    isActive: boolean
+}) => {
+    if (isActive) {
+
+        return changeItemLimitsRecursively({
+            structure: scheduleStructure,
+            itemUniqueId: fileUniqueId,
+            itemLimits: {
+                ...itemLimits,
+                randomIsActive: false
+            },
+        });
+
+    } else {
+
+        return changeItemLimitsRecursively({
+            structure: scheduleStructure,
+            itemUniqueId: fileUniqueId,
+            itemLimits: {
+                ...itemLimits,
+                randomIsActive: true
+            }
+        });
+
+    }
 }

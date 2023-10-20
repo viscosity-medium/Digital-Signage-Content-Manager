@@ -24,15 +24,23 @@ export interface ScheduleFolderInterface {
     limits: ItemFolderLimits
 }
 
+export interface ScheduleScrollProperties {
+    scrollTop: number
+    directoryId: string
+    content: ScheduleScrollProperties | undefined
+}
+
 export interface ScheduleScheme {
     scheduleStructure: Array<ScheduleItemInterface>
     activeItem: Identifier | null
     activeItemIndex: number | undefined
     activeItemsIndexesRange: ActiveItemsIndexesRange | undefined
     activeDirectoryId: "rootDirectory" | string
-    activeDirectoryName: string
+    activeDirectoryName: string,
+    fullDirectoriesPath: string[] | undefined,
     activeDirectoryScheduleItems: Array<ScheduleItemInterface>,
-    scheduleBufferDataToCopy: Array<ScheduleItemInterface>
+    scheduleBufferDataToCopy: Array<ScheduleItemInterface>,
+    scheduleScrollProperties: ScheduleScrollProperties | undefined
 }
 
 export interface ScheduleItemProps {

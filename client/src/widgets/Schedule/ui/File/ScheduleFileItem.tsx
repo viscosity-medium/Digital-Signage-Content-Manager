@@ -7,7 +7,7 @@ import {useDragAndDrop} from "../../model/hooks/Schedule.hooks";
 import {useSelector} from "react-redux";
 import {
     getScheduleActiveDirectoryId, getScheduleActiveItem, getScheduleStructure,
-    getScheduleActiveItemIndex, getScheduleActiveItemsIndexesRange,
+    getScheduleActiveItemIndex, getScheduleActiveItemsIndexesRange, getScheduleScrollProperties,
 } from "../../model/Schedule.selectors";
 import {useAppDispatch} from "@/store/store";
 import Image from "next/image";
@@ -16,8 +16,10 @@ import {TimeLimitations} from "../DisplaySettings/TimeLimitations";
 import {onDeleteButtonClick, onListElementClick} from "../../model/helpers/ScheduleEventListeners.helpers";
 
 import {createArrayFromAToB} from "../../model/helpers/ScheduleItemsCreators.helpers";
-import {getFileElementsColors} from "@/widgets/Schedule/model/helpers/ScheduleItemsColor.helpers";
-import {getItemIsActiveCondition} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
+import {
+    getFileElementsColors,
+    getItemIsActiveCondition
+} from "@/widgets/Schedule/model/helpers/ScheduleItemsGetters.helpers";
 
 const ScheduleFileItem: FC<ScheduleFileProps> = ({
     item,
@@ -31,6 +33,7 @@ const ScheduleFileItem: FC<ScheduleFileProps> = ({
     const activeItemIndex = useSelector(getScheduleActiveItemIndex);
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
     const activeItemsIndexesRange = useSelector(getScheduleActiveItemsIndexesRange);
+    const scheduleScrollProperties = useSelector(getScheduleScrollProperties);
     const { opacity, handlerId, refListObject } = useDragAndDrop({ item, index, moveScheduleItem, activeDirectoryId });
 
     const indexesRange = createArrayFromAToB({ firstIndex: activeItemsIndexesRange?.startIndex, secondIndex: activeItemsIndexesRange?.endIndex });

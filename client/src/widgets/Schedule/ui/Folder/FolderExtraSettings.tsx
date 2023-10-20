@@ -5,7 +5,7 @@ import {TimeLimitations} from "../DisplaySettings/TimeLimitations";
 import {ScheduleFolderInterface} from "../../model/Schedule.types";
 import {RandomOrder} from "../DisplaySettings/RandomOrder";
 
-import {onOpenExtraSettingsButtonClick} from "../../model/helpers/ScheduleEventListeners.helpers";
+import {onOpenFolderSettings} from "../../model/helpers/ScheduleEventListeners.helpers";
 import {DateLimitations} from "../DisplaySettings/DateLimitations";
 
 export interface FolderExtraSettingsProps {
@@ -29,12 +29,12 @@ const FolderExtraSettings: FC<FolderExtraSettingsProps> = ({
         item.isEditable && item.content.length > 0 ?
         (
             <Div
-                className={`absolute bottom-0 py-[4px] right-[60px] ${isOpen ? "translate-y-[0%]" : "translate-y-[100%]"} h-[auto] w-[auto] ${folderBackgroundColor} border-white border-[2px] border-b-0 rounded-t-[4px] transition duration-300`}
+                className={`absolute z-[3] bottom-0 py-[4px] right-[60px] ${isOpen ? "translate-y-[0%]" : "translate-y-[100%]"} h-[auto] w-[auto] ${folderBackgroundColor} border-white border-[2px] border-b-0 rounded-t-[4px] transition duration-300`}
             >
                 <Button
                     className={`absolute top-0 right-[8px] translate-y-[-100%] w-[24px] h-[16px] bg-[#ffffff60] ${folderBackgroundColor} border-white border-[2px] border-b-0 rounded-t-[4px] outline-none`}
                     onClick={()=>{
-                        onOpenExtraSettingsButtonClick(setIsOpen);
+                        onOpenFolderSettings(setIsOpen);
                     }}
                 >
                     <DownArrowIcon

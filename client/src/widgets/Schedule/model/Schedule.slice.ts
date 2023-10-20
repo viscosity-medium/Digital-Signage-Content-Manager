@@ -4,7 +4,7 @@ import {
     ActiveItemsIndexesRange,
     ScheduleFolderInterface,
     ScheduleItemInterface,
-    ScheduleScheme
+    ScheduleScheme, ScheduleScrollProperties
 } from "./Schedule.types";
 import {Identifier} from "dnd-core";
 import {
@@ -20,23 +20,25 @@ const initialState: ScheduleScheme = {
     activeDirectoryId: "rootDirectory",
     activeDirectoryName: "rootDirectory",
     activeDirectoryScheduleItems: [],
-    scheduleBufferDataToCopy: []
+    scheduleBufferDataToCopy: [],
+    fullDirectoriesPath: undefined,
+    scheduleScrollProperties: undefined
 }
 
 const scheduleSlice = createSlice({
     name: "schedule",
     initialState,
     reducers: {
-        setScheduleStructure: (state, action: PayloadAction<Array<ScheduleItemInterface>>) => {
-            state.scheduleStructure = action.payload
-        },
+        setScheduleStructure: (state, action: PayloadAction<Array<ScheduleItemInterface>>) => {state.scheduleStructure = action.payload},
         setActiveItem: (state, action: PayloadAction<Identifier | null>) => {state.activeItem = action.payload},
         setActiveItemIndex: (state, action: PayloadAction<number | undefined>) => {state.activeItemIndex = action.payload},
         setActiveItemsIndexesRange: (state, action: PayloadAction<ActiveItemsIndexesRange | undefined>) => {state.activeItemsIndexesRange = action.payload},
         setActiveDirectoryId: (state, action: PayloadAction<string>) => {state.activeDirectoryId = action.payload},
+        setFullDirectoriesPath: (state, action: PayloadAction<string[]>) => {state.fullDirectoriesPath = action.payload},
         setActiveDirectoryName: (state, action: PayloadAction<string>) => {state.activeDirectoryName = action.payload},
         setActiveDirectoryItems: (state, action: PayloadAction<Array<ScheduleItemInterface>>) => {state.activeDirectoryScheduleItems = action.payload},
         setCopyBuffer: (state, action: PayloadAction<Array<ScheduleItemInterface>>) => {state.scheduleBufferDataToCopy = action.payload},
+        setScheduleScrollProperties: (state, action: PayloadAction<ScheduleScrollProperties | undefined>) => {state.scheduleScrollProperties = action.payload}
     },
     extraReducers: (builder) => {
 

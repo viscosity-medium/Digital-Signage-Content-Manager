@@ -4,7 +4,8 @@ import {FC, useState} from "react";
 import {useAppDispatch} from "@/store/store";
 import {useSelector} from "react-redux";
 import {getScheduleActiveDirectoryId, getScheduleStructure} from "../../model/Schedule.selectors";
-import {onToggleRandomOrderSwitch} from "../../model/helpers/ScheduleRandomOrder.helpers";
+
+import {onToggleRandomOrder} from "@/widgets/Schedule/model/helpers/ScheduleEventListeners.helpers";
 
 export interface RandomOrderProps {
     folderItem: ScheduleFolderInterface
@@ -50,7 +51,7 @@ const RandomOrder: FC<RandomOrderProps> = ({
                         className={"w-[18px] h-[18px] outline-none"}
                         checked={isActive}
                         onChange={() => {
-                            onToggleRandomOrderSwitch({
+                            onToggleRandomOrder({
                                 scheduleStructure,
                                 activeDirectoryId,
                                 fileUniqueId,

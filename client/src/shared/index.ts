@@ -14,7 +14,8 @@ export { Form } from "./ui-kit/__HtmlTags/Form/ui/Form";
 export { Input } from "./ui-kit/__HtmlTags/Input/ui/Input";
 export { Hr } from "./ui-kit/__HtmlTags/Hr/ui/Hr";
 
-export {ProvidersWrapper} from "./ui-kit/ProvidersWrapper/ProvidersWrapper";
-export {dateWithoutTimezone} from "./helpers/timeConverters";
-export {stringValidators} from "./helpers/stringValidators";
-export {UserDataWrapper} from "./ui-kit/SpecialClientComponents/ui/UserDataWrapper"
+export { useDebounce} from "./helpers/useDebounce";
+export { ProvidersWrapper } from "./ui-kit/ProvidersWrapper/ProvidersWrapper";
+export { dateWithoutTimezone } from "./helpers/timeConverters";
+export { stringValidators } from "./helpers/stringValidators";
+export { UserDataWrapper } from "./ui-kit/SpecialClientComponents/ui/UserDataWrapper"

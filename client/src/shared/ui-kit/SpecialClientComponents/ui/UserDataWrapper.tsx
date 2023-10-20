@@ -1,7 +1,7 @@
 'use client'
 
 import {ReactNode} from "react"
-import {useSetUserCredentials} from "@/hooks/user.hook";
+import {useSetUserCredentials} from "@/entities";
 
 export const UserDataWrapper = (
     {children}:

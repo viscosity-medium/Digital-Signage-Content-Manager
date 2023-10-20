@@ -1,21 +1,25 @@
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {userDataActions} from "@/shared/ui-kit/SpecialClientComponents/model/UserData.slice";
+import {checkUserCredentials, setUserCredentials} from "./User.helpers";
 
 export const useSetUserCredentials = () => {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+
         if(typeof window !== undefined){
 
             const login = window.localStorage.getItem("login");
             const password = window.localStorage.getItem("password");
+            const userCredentials = checkUserCredentials({ login, password });
 
-            dispatch(userDataActions.setLogin(login));
-            dispatch(userDataActions.setPassword(password));
+            if(userCredentials){
+                setUserCredentials({dispatch});
+            }
 
         }
+
     },[]);
 
 }

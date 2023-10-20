@@ -5,15 +5,21 @@ import {useEffect, useRef} from "react";
 import {fetchScheduleStructure} from "../Schedule.asyncThunks";
 import {useAppDispatch} from "@/store/store";
 import {useRouter, useSearchParams} from "next/navigation";
-import { scheduleActions } from "../Schedule.slice";
+import {scheduleActions} from "../Schedule.slice";
 import {createNewActiveDirectoryItemsRecursively} from "../helpers/ScheduleItemsCreators.helpers";
 import {useSelector} from "react-redux";
 import {
+    getFullDirectoriesPath,
     getScheduleActiveDirectoryId,
+    getScheduleScrollProperties,
     getScheduleStructure
 } from "../Schedule.selectors";
 import {getChildrenFolderName} from "../helpers/ScheduleItemsGetters.helpers";
 import {modalActions} from "../../../Modal/model/Modal.slice";
+import {
+    getCurrentDirectoryScrollProperties,
+    initScrollPropertiesStructure
+} from "@/widgets/Schedule/model/helpers/ScheduleScrollProperties.helpers";
 
 export const useFetchScheduleStructure = () => {
 
@@ -45,16 +51,21 @@ export const useFetchScheduleStructure = () => {
 }
 
 export const useAutoScrollToTop = ({
-   unOrderListRef
+    unOrderListRef
 }: AutoScrollToTop) => {
 
     const activeDirectoryId = useSelector(getScheduleActiveDirectoryId);
+    const scrollProperties = useSelector(getScheduleScrollProperties);
 
     useEffect(() => {
 
-        unOrderListRef.current?.scrollTo(0,0);
+        const currentScrollProperties = getCurrentDirectoryScrollProperties({scrollProperties});
 
-    }, [activeDirectoryId, unOrderListRef]);
+        if(unOrderListRef.current && unOrderListRef.current.scrollTop !== undefined && currentScrollProperties && currentScrollProperties.scrollTop !== undefined){
+            unOrderListRef.current.scrollTop = currentScrollProperties.scrollTop;
+        }
+
+    }, [activeDirectoryId, unOrderListRef, scrollProperties]);
 
 };
 
@@ -64,12 +75,15 @@ export const useChangeFolderProperties = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const scheduleStructure = useSelector(getScheduleStructure);
+    const fullDirectoriesPath = useSelector(getFullDirectoriesPath);
     const structureParams = searchParams.get("structure");
     const activeDirectoryId = structureParams?.replace(/.*\//, "");
+    const searchParamsString = searchParams.get("structure");
+    const searchParamsArray = searchParamsString?.split("/").filter(param => param);
 
     useEffect(() => {
 
-        if(activeDirectoryId){
+        if( activeDirectoryId ){
 
             const folderName = getChildrenFolderName(scheduleStructure, activeDirectoryId) || "";
             const activeDirectoryItems = createNewActiveDirectoryItemsRecursively(
@@ -84,10 +98,42 @@ export const useChangeFolderProperties = () => {
         }
 
         if(["", "/", null].includes(structureParams) || structureParams?.startsWith("undefined")){
-            router.push(`/?structure=/rootDirectory`)
+            router.push(`/?structure=/rootDirectory`);
         }
 
     }, [dispatch, router, activeDirectoryId, structureParams, scheduleStructure]);
+
+
+    useEffect(() => {
+
+        if( !fullDirectoriesPath && searchParamsArray && searchParamsArray.length > 0 ){
+
+            dispatch(scheduleActions.setFullDirectoriesPath(searchParamsArray));
+
+        } else if(fullDirectoriesPath && searchParamsArray && activeDirectoryId) {
+
+            if( !fullDirectoriesPath.includes(activeDirectoryId) ){
+
+                const newFullDirectoriesPath = [...fullDirectoriesPath, activeDirectoryId];
+
+                dispatch(scheduleActions.setFullDirectoriesPath(newFullDirectoriesPath));
+
+            } else {
+
+                const index = searchParamsArray.indexOf(activeDirectoryId);
+
+                if (index > -1) {
+
+                    searchParamsArray.filter((item) => item !== activeDirectoryId);
+                    dispatch(scheduleActions.setFullDirectoriesPath(searchParamsArray));
+
+                }
+
+            }
+
+        }
+
+    }, [activeDirectoryId]);
 
 };
 
@@ -165,5 +211,16 @@ export const useDragAndDrop = ({
         handlerId,
         refListObject
     }
+
+}
+
+export const useInitScrollPropertiesStructure = () => {
+
+    const dispatch = useAppDispatch();
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        initScrollPropertiesStructure({dispatch, searchParams});
+    }, []);
 
 }
